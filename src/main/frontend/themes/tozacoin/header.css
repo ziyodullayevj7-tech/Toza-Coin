@@ -1,20 +1,23 @@
 /* Header Layout & Navigation Styles for TozaCoin */
 
 .header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 0.75rem 2.5rem;
-  background-color: var(--toza-bg-header, #f6f8f5);
+  background-color: rgba(246, 248, 245, 0.95);
   box-sizing: border-box;
   min-height: 70px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 /* Brand Logo */

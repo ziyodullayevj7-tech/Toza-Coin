@@ -14,7 +14,6 @@ public class MainLayout extends VerticalLayout implements RouterLayout {
         setSpacing(false);
         setMargin(false);
         setWidthFull();
-        setHeightFull();
         getStyle().set("min-height", "100vh");
 
         content.setWidthFull();

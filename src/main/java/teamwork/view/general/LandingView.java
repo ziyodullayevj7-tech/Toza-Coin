@@ -5,6 +5,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import teamwork.view.layout.AboutUsSection;
+import teamwork.view.layout.CallToActionBanner;
 import teamwork.view.layout.ContactSection;
 import teamwork.view.layout.FaqSection;
 import teamwork.view.layout.FeaturedCampaignsSection;
@@ -42,5 +43,6 @@ public class LandingView extends VerticalLayout {
         add(new AboutUsSection());
         add(new FaqSection());
         add(new ContactSection());
+        add(new CallToActionBanner());
     }
 }
