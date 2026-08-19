@@ -1,3 +1,22 @@
+/* Main Theme Stylesheet for TozaCoin */
+
+@import "./header.css";
+@import "./hero.css";
+@import "./stats-summary.css";
+@import "./how-it-works.css";
+@import "./trust-fairness.css";
+@import "./waste-category.css";
+@import "./featured-campaigns.css";
+@import "./map-preview.css";
+@import "./rewards-catalog.css";
+@import "./leaderboard.css";
+@import "./review.css";
+@import "./about-us.css";
+@import "./faq.css";
+@import "./contact.css";
+@import "./cta-banner.css";
+@import "./footer.css";
+
 :root {
   --toza-primary: #2D7D3E;
   --toza-primary-hover: #236632;
@@ -7,10 +26,22 @@
   --toza-border: #e2e8f0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--toza-text-dark);
   background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Global Reset for Lists */
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

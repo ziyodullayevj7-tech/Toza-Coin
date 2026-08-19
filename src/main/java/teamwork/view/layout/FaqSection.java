@@ -6,10 +6,14 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Route(value = "faq", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/faq.css")
 public class FaqSection extends Div {
 

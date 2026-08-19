@@ -9,12 +9,16 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Route(value = "rewards-catalog", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/rewards-catalog.css")
 public class RewardsCatalogSection extends Div {
 

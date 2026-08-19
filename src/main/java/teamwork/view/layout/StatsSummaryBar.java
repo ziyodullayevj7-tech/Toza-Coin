@@ -7,11 +7,11 @@ import com.vaadin.flow.component.html.Span;
 @CssImport("./themes/tozacoin/stats-summary.css")
 public class StatsSummaryBar extends Div {
 
-    private final Span activeUsersNum = new Span("12,847");
-    private final Span submittedReportsNum = new Span("89,320");
-    private final Span cleanedWasteNum = new Span("247,500");
-    private final Span completedCampaignsNum = new Span("1,240");
-    private final Span distributedCoinsNum = new Span("5.2M");
+    private final Span numActiveUsers = new Span("12,847");
+    private final Span numSubmittedReports = new Span("89,320");
+    private final Span numCleanedWasteKg = new Span("247,500 kg");
+    private final Span numCompletedCampaigns = new Span("1,240");
+    private final Span numDistributedCoins = new Span("5.2M");
 
     public StatsSummaryBar() {
         addClassName("stats-summary-wrapper");
@@ -20,64 +20,58 @@ public class StatsSummaryBar extends Div {
         container.addClassName("stats-summary-container");
 
         container.add(
-            createStatItem("👥", activeUsersNum, "Faol foydalanuvchilar"),
-            createStatItem("📍", submittedReportsNum, "Yuborilgan xabarlar"),
-            createStatItem("♻️", cleanedWasteNum, "Tozalangan chiqindi (kg)"),
-            createStatItem("🏆", completedCampaignsNum, "Yakunlangan kampaniyalar"),
-            createStatItem("🪙", distributedCoinsNum, "Tarqatilgan tanga")
+            createStatItem("👥", numActiveUsers, "Faol ko'ngillilar"),
+            createStatItem("📍", numSubmittedReports, "Yuborilgan xabarlar"),
+            createStatItem("♻️", numCleanedWasteKg, "Tozalangan chiqindi"),
+            createStatItem("🏆", numCompletedCampaigns, "Yakunlangan aksiyalar"),
+            createStatItem("🪙", numDistributedCoins, "Tarqatilgan tangalar")
         );
 
         add(container);
     }
 
-    // Constructor to pass initial dynamic values directly from a Service/DTO
-    public StatsSummaryBar(String activeUsers, String submittedReports, String cleanedWasteKg, String completedCampaigns, String distributedCoins) {
-        this();
-        setStats(activeUsers, submittedReports, cleanedWasteKg, completedCampaigns, distributedCoins);
-    }
-
-    // Dynamic Setters for future Service integration
-    public void setActiveUsers(String count) {
-        this.activeUsersNum.setText(count != null ? count : "0");
-    }
-
-    public void setSubmittedReports(String count) {
-        this.submittedReportsNum.setText(count != null ? count : "0");
-    }
-
-    public void setCleanedWasteKg(String count) {
-        this.cleanedWasteNum.setText(count != null ? count : "0");
-    }
-
-    public void setCompletedCampaigns(String count) {
-        this.completedCampaignsNum.setText(count != null ? count : "0");
-    }
-
-    public void setDistributedCoins(String count) {
-        this.distributedCoinsNum.setText(count != null ? count : "0");
-    }
-
-    public void setStats(String activeUsers, String submittedReports, String cleanedWasteKg, String completedCampaigns, String distributedCoins) {
-        setActiveUsers(activeUsers);
-        setSubmittedReports(submittedReports);
-        setCleanedWasteKg(cleanedWasteKg);
-        setCompletedCampaigns(completedCampaigns);
-        setDistributedCoins(distributedCoins);
-    }
-
-    private Div createStatItem(String icon, Span numberSpan, String label) {
+    private Div createStatItem(String iconEmoji, Span numberSpan, String labelText) {
         Div item = new Div();
         item.addClassName("stats-summary-item");
 
-        Span iconSpan = new Span(icon);
+        Span iconSpan = new Span(iconEmoji);
         iconSpan.addClassName("stats-summary-icon");
 
         numberSpan.addClassName("stats-summary-number");
 
-        Span labelSpan = new Span(label);
+        Span labelSpan = new Span(labelText);
         labelSpan.addClassName("stats-summary-label");
 
         item.add(iconSpan, numberSpan, labelSpan);
         return item;
+    }
+
+    // Dynamic Setters for Backend Service Integration
+    public void setActiveUsers(String count) {
+        numActiveUsers.setText(count);
+    }
+
+    public void setSubmittedReports(String count) {
+        numSubmittedReports.setText(count);
+    }
+
+    public void setCleanedWasteKg(String count) {
+        numCleanedWasteKg.setText(count);
+    }
+
+    public void setCompletedCampaigns(String count) {
+        numCompletedCampaigns.setText(count);
+    }
+
+    public void setDistributedCoins(String count) {
+        numDistributedCoins.setText(count);
+    }
+
+    public void setStats(String users, String reports, String wasteKg, String campaigns, String coins) {
+        numActiveUsers.setText(users);
+        numSubmittedReports.setText(reports);
+        numCleanedWasteKg.setText(wasteKg);
+        numCompletedCampaigns.setText(campaigns);
+        numDistributedCoins.setText(coins);
     }
 }

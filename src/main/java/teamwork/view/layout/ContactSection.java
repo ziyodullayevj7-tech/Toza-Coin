@@ -14,7 +14,11 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+@Route(value = "contact", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/contact.css")
 public class ContactSection extends Div {
 

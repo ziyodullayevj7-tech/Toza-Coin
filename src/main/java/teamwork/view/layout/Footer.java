@@ -4,140 +4,110 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 
 @CssImport("./themes/tozacoin/footer.css")
-public class Footer extends com.vaadin.flow.component.html.Footer {
+public class Footer extends Div {
 
     public Footer() {
-        addClassName("footer-container");
+        addClassName("footer-wrapper");
 
-        // Top Section (4 Columns)
-        Div footerTop = new Div();
-        footerTop.addClassName("footer-top");
+        Div container = new Div();
+        container.addClassName("footer-container");
+
+        // Main 4 Columns Grid
+        Div mainGrid = new Div();
+        mainGrid.addClassName("footer-main-grid");
 
         // Col 1: Brand Info
-        Div brandCol = new Div();
-        brandCol.addClassName("footer-brand-col");
+        Div colBrand = new Div();
+        colBrand.addClassName("footer-brand-col");
 
-        Anchor logoLink = new Anchor("", "");
-        logoLink.addClassName("footer-logo-link");
+        Div logoGroup = new Div();
+        logoGroup.addClassName("footer-logo-group");
 
-        Div logoBadge = new Div();
-        logoBadge.setText("TC");
-        logoBadge.addClassName("footer-logo-badge");
+        Image logoIcon = new Image("images/tc-icon.svg", "TC Logo");
+        logoIcon.addClassName("footer-logo-icon");
 
-        Span textToza = new Span("Toza");
-        textToza.addClassName("text-toza");
-
-        Span textCoin = new Span("Coin");
-        textCoin.addClassName("text-coin");
-
-        Div logoText = new Div(textToza, textCoin);
+        Span logoText = new Span();
         logoText.addClassName("footer-logo-text");
 
-        logoLink.add(logoBadge, logoText);
+        Span spanToza = new Span("Toza");
+        spanToza.addClassName("text-toza");
+        Span spanCoin = new Span("Coin");
+        spanCoin.addClassName("text-coin");
+        logoText.add(spanToza, spanCoin);
 
-        Paragraph desc = new Paragraph("O'zbekistonda ekologik harakatni qo'llab-quvvatlash va ifloslanishga qarshi kurashish platformasi.");
-        desc.addClassName("footer-description");
+        logoGroup.add(logoIcon, logoText);
 
-        Div socials = new Div();
-        socials.addClassName("footer-socials");
+        Paragraph brandDesc = new Paragraph("TozaCoin — toza O'zbekiston uchun fuqarolik tashabbusi. Muammolarni xabar qiling, tozalang, tanga yig'ing va mukofotlarga almashtiring.");
+        brandDesc.addClassName("footer-brand-desc");
 
-        Anchor social1 = new Anchor("#", "📷");
-        social1.addClassName("social-icon-btn");
-        social1.getElement().setAttribute("title", "Instagram");
-
-        Anchor social2 = new Anchor("#", "✈️");
-        social2.addClassName("social-icon-btn");
-        social2.getElement().setAttribute("title", "Telegram");
-
-        Anchor social3 = new Anchor("#", "💼");
-        social3.addClassName("social-icon-btn");
-        social3.getElement().setAttribute("title", "LinkedIn");
-
-        Anchor social4 = new Anchor("#", "▶️");
-        social4.addClassName("social-icon-btn");
-        social4.getElement().setAttribute("title", "YouTube");
-
-        socials.add(social1, social2, social3, social4);
-        brandCol.add(logoLink, desc, socials);
+        colBrand.add(logoGroup, brandDesc);
 
         // Col 2: Platforma
-        Div colPlatforma = createNavColumn("Platforma",
-            new LinkItem("#how-it-works", "Qanday ishlaydi"),
-            new LinkItem("#campaigns", "Kampaniyalar"),
-            new LinkItem("#rating", "Reyting"),
-            new LinkItem("#rewards", "Mukofotlar do'koni")
-        );
+        Div colPlatform = createNavColumn("Platforma", new String[][]{
+            {"Qanday ishlaydi?", "#how-it-works"},
+            {"Toifalar", "#categories"},
+            {"Kampaniyalar", "#campaigns"},
+            {"Xarita", "#map"},
+            {"Mukofotlar", "#rewards"}
+        });
 
         // Col 3: Kompaniya
-        Div colKompaniya = createNavColumn("Kompaniya",
-            new LinkItem("#about", "Biz haqimizda"),
-            new LinkItem("#blog", "Blog"),
-            new LinkItem("#contact", "Aloqa"),
-            new LinkItem("#partners", "Sheriklik")
-        );
+        Div colCompany = createNavColumn("Kompaniya", new String[][]{
+            {"Biz haqimizda", "#about"},
+            {"Reyting", "#leaderboard"},
+            {"Fikrlar", "#reviews"},
+            {"Savol-javob", "#faq"},
+            {"Bog'lanish", "#contact"}
+        });
 
         // Col 4: Huquqiy
-        Div colHuquqiy = createNavColumn("Huquqiy",
-            new LinkItem("#privacy", "Maxfiylik siyosati"),
-            new LinkItem("#terms", "Foydalanish shartlari"),
-            new LinkItem("#cookie", "Cookie siyosati"),
-            new LinkItem("#faq", "FAQ")
-        );
+        Div colLegal = createNavColumn("Huquqiy", new String[][]{
+            {"Foydalanish shartlari", "#terms"},
+            {"Maxfiylik siyosati", "#privacy"},
+            {"Ochiq ma'lumotlar", "#open-data"}
+        });
 
-        footerTop.add(brandCol, colPlatforma, colKompaniya, colHuquqiy);
+        mainGrid.add(colBrand, colPlatform, colCompany, colLegal);
 
-        // Divider
-        Div divider = new Div();
-        divider.addClassName("footer-divider");
+        // Bottom Copyright Bar
+        Div bottomBar = new Div();
+        bottomBar.addClassName("footer-bottom-bar");
 
-        // Bottom Bar
-        Div footerBottom = new Div();
-        footerBottom.addClassName("footer-bottom");
+        Paragraph copyText = new Paragraph("© 2026 TozaCoin. Barcha huquqlar himoyalangan.");
+        copyText.addClassName("footer-copyright-text");
 
-        Span copyright = new Span("© 2026 TozaCoin. Barcha huquqlar himoyalangan.");
-        copyright.addClassName("footer-copyright");
+        bottomBar.add(copyText);
 
-        Span madeIn = new Span("🌿 O'zbekiston uchun yasalgan");
-        madeIn.addClassName("footer-made-in");
-
-        footerBottom.add(copyright, madeIn);
-
-        add(footerTop, divider, footerBottom);
+        container.add(mainGrid, bottomBar);
+        add(container);
     }
 
-    private Div createNavColumn(String title, LinkItem... items) {
+    private Div createNavColumn(String colTitle, String[][] links) {
         Div col = new Div();
-        col.addClassName("footer-col");
+        col.addClassName("footer-nav-col");
 
-        H4 colTitle = new H4(title);
-        colTitle.addClassName("footer-col-title");
+        H4 title = new H4(colTitle);
+        title.addClassName("footer-col-title");
 
         UnorderedList list = new UnorderedList();
-        list.addClassName("footer-links-list");
+        list.addClassName("footer-link-list");
 
-        for (LinkItem item : items) {
-            Anchor link = new Anchor(item.href, item.text);
-            link.addClassName("footer-link");
-            list.add(new ListItem(link));
+        for (String[] link : links) {
+            ListItem item = new ListItem();
+            Anchor anchor = new Anchor(link[1], link[0]);
+            anchor.addClassName("footer-nav-link");
+            item.add(anchor);
+            list.add(item);
         }
 
-        col.add(colTitle, list);
+        col.add(title, list);
         return col;
-    }
-
-    private static class LinkItem {
-        final String href;
-        final String text;
-
-        LinkItem(String href, String text) {
-            this.href = href;
-            this.text = text;
-        }
     }
 }
