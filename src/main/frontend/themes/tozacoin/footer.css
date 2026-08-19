@@ -1,0 +1,185 @@
+/* Footer Component Styling for TozaCoin */
+
+.footer-container {
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 3.5rem 2.5rem 1.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Brand Column */
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.footer-logo-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--toza-primary, #2D7D3E);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+}
+
+.footer-logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.footer-logo-text .text-toza {
+  color: var(--toza-text-dark, #1E293B);
+}
+
+.footer-logo-text .text-coin {
+  color: var(--toza-primary, #2D7D3E);
+}
+
+.footer-description {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+  max-width: 300px;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.social-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.social-icon-btn:hover {
+  background-color: var(--toza-primary, #2D7D3E);
+  color: #ffffff;
+  border-color: var(--toza-primary, #2D7D3E);
+  transform: translateY(-2px);
+}
+
+/* Links Columns */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--toza-text-dark, #1E293B);
+  margin-bottom: 1.15rem;
+}
+
+.footer-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-link {
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--toza-primary, #2D7D3E);
+}
+
+/* Divider & Bottom Bar */
+.footer-divider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 2.5rem auto 1.5rem auto;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.footer-copyright {
+  color: #64748b;
+}
+
+.footer-made-in {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #64748b;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+}
