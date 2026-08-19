@@ -11,6 +11,7 @@ import teamwork.view.layout.LeaderboardSection;
 import teamwork.view.layout.MainLayout;
 import teamwork.view.layout.MapPreviewSection;
 import teamwork.view.layout.ReviewSection;
+import teamwork.view.layout.RewardsCatalogSection;
 import teamwork.view.layout.StatsSummaryBar;
 import teamwork.view.layout.TrustFairnessSection;
 import teamwork.view.layout.WasteCategorySection;
@@ -31,8 +32,9 @@ public class LandingView extends VerticalLayout {
         add(new TrustFairnessSection());
         add(new WasteCategorySection());
         add(new FeaturedCampaignsSection());
-        add(new MapPreviewSection());
         add(new LeaderboardSection());
         add(new ReviewSection());
+        add(new MapPreviewSection());
+        add(new RewardsCatalogSection());
     }
 }
