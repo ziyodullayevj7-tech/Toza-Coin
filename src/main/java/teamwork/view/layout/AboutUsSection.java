@@ -6,13 +6,17 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+@Route(value = "about-us", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/about-us.css")
 public class AboutUsSection extends Div {
 
     private final Span statVal1 = new Span("2025");
     private final Span statVal2 = new Span("47+");
-    private final Span statVal3 = new Span("13/13");
+    private final Span statVal3 = new Span("14/14");
     private final Span statVal4 = new Span("4.9 ★");
 
     public AboutUsSection() {

@@ -10,10 +10,14 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.IFrame;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Route(value = "map-preview", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/map-preview.css")
 public class MapPreviewSection extends Div {
 

@@ -18,6 +18,7 @@ public class MainLayout extends VerticalLayout implements RouterLayout {
 
         content.setWidthFull();
         content.getStyle().set("flex", "1");
+        content.getStyle().set("padding-top", "75px"); // Offset for fixed top Header
 
         add(new Header());
         add(content);

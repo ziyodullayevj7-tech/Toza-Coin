@@ -10,12 +10,16 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Route(value = "featured-campaigns", layout = MainLayout.class)
+@AnonymousAllowed
 @CssImport("./themes/tozacoin/featured-campaigns.css")
 public class FeaturedCampaignsSection extends Div {
 
