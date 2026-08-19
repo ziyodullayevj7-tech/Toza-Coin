@@ -5,6 +5,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import teamwork.view.layout.Hero;
+import teamwork.view.layout.HowItWorksSection;
 import teamwork.view.layout.MainLayout;
 import teamwork.view.layout.StatsSummaryBar;
 
@@ -20,5 +21,6 @@ public class LandingView extends VerticalLayout {
 
         add(new Hero());
         add(new StatsSummaryBar());
+        add(new HowItWorksSection());
     }
 }

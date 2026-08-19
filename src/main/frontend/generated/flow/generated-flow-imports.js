@@ -5,6 +5,7 @@ import $cssFromFile_0 from 'Frontend/themes/tozacoin/stats-summary.css?inline';
 import $cssFromFile_1 from 'Frontend/themes/tozacoin/footer.css?inline';
 import $cssFromFile_2 from 'Frontend/themes/tozacoin/header.css?inline';
 import $cssFromFile_3 from 'Frontend/themes/tozacoin/hero.css?inline';
+import $cssFromFile_4 from 'Frontend/themes/tozacoin/how-it-works.css?inline';
 import '@vaadin/field-highlighter/src/vaadin-field-highlighter.js';
 import '@vaadin/common-frontend/ConnectionIndicator.js';
 import '@vaadin/accordion/src/vaadin-accordion.js';
@@ -124,6 +125,8 @@ injectGlobalCss($cssFromFile_1.toString(), 'CSSImport end', document);
 injectGlobalCss($cssFromFile_2.toString(), 'CSSImport end', document);
 
 injectGlobalCss($cssFromFile_3.toString(), 'CSSImport end', document);
+
+injectGlobalCss($cssFromFile_4.toString(), 'CSSImport end', document);
 const loadOnDemand = (key) => { return Promise.resolve(0); }
 window.Vaadin = window.Vaadin || {};
 window.Vaadin.Flow = window.Vaadin.Flow || {};
