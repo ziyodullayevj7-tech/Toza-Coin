@@ -1,0 +1,160 @@
+/* Review / Testimonials Section Styling for TozaCoin */
+
+.review-wrapper {
+  width: 100%;
+  background-color: var(--toza-bg-header, #f6f8f5);
+  padding: 4.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.review-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Title Block */
+.review-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.review-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--toza-primary, #2D7D3E);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.review-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* 3 Review Cards Grid */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.review-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+.review-stars {
+  color: #ffc107;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-bottom: 1.25rem;
+}
+
+.review-quote {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #475569;
+  font-style: italic;
+  margin: 0 0 1.75rem 0;
+  flex: 1;
+}
+
+/* User Footer Row */
+.review-user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.review-user-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.review-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-user-avatar.green { background-color: #2D7D3E; }
+.review-user-avatar.blue { background-color: #0284c7; }
+.review-user-avatar.yellow { background-color: #eab308; }
+
+.review-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-user-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--toza-text-dark, #1E293B);
+  line-height: 1.2;
+}
+
+.review-user-city {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.review-coins-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #d97706;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+  .review-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .review-wrapper {
+    padding: 3rem 1.25rem;
+  }
+
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-title {
+    font-size: 2rem;
+  }
+}

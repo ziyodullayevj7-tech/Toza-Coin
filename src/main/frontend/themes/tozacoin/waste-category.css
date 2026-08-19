@@ -1,0 +1,171 @@
+/* Waste / Pollution Category Section Styling for TozaCoin */
+
+.waste-category-wrapper {
+  width: 100%;
+  background-color: var(--toza-bg-header, #f6f8f5);
+  padding: 4.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.waste-category-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Title Block */
+.waste-category-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.waste-category-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--toza-primary, #2D7D3E);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.waste-category-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* 6 Category Cards Grid */
+.waste-category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.category-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.category-card:hover {
+  background-color: #fafcfb;
+  border-color: rgba(45, 125, 62, 0.18);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Icon Badge - Elastic Spring & Glow Animation */
+.category-icon-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, background-color 0.25s ease;
+}
+
+.category-card:hover .category-icon-badge {
+  transform: scale(1.18) rotate(4deg);
+}
+
+/* Color-Specific Icon Badges & Dynamic Glow Shadows */
+.category-icon-badge.pink {
+  background-color: #ffe4e6;
+}
+.category-card:hover .category-icon-badge.pink {
+  background-color: #fecdd3;
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.25);
+}
+
+.category-icon-badge.red {
+  background-color: #fee2e2;
+}
+.category-card:hover .category-icon-badge.red {
+  background-color: #fca5a5;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+}
+
+.category-icon-badge.blue {
+  background-color: #e0f2fe;
+}
+.category-card:hover .category-icon-badge.blue {
+  background-color: #bae6fd;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
+}
+
+.category-icon-badge.grey {
+  background-color: #f1f5f9;
+}
+.category-card:hover .category-icon-badge.grey {
+  background-color: #e2e8f0;
+  box-shadow: 0 8px 20px rgba(71, 85, 105, 0.2);
+}
+
+.category-icon-badge.purple {
+  background-color: #f3e8ff;
+}
+.category-card:hover .category-icon-badge.purple {
+  background-color: #e9d5ff;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+.category-icon-badge.yellow {
+  background-color: #fef3c7;
+}
+.category-card:hover .category-icon-badge.yellow {
+  background-color: #fde68a;
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.25);
+}
+
+.category-card-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--toza-text-dark, #1E293B);
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.category-card:hover .category-card-label {
+  color: var(--toza-primary, #2D7D3E);
+}
+
+/* Responsiveness */
+@media (max-width: 1100px) {
+  .waste-category-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .waste-category-wrapper {
+    padding: 3rem 1.25rem;
+  }
+
+  .waste-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .waste-category-title {
+    font-size: 2rem;
+  }
+}

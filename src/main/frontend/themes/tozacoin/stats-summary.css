@@ -71,3 +71,10 @@
     font-size: 1.45rem;
   }
 }
+
+@media (max-width: 400px) {
+  .stats-summary-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

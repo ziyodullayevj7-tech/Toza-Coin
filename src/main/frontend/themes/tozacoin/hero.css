@@ -83,6 +83,7 @@
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -105,6 +106,7 @@
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -232,7 +234,7 @@
 
 @media (max-width: 576px) {
   .hero-container-wrapper {
-    padding: 2rem 1rem;
+    padding: 2.25rem 1rem;
   }
 
   .hero-title {
@@ -246,5 +248,25 @@
 
   .hero-stats-row {
     grid-template-columns: 1fr;
+  }
+
+  .hero-img-card {
+    height: 240px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-pill-badge {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.9rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
   }
 }
