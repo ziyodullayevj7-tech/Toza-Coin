@@ -8,6 +8,7 @@ import teamwork.view.layout.Hero;
 import teamwork.view.layout.HowItWorksSection;
 import teamwork.view.layout.MainLayout;
 import teamwork.view.layout.StatsSummaryBar;
+import teamwork.view.layout.TrustFairnessSection;
 
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Toza Coin")
@@ -22,5 +23,6 @@ public class LandingView extends VerticalLayout {
         add(new Hero());
         add(new StatsSummaryBar());
         add(new HowItWorksSection());
+        add(new TrustFairnessSection());
     }
 }
