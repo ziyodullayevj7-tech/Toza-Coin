@@ -4,6 +4,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import teamwork.view.layout.FeaturedCampaignsSection;
 import teamwork.view.layout.Hero;
 import teamwork.view.layout.HowItWorksSection;
 import teamwork.view.layout.MainLayout;
@@ -24,5 +25,6 @@ public class LandingView extends VerticalLayout {
         add(new StatsSummaryBar());
         add(new HowItWorksSection());
         add(new TrustFairnessSection());
+        add(new FeaturedCampaignsSection());
     }
 }
