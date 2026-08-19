@@ -1,0 +1,162 @@
+/* How It Works Section Styling for TozaCoin */
+
+.how-it-works-wrapper {
+  width: 100%;
+  background-color: var(--toza-bg-header, #f6f8f5);
+  padding: 4.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.how-it-works-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Title Block */
+.how-it-works-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 600px;
+}
+
+.how-it-works-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--toza-primary, #2D7D3E);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+  display: block;
+}
+
+.how-it-works-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0 0 0.85rem 0;
+  letter-spacing: -0.5px;
+}
+
+.how-it-works-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* 4 Step Cards Grid */
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.step-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.25 ease, box-shadow 0.25s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.step-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.step-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.step-icon-badge.blue {
+  background-color: #e0f2fe;
+}
+
+.step-icon-badge.grey {
+  background-color: #f1f5f9;
+}
+
+.step-icon-badge.green {
+  background-color: #dcfce7;
+}
+
+.step-icon-badge.yellow {
+  background-color: #fef3c7;
+}
+
+.step-watermark {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  line-height: 1;
+  user-select: none;
+}
+
+.step-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.step-number.blue { color: #0284c7; }
+.step-number.green { color: #16a34a; }
+.step-number.orange { color: #d97706; }
+.step-number.amber { color: #b45309; }
+
+.step-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0 0 0.65rem 0;
+}
+
+.step-card-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+  .how-it-works-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .how-it-works-wrapper {
+    padding: 3rem 1.25rem;
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .how-it-works-title {
+    font-size: 2rem;
+  }
+}
