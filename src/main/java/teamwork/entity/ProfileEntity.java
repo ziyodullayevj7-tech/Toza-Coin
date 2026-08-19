@@ -24,11 +24,19 @@ public class ProfileEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "temp_phone")
-    private String tempPhone;
+    @Column(name = "phone_number")
+    private String phoneNumber;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProfileStatus status = ProfileStatus.ACTIVE;
+    @Column(name = "profile_image")
+    private String profileImageUrl;
+    @Column(name = "district")
+    private String district;
+    @Column(name = "mahalla")
+    private String mahalla;
+    @Column(name = "streak_days")
+    private Integer streakDays;
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
@@ -40,11 +48,4 @@ public class ProfileEntity {
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private List<ProfileRoleEntity> profileRoles;
-
-    @Column
-    private Long telegramId;
-
-    @Transient
-    private Integer postCount = 0;
-
 }
