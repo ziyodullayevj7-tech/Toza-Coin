@@ -1,0 +1,141 @@
+/* Trust & Fairness Section Styling for TozaCoin */
+
+.trust-fairness-wrapper {
+  width: 100%;
+  background-color: var(--toza-bg-header, #f6f8f5);
+  padding: 4.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.trust-fairness-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Title Block */
+.trust-fairness-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 650px;
+}
+
+.trust-fairness-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--toza-primary, #2D7D3E);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+  display: block;
+}
+
+.trust-fairness-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0 0 0.85rem 0;
+  letter-spacing: -0.5px;
+}
+
+.trust-fairness-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 4 Cards Grid */
+.trust-fairness-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.trust-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.trust-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.trust-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.trust-icon-badge.blue {
+  background-color: #e0f2fe;
+}
+
+.trust-icon-badge.purple {
+  background-color: #f3e8ff;
+}
+
+.trust-icon-badge.yellow {
+  background-color: #fef3c7;
+}
+
+.trust-icon-badge.green {
+  background-color: #dcfce7;
+}
+
+.trust-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.35;
+}
+
+.trust-card-title.blue { color: #0284c7; }
+.trust-card-title.purple { color: #7c3aed; }
+.trust-card-title.amber { color: #d97706; }
+.trust-card-title.green { color: #16a34a; }
+
+.trust-card-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+  .trust-fairness-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .trust-fairness-wrapper {
+    padding: 3rem 1.25rem;
+  }
+
+  .trust-fairness-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-fairness-title {
+    font-size: 2rem;
+  }
+}
