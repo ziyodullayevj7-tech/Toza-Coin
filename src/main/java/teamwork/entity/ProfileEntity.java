@@ -48,4 +48,10 @@ public class ProfileEntity {
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
     private List<ProfileRoleEntity> profileRoles;
+
+    @Column(nullable = false)
+    private String passwordHash;
+
+    @Column(nullable = false)
+    private boolean blocked = false;
 }
