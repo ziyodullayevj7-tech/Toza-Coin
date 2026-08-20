@@ -16,6 +16,7 @@
 @import "./contact.css";
 @import "./cta-banner.css";
 @import "./footer.css";
+@import "./register.css";
 
 :root {
   --toza-primary: #2D7D3E;
