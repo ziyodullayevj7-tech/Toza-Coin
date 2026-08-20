@@ -12,7 +12,6 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
-import teamwork.view.general.RegistrationView;
 
 @CssImport("./themes/tozacoin/header.css")
 public class Header extends Div {
@@ -69,10 +68,6 @@ public class Header extends Div {
         btnRegister.addClassName("btn-register");
         btnRegister.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        // Navigation click listeners
-        btnRegister.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate(RegistrationView.class)));
-        btnKirish.addClickListener(event -> getUI().ifPresent(ui -> ui.navigate("login")));
-
         actions.add(btnKirish, btnRegister);
 
         add(logoLink, nav, actions);
@@ -89,7 +84,7 @@ public class Header extends Div {
         return item;
     }
 
-    // Public methods for adding custom click listeners if needed
+    // Public methods for adding click listeners to Kirish and Register buttons
     public void addLoginClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
         btnKirish.addClickListener(listener);
     }
