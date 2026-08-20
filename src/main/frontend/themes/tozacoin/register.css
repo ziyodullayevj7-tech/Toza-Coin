@@ -1,0 +1,160 @@
+/* Register View Styling for TozaCoin */
+
+.register-page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--toza-bg-header, #f6f8f5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.register-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.register-brand-logo .logo-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--toza-primary, #2D7D3E);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(45, 125, 62, 0.25);
+}
+
+.register-brand-logo .logo-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.register-brand-logo .text-toza {
+  color: var(--toza-text-dark, #1E293B);
+}
+
+.register-brand-logo .text-coin {
+  color: var(--toza-primary, #2D7D3E);
+}
+
+/* Card Container */
+.register-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 2.5rem 2.25rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.register-card-header {
+  margin-bottom: 0.5rem;
+}
+
+.register-card-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--toza-text-dark, #1E293B);
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.5px;
+}
+
+.register-card-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.register-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Form Inputs Styling */
+.register-card vaadin-text-field,
+.register-card vaadin-email-field,
+.register-card vaadin-password-field {
+  width: 100%;
+}
+
+.register-terms-checkbox {
+  font-size: 0.88rem;
+  color: #475569;
+  margin-top: 0.25rem;
+}
+
+.btn-register-submit {
+  width: 100% !important;
+  background-color: var(--toza-primary, #2D7D3E) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 0.85rem 1rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(45, 125, 62, 0.25) !important;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  margin-top: 0.5rem;
+}
+
+.btn-register-submit:hover {
+  background-color: var(--toza-primary-hover, #236632) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(45, 125, 62, 0.35) !important;
+}
+
+.register-footer-text {
+  margin-top: 1.75rem;
+  font-size: 0.92rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.register-login-link {
+  color: var(--toza-primary, #2D7D3E);
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.register-login-link:hover {
+  text-decoration: underline;
+  color: var(--toza-primary-hover, #236632);
+}
+
+/* Responsiveness */
+@media (max-width: 576px) {
+  .register-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 18px;
+  }
+
+  .register-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .register-card-title {
+    font-size: 1.5rem;
+  }
+}
