@@ -1,0 +1,250 @@
+/* ============================================================
+   TozaCoin - Kirish sahifasi stillari
+   ============================================================ */
+
+.login-root {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+/* ---------------- CHAP PANEL: BREND ---------------- */
+
+.brand-panel {
+    flex: 0 0 38%;
+    max-width: 560px;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1f5c33 0%, #2f7a45 55%, #3f9155 100%);
+    box-sizing: border-box;
+    padding: 48px 56px;
+    color: #ffffff;
+}
+
+.brand-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-row {
+    gap: 12px;
+    margin-bottom: 48px;
+}
+
+.logo-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.leaf-icon {
+    width: 40px;
+    height: 40px;
+    color: #a9e08f;
+    margin-bottom: 24px;
+}
+
+.brand-heading {
+    font-size: 34px;
+    line-height: 1.2;
+    font-weight: 800;
+    margin: 0 0 16px 0;
+    max-width: 380px;
+}
+
+.brand-subtitle {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 380px;
+    margin: 0 0 40px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 420px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.brand-footer {
+    margin-top: auto;
+    padding-top: 32px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------------- O'NG PANEL: FORMA ---------------- */
+
+.form-panel {
+    flex: 1;
+    min-height: 100vh;
+    background: #f4f7f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 24px;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #142317;
+    margin: 0 0 8px 0;
+}
+
+.form-subtitle {
+    font-size: 14px;
+    color: #5c6b60;
+    margin: 0 0 28px 0;
+}
+
+.google-button {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #d8ded9;
+    background: #ffffff;
+    color: #1f2a22;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.divider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.divider-line {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #dde3dd;
+    margin: 0;
+}
+
+.divider-text {
+    font-size: 13px;
+    color: #8a9490;
+}
+
+.form-field {
+    margin-bottom: 18px;
+}
+
+.form-field input {
+    border-radius: 10px !important;
+}
+
+.password-label-row {
+    margin-bottom: 6px;
+    align-items: center;
+}
+
+.field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2a22;
+}
+
+.forgot-link {
+    font-size: 13px;
+    color: #2f7a45;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.remember-checkbox {
+    margin-bottom: 22px;
+}
+
+.login-button {
+    height: 48px;
+    background: #1f5c33;
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.login-button:hover {
+    background: #184a29;
+}
+
+.signup-row {
+    font-size: 14px;
+    color: #5c6b60;
+}
+
+.signup-link {
+    color: #2f7a45;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+/* ---------------- RESPONSIV ---------------- */
+
+@media (max-width: 900px) {
+    .login-root {
+        flex-direction: column;
+    }
+
+    .brand-panel {
+        flex: none;
+        max-width: 100%;
+        min-height: auto;
+        padding: 32px 24px;
+    }
+
+    .form-panel {
+        min-height: auto;
+        padding: 40px 20px;
+    }
+}
