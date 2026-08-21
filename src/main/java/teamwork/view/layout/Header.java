@@ -2,6 +2,7 @@ package teamwork.view.layout;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import teamwork.view.general.home.LoginView;
 
 @CssImport("./themes/tozacoin/header.css")
 public class Header extends Div {
@@ -65,6 +67,7 @@ public class Header extends Div {
         actions.addClassName("header-actions");
 
         btnKirish.addClassName("btn-kirish");
+        btnKirish.addClickListener(e -> UI.getCurrent().navigate(LoginView.class));
         btnRegister.addClassName("btn-register");
         btnRegister.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
