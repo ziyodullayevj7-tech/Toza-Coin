@@ -68,4 +68,34 @@ public class AuthService {
             throw new AppBadRequestException(errorMessage);
         }
     }
+
+    public ProfileEntity findOrCreateGoogleUser(String phoneNumber, String email, String name, String surname) {
+        String emailLowerCase = email.toLowerCase();
+
+        return profileRepository.findByUsername(emailLowerCase)
+                .orElseGet(() -> {
+                    log.info("Creating new user from Google OAuth2: email={}", email);
+
+                    ProfileEntity profile = new ProfileEntity();
+                    profile.setName(name);
+                    profile.setSurname(surname);
+                    profile.setPhoneNumber(phoneNumber);
+                    profile.setUsername(emailLowerCase);
+                    profile.setPassword("");
+                    profile.setCreatedDate(LocalDateTime.now());
+                    profile.setStatus(ProfileStatus.ACTIVE);
+
+                    profileRepository.save(profile);
+
+                    //PROFILE ROLE ENTITY SET
+                    ProfileRoleEntity  profileRole = new ProfileRoleEntity();
+                    profileRole.setProfileId(profile.getId());
+                    profileRole.setRoles(ProfileRole.ROLE_USER);
+                    profileRole.setCreatedDate(profile.getCreatedDate());
+                    profileRoleRepository.save(profileRole);
+
+                    return  profile;
+                });
+
+    }
 }
