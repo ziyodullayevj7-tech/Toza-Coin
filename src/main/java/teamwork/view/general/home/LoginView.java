@@ -16,6 +16,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,15 +24,20 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-
+import teamwork.dto.LoginDto;
+import teamwork.dto.ProfileDto;
+import teamwork.exceptions.AppBadRequestException;
+import teamwork.service.AuthService;
 
 @Route("login")
 @PageTitle("Login | Toza Coin")
 @CssImport("./themes/tozacoin/login-view.css")
 public class LoginView extends HorizontalLayout {
 
-    public LoginView() {
+    private final AuthService authService;
+
+    public LoginView(AuthService authService) {
+        this.authService = authService;
         addClassName("login-root");
         setSizeFull();
         setSpacing(false);
@@ -134,7 +140,7 @@ public class LoginView extends HorizontalLayout {
         Button googleButton = new Button("Google orqali kirish", VaadinIcon.GLOBE.create());
         googleButton.addClassName("google-button");
         googleButton.addClickListener(e ->
-                Notification.show("Google orqali kirish bosildi (integratsiya keyinroq ulanadi)"));
+                UI.getCurrent().getPage().setLocation("/oauth2/authorization/google"));
 
         // Ajratuvchi chiziq "yoki"
         Div divider = buildDivider();
@@ -218,10 +224,19 @@ public class LoginView extends HorizontalLayout {
             return;
         }
 
-        // TODO: hozircha bazaga tegmayapmiz - AuthService tayyor bo'lgach shu yerga ulanadi
-        // masalan: LoginResult result = authService.login(identifier, password); ...
-        Notification.show("Kirish so'rovi yuborildi: " + identifier)
-                .addThemeVariants(com.vaadin.flow.component.notification.NotificationVariant.LUMO_SUCCESS);
+        try {
+            LoginDto dto = new LoginDto(identifier, password);
+            ProfileDto profile = authService.login(dto);
+
+            Notification.show("Xush kelibsiz, " + profile.getName() + "!")
+                    .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+
+            UI.getCurrent().navigate("");
+        } catch (AppBadRequestException e) {
+            showError(e.getMessage());
+        } catch (Exception e) {
+            showError("Kirishda xatolik yuz berdi: " + e.getMessage());
+        }
     }
 
     private void showError(String message) {

@@ -13,6 +13,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import teamwork.view.general.RegistrationView;
 import teamwork.view.general.home.LoginView;
 
 @CssImport("./themes/tozacoin/header.css")
@@ -69,6 +70,7 @@ public class Header extends Div {
         btnKirish.addClassName("btn-kirish");
         btnKirish.addClickListener(e -> UI.getCurrent().navigate(LoginView.class));
         btnRegister.addClassName("btn-register");
+        btnRegister.addClickListener(e -> UI.getCurrent().navigate(RegistrationView.class));
         btnRegister.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         actions.add(btnKirish, btnRegister);
