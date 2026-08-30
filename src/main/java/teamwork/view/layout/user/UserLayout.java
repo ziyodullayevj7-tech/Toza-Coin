@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.RouterLink;
+import teamwork.view.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,18 +79,18 @@ public class UserLayout extends AppLayout {
         scrollNav.addClassName("sidebar-scroll-area");
 
         scrollNav.add(
-                createNavItem("Boshqaruv paneli", "🏡", true, null, e -> navigateTo("user/dashboard")),
-                createNavItem("Ifloslik xabar", "📍", false, null, e -> navigateTo("user/report")),
-                createNavItem("Mening xabarlarim", "📋", false, null, e -> navigateTo("user/my-reports")),
-                createNavItem("Mening tozalashlarim", "🧹", false, null, e -> navigateTo("user/my-cleanups")),
-                createNavItem("Xarita", "🗺️", false, null, e -> navigateTo("user/map")),
-                createNavItem("Kampaniyalar", "🏕️", false, null, e -> navigateTo("user/campaigns")),
-                createNavItem("Reyting", "🏆", false, null, e -> navigateTo("user/leaderboard")),
-                createNavItem("Tanga hamyon", "🪙", false, null, e -> navigateTo("user/wallet")),
-                createNavItem("Mukofotlar do'koni", "🎁", false, null, e -> navigateTo("user/rewards")),
-                createNavItem("Bildirishnomalar", "🔔", false, "2", e -> navigateTo("user/notifications")),
-                createNavItem("Profil", "👤", false, null, e -> navigateTo("user/profile")),
-                createNavItem("Sozlamalar", "⚙️", false, null, e -> navigateTo("user/settings"))
+                createNavItem("Boshqaruv paneli", "🏡", true, null, e -> navigateTo(UserDashboard.class)),
+                createNavItem("Ifloslik xabar", "📍", false, null, e -> navigateTo(ReportWasteView.class)),
+                createNavItem("Mening xabarlarim", "📋", false, null, e -> navigateTo(MyReportsView.class)),
+                createNavItem("Mening tozalashlarim", "🧹", false, null, e -> navigateTo(MyCleanupsView.class)),
+                createNavItem("Xarita", "🗺️", false, null, e -> navigateTo(MapView.class)),
+                createNavItem("Kampaniyalar", "🏕️", false, null, e -> navigateTo(CampaignsView.class)),
+                createNavItem("Reyting", "🏆", false, null, e -> navigateTo(LeaderboardView.class)),
+                createNavItem("Tanga hamyon", "🪙", false, null, e -> navigateTo(WalletView.class)),
+                createNavItem("Mukofotlar do'koni", "🎁", false, null, e -> navigateTo(RewardsView.class)),
+                createNavItem("Bildirishnomalar", "🔔", false, "2", e -> navigateTo(NotificationsView.class)),
+                createNavItem("Profil", "👤", false, null, e -> navigateTo(ProfileView.class)),
+                createNavItem("Sozlamalar", "⚙️", false, null, e -> navigateTo(SettingsView.class))
         );
 
         // 3. Bottom Fixed Profile & Chiqish Footer (Stays Fixed)
@@ -157,9 +158,9 @@ public class UserLayout extends AppLayout {
         activeBtn.addClassName("active");
     }
 
-    private void navigateTo(String path) {
-        if ("user/dashboard".equals(path)) {
-            UI.getCurrent().navigate(teamwork.view.user.UserDashboard.class);
+    private void navigateTo(Class<? extends com.vaadin.flow.component.Component> targetView) {
+        if (targetView != null) {
+            UI.getCurrent().navigate(targetView);
         }
     }
 
