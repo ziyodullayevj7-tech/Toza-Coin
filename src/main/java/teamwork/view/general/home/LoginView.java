@@ -28,6 +28,8 @@ import teamwork.dto.LoginDto;
 import teamwork.dto.ProfileDto;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.service.AuthService;
+import teamwork.util.SecurityUtils;
+import teamwork.view.user.UserDashboard;
 
 @Route("login")
 @PageTitle("Login | Toza Coin")
@@ -228,10 +230,10 @@ public class LoginView extends HorizontalLayout {
             LoginDto dto = new LoginDto(identifier, password);
             ProfileDto profile = authService.login(dto);
 
-            Notification.show("Xush kelibsiz, " + profile.getName() + "!")
+            Notification.show("Xush kelibsiz, " + SecurityUtils.getCurrentUser().get().getName() + "!")
                     .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
 
-            UI.getCurrent().navigate("");
+            UI.getCurrent().navigate(UserDashboard.class);
         } catch (AppBadRequestException e) {
             showError(e.getMessage());
         } catch (Exception e) {
