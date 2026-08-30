@@ -1,4 +1,4 @@
-package teamwork.view.layout;
+package teamwork.view.layout.landingPage;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;

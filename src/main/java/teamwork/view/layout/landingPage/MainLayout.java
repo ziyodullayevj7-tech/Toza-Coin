@@ -1,4 +1,4 @@
-package teamwork.view.layout;
+package teamwork.view.layout.landingPage;
 
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.html.Div;

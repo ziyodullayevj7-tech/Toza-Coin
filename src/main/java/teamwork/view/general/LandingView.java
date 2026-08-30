@@ -4,21 +4,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import teamwork.view.layout.AboutUsSection;
-import teamwork.view.layout.CallToActionBanner;
-import teamwork.view.layout.ContactSection;
-import teamwork.view.layout.FaqSection;
-import teamwork.view.layout.FeaturedCampaignsSection;
-import teamwork.view.layout.Hero;
-import teamwork.view.layout.HowItWorksSection;
-import teamwork.view.layout.LeaderboardSection;
-import teamwork.view.layout.MainLayout;
-import teamwork.view.layout.MapPreviewSection;
-import teamwork.view.layout.ReviewSection;
-import teamwork.view.layout.RewardsCatalogSection;
-import teamwork.view.layout.StatsSummaryBar;
-import teamwork.view.layout.TrustFairnessSection;
-import teamwork.view.layout.WasteCategorySection;
+import teamwork.view.layout.landingPage.AboutUsSection;
+import teamwork.view.layout.landingPage.CallToActionBanner;
+import teamwork.view.layout.landingPage.ContactSection;
+import teamwork.view.layout.landingPage.FaqSection;
+import teamwork.view.layout.landingPage.FeaturedCampaignsSection;
+import teamwork.view.layout.landingPage.Hero;
+import teamwork.view.layout.landingPage.HowItWorksSection;
+import teamwork.view.layout.landingPage.LeaderboardSection;
+import teamwork.view.layout.landingPage.MainLayout;
+import teamwork.view.layout.landingPage.MapPreviewSection;
+import teamwork.view.layout.landingPage.ReviewSection;
+import teamwork.view.layout.landingPage.RewardsCatalogSection;
+import teamwork.view.layout.landingPage.StatsSummaryBar;
+import teamwork.view.layout.landingPage.TrustFairnessSection;
+import teamwork.view.layout.landingPage.WasteCategorySection;
 
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Toza Coin")
