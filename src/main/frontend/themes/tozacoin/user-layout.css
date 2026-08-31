@@ -965,7 +965,7 @@ vaadin-app-layout::part(content) {
 }
 
 /* Nearby Issues Map & List Styles */
-.map-preview-wrapper {
+.dashboard-map-preview {
   position: relative;
   width: 100%;
   height: 140px;
