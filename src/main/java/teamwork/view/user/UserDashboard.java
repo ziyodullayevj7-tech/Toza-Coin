@@ -382,7 +382,7 @@ public class UserDashboard extends VerticalLayout {
 
         // Map Preview Container
         Div mapPreview = new Div();
-        mapPreview.addClassName("map-preview-wrapper");
+        mapPreview.addClassName("dashboard-map-preview");
 
         Div centerBadge = new Div(new Span("🗺️ 3 ta muammo topildi"));
         centerBadge.addClassName("map-badge-center");
