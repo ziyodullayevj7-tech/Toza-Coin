@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import teamwork.config.CustomUserDetails;
+import teamwork.config.PasswordEncoderConfig;
 import teamwork.dto.LoginDto;
 import teamwork.dto.ProfileDto;
 import teamwork.entity.ProfileEntity;
@@ -27,6 +28,7 @@ import teamwork.repository.ProfileRepository;
 import teamwork.repository.ProfileRoleRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Slf4j
@@ -39,7 +41,7 @@ public class AuthService {
     @Autowired
     private ProfileRoleRepository profileRoleRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoderConfig passwordEncoder;
 
     @Transactional
     public void register(ProfileDto dto) {
@@ -61,7 +63,9 @@ public class AuthService {
         profile.setSurname(dto.getSurname());
         profile.setPhoneNumber(String.valueOf(dto.getPhone()));
         profile.setUsername(username);
-        profile.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
+        profile.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(dto.getPassword()));
+        profile.setCoinBalance(0);
+        profile.setStreakDays(0);
         profile.setCreatedDate(LocalDateTime.now());
         profile.setStatus(ProfileStatus.ACTIVE);
 
@@ -148,5 +152,20 @@ public class AuthService {
                     return profile;
                 });
 
+    }
+
+    public boolean updateUserBalance(String currentProfileId, Integer amount) {
+        Optional<ProfileEntity> optional = profileRepository.findById(currentProfileId);
+
+        if (optional.isEmpty()) return false;
+
+        ProfileEntity profile = optional.get();
+        profile.setCoinBalance(profile.getCoinBalance() + amount);
+        profileRepository.save(profile);
+        return true;
+    }
+
+    public ProfileEntity getCurrentProfile(String id) {
+        return profileRepository.getReferenceById(id);
     }
 }

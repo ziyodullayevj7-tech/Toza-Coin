@@ -37,6 +37,8 @@ public class ProfileEntity {
     private String mahalla;
     @Column(name = "streak_days")
     private Integer streakDays;
+    @Column(name = "coin_balance")
+    private Integer coinBalance;
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")

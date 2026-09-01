@@ -1169,3 +1169,380 @@ vaadin-app-layout::part(content) {
 .btn-join-campaign:hover {
   background-color: #166534;
 }
+
+/* Step 1 Camera Card Styles */
+.report-step-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.camera-preview-dashed-box {
+  width: 100%;
+  height: 280px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  overflow: hidden;
+  position: relative;
+}
+
+.camera-placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  text-align: center;
+}
+
+.btn-camera-capture {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  padding: 14px !important;
+  font-size: 15px !important;
+}
+
+.camera-note-text {
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+  margin: 0;
+}
+
+.btn-step-next {
+  background-color: #ffffff !important;
+  color: #15803d !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  padding: 14px !important;
+}
+
+/* Yandex Taxi Style HD Satellite Map */
+.yandex-map-container {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.yandex-map-div {
+  width: 100%;
+  height: 100%;
+  background-color: #0f172a;
+}
+
+/* Yandex Taxi Floating Center Pin 📍 */
+.yandex-center-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  z-index: 1000;
+  pointer-events: none;
+  font-size: 38px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  animation: pinBounce 1.5s infinite ease-in-out;
+}
+
+@keyframes pinBounce {
+  0%, 100% { transform: translate(-50%, -100%); }
+  50% { transform: translate(-50%, -115%); }
+}
+
+/* Floating Recenter GPS Target Button 🎯 */
+.btn-recenter-gps {
+  position: absolute !important;
+  bottom: 14px !important;
+  right: 14px !important;
+  z-index: 1000 !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid #cbd5e1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, background-color 0.15s ease !important;
+}
+
+.btn-recenter-gps:hover {
+  transform: scale(1.08) !important;
+  background-color: #f8fafc !important;
+}
+
+/* Figma Header Back Arrow Button (←) */
+.report-header-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-step-back-circle {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.btn-step-back-circle:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Selected Tag Badge (✓ Tanlandi) */
+.action-selected-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-top: 4px;
+}
+
+/* Disabled Next Step Button Styling */
+vaadin-button[disabled].btn-step-next-green {
+  background-color: #94a3b8 !important;
+  color: #ffffff !important;
+  border-color: #94a3b8 !important;
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+/* Full-Screen Camera Overlay */
+.fullscreen-camera-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #000000 !important;
+  z-index: 10000 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.fullscreen-video-stream {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 10001 !important;
+}
+
+.camera-top-controls {
+  position: absolute !important;
+  top: 24px !important;
+  right: 24px !important;
+  z-index: 10002 !important;
+}
+
+.btn-close-camera {
+  background: rgba(15, 23, 42, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 10px 20px !important;
+  border-radius: 24px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.camera-bottom-controls {
+  position: absolute !important;
+  bottom: 40px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 10002 !important;
+}
+
+.btn-shutter-capture {
+  background-color: #22c55e !important;
+  color: #ffffff !important;
+  border: 3px solid #ffffff !important;
+  padding: 16px 36px !important;
+  border-radius: 40px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5) !important;
+  transition: transform 0.15s ease !important;
+}
+
+.btn-shutter-capture:active {
+  transform: scale(0.95) !important;
+}
+
+/* Full-Screen Map Overlay */
+.fullscreen-map-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #0f172a !important;
+  z-index: 10000 !important;
+}
+
+.fullscreen-map-div {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+.map-top-bar {
+  position: absolute !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 10002 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  padding: 12px 24px !important;
+  border-radius: 30px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  color: #0f172a !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  max-width: 90vw !important;
+}
+
+.map-bottom-controls {
+  position: absolute !important;
+  bottom: 32px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 10002 !important;
+}
+
+.btn-confirm-map-location {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  padding: 14px 32px !important;
+  border-radius: 30px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .report-step-card {
+    padding: 20px 16px !important;
+    margin: 12px auto !important;
+    width: 95vw !important;
+    border-radius: 16px !important;
+  }
+
+  .report-steps-bar-wrapper {
+    padding: 16px 12px !important;
+  }
+
+  .report-steps-bar-container {
+    padding: 0 8px !important;
+  }
+
+  .category-grid-6, .severity-grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .action-choice-card {
+    padding: 14px !important;
+    gap: 10px !important;
+  }
+
+  .coin-badge-yellow, .coin-badge-blue {
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+  }
+
+  .step-bar-label {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-grid-6 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .severity-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .step-bar-label {
+    display: none !important;
+  }
+
+  .btn-step-next-green, .btn-camera-capture {
+    height: 44px !important;
+    font-size: 15px !important;
+  }
+
+  .btn-shutter-capture {
+    padding: 14px 28px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* GPS Radar Pulse Animation */
+.gps-radar-pulse {
+  font-size: 48px !important;
+  animation: radarPulseAnim 1.8s infinite ease-in-out !important;
+}
+
+@keyframes radarPulseAnim {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+}

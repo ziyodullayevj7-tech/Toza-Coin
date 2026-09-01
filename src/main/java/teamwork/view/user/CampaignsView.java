@@ -9,7 +9,7 @@ import jakarta.annotation.security.PermitAll;
 import teamwork.view.layout.user.UserLayout;
 
 @Route(value = "user/campaigns", layout = UserLayout.class)
-@PageTitle("Kampaniyalar | TozaCoin")
+@PageTitle("Kompaniyalar | TozaCoin")
 @PermitAll
 @CssImport("./themes/tozacoin/user-layout.css")
 public class CampaignsView extends VerticalLayout {
