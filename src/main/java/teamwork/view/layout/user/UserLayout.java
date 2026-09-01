@@ -1,7 +1,6 @@
 package teamwork.view.layout.user;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
@@ -9,18 +8,21 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLink;
 import teamwork.view.user.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CssImport("./themes/tozacoin/user-layout.css")
-public class UserLayout extends AppLayout {
+public class UserLayout extends AppLayout implements BeforeEnterObserver {
 
     private final UserHeader header = new UserHeader();
     private final UserFooter footer = new UserFooter();
-    private final List<Div> navButtons = new ArrayList<>();
+    private final Map<Class<? extends Component>, Div> navButtonsMap = new HashMap<>();
+    private final Map<Class<? extends Component>, String> navTitlesMap = new HashMap<>();
     private final Button btnToggleCollapse = new Button(VaadinIcon.CHEVRON_LEFT.create());
     
     private Div sidebarContainer;
@@ -38,6 +40,22 @@ public class UserLayout extends AppLayout {
 
         setPrimarySection(Section.DRAWER);
         setDrawerOpened(true);
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        Class<?> target = event.getNavigationTarget();
+        for (Map.Entry<Class<? extends Component>, Div> entry : navButtonsMap.entrySet()) {
+            if (entry.getKey().equals(target)) {
+                entry.getValue().addClassName("active");
+                String title = navTitlesMap.get(target);
+                if (title != null) {
+                    header.setPageTitle(title);
+                }
+            } else {
+                entry.getValue().removeClassName("active");
+            }
+        }
     }
 
     private Div buildSidebar() {
@@ -79,18 +97,18 @@ public class UserLayout extends AppLayout {
         scrollNav.addClassName("sidebar-scroll-area");
 
         scrollNav.add(
-                createNavItem("Boshqaruv paneli", "🏡", true, null, e -> navigateTo(UserDashboard.class)),
-                createNavItem("Ifloslik xabar", "📍", false, null, e -> navigateTo(ReportWasteView.class)),
-                createNavItem("Mening xabarlarim", "📋", false, null, e -> navigateTo(MyReportsView.class)),
-                createNavItem("Mening tozalashlarim", "🧹", false, null, e -> navigateTo(MyCleanupsView.class)),
-                createNavItem("Xarita", "🗺️", false, null, e -> navigateTo(MapView.class)),
-                createNavItem("Kampaniyalar", "🏕️", false, null, e -> navigateTo(CampaignsView.class)),
-                createNavItem("Reyting", "🏆", false, null, e -> navigateTo(LeaderboardView.class)),
-                createNavItem("Tanga hamyon", "🪙", false, null, e -> navigateTo(WalletView.class)),
-                createNavItem("Mukofotlar do'koni", "🎁", false, null, e -> navigateTo(RewardsView.class)),
-                createNavItem("Bildirishnomalar", "🔔", false, "2", e -> navigateTo(NotificationsView.class)),
-                createNavItem("Profil", "👤", false, null, e -> navigateTo(ProfileView.class)),
-                createNavItem("Sozlamalar", "⚙️", false, null, e -> navigateTo(SettingsView.class))
+                createNavItem("Boshqaruv paneli", "🏡", UserDashboard.class, null),
+                createNavItem("Ifloslik xabar", "📍", ReportWasteView.class, null),
+                createNavItem("Mening xabarlarim", "📋", MyReportsView.class, null),
+                createNavItem("Mening tozalashlarim", "🧹", MyCleanupsView.class, null),
+                createNavItem("Xarita", "🗺️", MapView.class, null),
+                createNavItem("Kampaniyalar", "🏕️", CampaignsView.class, null),
+                createNavItem("Reyting", "🏆", LeaderboardView.class, null),
+                createNavItem("Tanga hamyon", "🪙", WalletView.class, null),
+                createNavItem("Mukofotlar do'koni", "🎁", RewardsView.class, null),
+                createNavItem("Bildirishnomalar", "🔔", NotificationsView.class, "2"),
+                createNavItem("Profil", "👤", ProfileView.class, null),
+                createNavItem("Sozlamalar", "⚙️", SettingsView.class, null)
         );
 
         // 3. Bottom Fixed Profile & Chiqish Footer (Stays Fixed)
@@ -111,15 +129,10 @@ public class UserLayout extends AppLayout {
         }
     }
 
-    private Div createNavItem(String title, String iconEmoji, boolean isActive, String badgeText,
-                              ComponentEventListener<ClickEvent<Div>> listener) {
+    private Div createNavItem(String title, String iconEmoji, Class<? extends Component> viewClass, String badgeText) {
         Div itemBtn = new Div();
         itemBtn.addClassName("nav-item-btn");
         itemBtn.getElement().setAttribute("title", title);
-        
-        if (isActive) {
-            itemBtn.addClassName("active");
-        }
 
         Div leftGroup = new Div();
         leftGroup.addClassName("nav-item-left");
@@ -139,29 +152,13 @@ public class UserLayout extends AppLayout {
             itemBtn.add(badge);
         }
 
-        itemBtn.addClickListener(event -> {
-            setActiveItem(itemBtn);
-            header.setPageTitle(title);
-            if (listener != null) {
-                listener.onComponentEvent(event);
-            }
-        });
+        if (viewClass != null) {
+            navButtonsMap.put(viewClass, itemBtn);
+            navTitlesMap.put(viewClass, title);
+            itemBtn.addClickListener(event -> UI.getCurrent().navigate(viewClass));
+        }
 
-        navButtons.add(itemBtn);
         return itemBtn;
-    }
-
-    private void setActiveItem(Div activeBtn) {
-        for (Div btn : navButtons) {
-            btn.removeClassName("active");
-        }
-        activeBtn.addClassName("active");
-    }
-
-    private void navigateTo(Class<? extends com.vaadin.flow.component.Component> targetView) {
-        if (targetView != null) {
-            UI.getCurrent().navigate(targetView);
-        }
     }
 
     public UserHeader getHeader() {
