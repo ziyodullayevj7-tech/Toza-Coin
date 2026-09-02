@@ -46,7 +46,9 @@ public class SpringConfig {
             "/.well-known/**",
             "/images/**",
             "/icons/**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/attaches/**",
+            "/api/v1/attach/**"
     };
 
     @Bean

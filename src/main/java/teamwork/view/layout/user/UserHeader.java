@@ -2,6 +2,7 @@ package teamwork.view.layout.user;
 
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import teamwork.config.CustomUserDetails;
 import teamwork.util.SecurityUtils;
+import teamwork.view.user.ReportWasteView;
 
 import java.util.Optional;
 
@@ -41,6 +43,7 @@ public class UserHeader extends Div {
         // + Xabar berish Button
         btnReport.addClassName("btn-report-action");
         btnReport.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnReport.addClickListener(event -> UI.getCurrent().navigate(ReportWasteView.class));
 
         // Notification Bell Button with badge 2
         btnNotification.addClassName("header-notification-btn");

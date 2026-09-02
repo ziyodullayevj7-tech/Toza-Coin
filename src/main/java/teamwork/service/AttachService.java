@@ -220,6 +220,16 @@ public class AttachService {
                 .orElseThrow(() -> new AppBadRequestException("Attach not found"));
     }
 
+    public Optional<AttachEntity> findEntity(String id) {
+        if (id == null || id.isBlank()) return Optional.empty();
+        return attachRepository.findById(id);
+    }
+
+    public Path getFilePath(AttachEntity entity) {
+        if (entity == null) return null;
+        return Paths.get(attacheFolder, entity.getPath(), entity.getId()).normalize();
+    }
+
     private String getExtension(String fileName) {
         int lastIndex = fileName.lastIndexOf(".");
         return fileName.substring(lastIndex + 1);
@@ -243,8 +253,17 @@ public class AttachService {
         return attachDTO;
     }
 
+    public String getPublicUrl(AttachEntity entity) {
+        if (entity == null) return null;
+        return "/attaches/" + entity.getPath() + "/" + entity.getId();
+    }
+
     public String openURL(String fileName) {
-        return attacheUrl + "/api/v1/attach/open/" + fileName;
+        Optional<AttachEntity> optional = attachRepository.findById(fileName);
+        if (optional.isPresent()) {
+            return getPublicUrl(optional.get());
+        }
+        return "/attaches/" + fileName;
     }
 
     private boolean isValidImageMagicBytes(byte[] bytes) {
