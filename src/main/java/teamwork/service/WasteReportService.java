@@ -3,18 +3,22 @@ package teamwork.service;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import teamwork.dto.coinTransaction.CoinTransactionDto;
 import teamwork.dto.wasteReport.WasteReportDto;
+import teamwork.dto.wasteReport.WasteReportForMyReportDto;
 import teamwork.entity.LocationEntity;
 import teamwork.entity.ProfileEntity;
 import teamwork.entity.WasteReportEntity;
 import teamwork.enums.CoinType;
 import teamwork.enums.ReportActionEnum;
+import teamwork.enums.ReportStatus;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.WasteReportRepository;
 import teamwork.util.SecurityUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -95,5 +99,41 @@ public class WasteReportService {
 
         wasteReportRepository.save(wasteReport);
         return true;
+    }
+
+    public WasteReportForMyReportDto getInfoForMyReport(String userId) {
+        WasteReportForMyReportDto dto = new WasteReportForMyReportDto();
+        Optional<WasteReportEntity> optional = wasteReportRepository.findById(userId);
+        if (optional.isEmpty()){
+            throw new AppBadRequestException("Waste Report not found");
+        }
+        WasteReportEntity entity = optional.get();
+
+        dto.setPhotoUrl(entity.getImageUrl());
+        dto.setReportStatus(entity.getReportStatus());
+        dto.setSeverityLevel(entity.getSeverity());
+        dto.setWasteType(entity.getCategory());
+        dto.setDescription(entity.getDescription());
+        dto.setCoins(entity.getRewardCoins());
+        dto.setRegion(entity.getLocation().getRegion());
+        dto.setDistrict(entity.getLocation().getDistrict());
+        dto.setStreetAddress(entity.getLocation().getStreetAddress());
+
+        LocalDate date = entity.getCapturedDate().toLocalDate();
+        dto.setDate(date);
+
+        return dto;
+    }
+
+    public long countByReporterId(String userId) {
+        return wasteReportRepository.countByReporterId(userId);
+    }
+
+    public long countByReporterIdAndReportStatus(String userId, ReportStatus status) {
+        return wasteReportRepository.countByReporterIdAndReportStatus(userId, status);
+    }
+
+    public Integer balanceByUserId(String userId) {
+        return authService.getBalanceByUserId(userId);
     }
 }

@@ -19,4 +19,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
     Optional<ProfileEntity> findByUsernameAndVisibleIsTrue(@Param("username") String username);
 
     Optional<ProfileEntity> findByUsername(String username);
+
+    @Query("SELECT COALESCE(SUM(p.coinBalance), 0) FROM ProfileEntity p WHERE p.id = :userId")
+    Optional<Integer> getBalanceById(String userId);
 }

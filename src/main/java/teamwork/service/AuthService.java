@@ -168,4 +168,9 @@ public class AuthService {
     public ProfileEntity getCurrentProfile(String id) {
         return profileRepository.getReferenceById(id);
     }
+
+    public Integer getBalanceByUserId(String userId) {
+        Optional<Integer> optional = profileRepository.getBalanceById(userId);
+        return optional.orElse(0);
+    }
 }
