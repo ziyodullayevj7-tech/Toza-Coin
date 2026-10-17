@@ -3,6 +3,7 @@ package teamwork.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import teamwork.enums.CompanyTypeEnum;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +33,13 @@ public class CampaignEntity {
 
     @Column(name = "attendees_count")
     private Integer attendeesCount;
+
+    @Column(name = "reward_coins")
+    private Integer rewardCoins;
+
+    @Column(name = "company_type")
+    @Enumerated(EnumType.STRING)
+    private CompanyTypeEnum companyType;
 
     @Column(name = "location_id", insertable = false, updatable = false)
     private String locationId;
