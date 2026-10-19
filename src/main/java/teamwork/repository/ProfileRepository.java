@@ -1,5 +1,7 @@
 package teamwork.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +24,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
 
     @Query("SELECT COALESCE(SUM(p.coinBalance), 0) FROM ProfileEntity p WHERE p.id = :userId")
     Optional<Integer> getBalanceById(String userId);
+
+    @Query("SELECT p FROM ProfileEntity p ORDER BY p.totalEarnedCoins DESC")
+    Page<ProfileEntity> findAllOrderByCount(Pageable pageable);
 }

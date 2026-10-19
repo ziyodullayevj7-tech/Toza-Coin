@@ -39,8 +39,14 @@ public class ProfileEntity {
     private Integer streakDays;
     @Column(name = "coin_balance")
     private Integer coinBalance;
+    @Column(name = "total_earned_coins")
+    private Integer totalEarnedCoins;
+    @Column(name = "report_count")
+    private Integer reportCount;
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
+    @Column(name = "last_report_date")
+    private LocalDateTime lastReportDate;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
