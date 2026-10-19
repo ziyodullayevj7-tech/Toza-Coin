@@ -66,6 +66,8 @@ public class AuthService {
         profile.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(dto.getPassword()));
         profile.setCoinBalance(0);
         profile.setStreakDays(0);
+        profile.setTotalEarnedCoins(0);
+        profile.setReportCount(0);
         profile.setCreatedDate(LocalDateTime.now());
         profile.setStatus(ProfileStatus.ACTIVE);
 
@@ -161,6 +163,16 @@ public class AuthService {
 
         ProfileEntity profile = optional.get();
         profile.setCoinBalance(profile.getCoinBalance() + amount);
+        profile.setTotalEarnedCoins(profile.getTotalEarnedCoins() + amount);
+        profile.setReportCount(profile.getReportCount() + 1);
+        if (profile.getLastReportDate() != null){
+            if (profile.getLastReportDate().isAfter(LocalDateTime.now().minusDays(1))) {
+                profile.setStreakDays(profile.getStreakDays() + 1);
+            } else {
+                profile.setStreakDays(1);
+            }
+        }
+        profile.setLastReportDate(LocalDateTime.now());
         profileRepository.save(profile);
         return true;
     }
