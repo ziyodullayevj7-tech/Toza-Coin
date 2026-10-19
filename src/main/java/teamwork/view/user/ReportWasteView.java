@@ -26,6 +26,8 @@ import teamwork.service.WasteReportService;
 import teamwork.view.layout.user.UserLayout;
 
 import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
 
 @Route(value = "user/report", layout = UserLayout.class)
 @PageTitle("Ifloslik xabar berish | TozaCoin")
@@ -48,11 +50,19 @@ public class ReportWasteView extends VerticalLayout {
     private final Div cardContainer = new Div();
 
     // Step 1 UI components
-    private final Button btnCapture = new Button("📷 Kamera orqali rasm olish");
-    private final Button btnNextStep1 = new Button("Davom etish →");
+    private final Button btnCapture = new Button("📷 Kamera orqali rasm olish",
+            event -> startOrCaptureCamera(false));
+    private final Button btnNextStep1 = new Button("Davom etish →",
+            event -> renderStepCard(2));
     private final Div cameraBox = new Div();
-
-    private String capturedBase64Image;
+    private final Div afterPhotoBox = new Div();
+    private final Button btnAfterPhotoCapture = new Button("📷 Tozalangandan keyingi surat",
+            event -> startOrCaptureCamera(true));
+    private final Button btnAfterPhotoNext = new Button("Davom etish →",
+            event -> renderStepCard(7));
+    private Instant cleaningStartedAt;
+    private Long cleaningDurationMillis;
+    private boolean openAfterPhotoCameraOnEntry;
 
     // Step 2 UI components
     private Span locationPillText;
@@ -66,7 +76,8 @@ public class ReportWasteView extends VerticalLayout {
 
     // Step 4 Selected State & Next Button
     private Div selectedActionCard = null;
-    private final Button btnNextStep4 = new Button("Davom etish →");
+    private final Button btnNextStep4 = new Button("Davom etish →",
+            event -> advanceFromActionChoice());
 
     public ReportWasteView() {
         setWidthFull();
@@ -124,8 +135,9 @@ public class ReportWasteView extends VerticalLayout {
                 .set("align-items", "center")
                 .set("gap", "12px");
 
-        // Back Arrow Button (←) to return to previous step (disabled on Step 6 completion)
-        if (currentStep > 1 && currentStep < 6) {
+        // Back Arrow Button (←) to return to the previous step before submission.
+        int completionStep = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 8 : 6;
+        if (currentStep > 1 && currentStep < completionStep) {
             Button btnBack = new Button("←");
             btnBack.addClassName("btn-step-back-circle");
             btnBack.getStyle()
@@ -148,7 +160,14 @@ public class ReportWasteView extends VerticalLayout {
         H3 headerTitle = new H3("Ifloslik xabar berish");
         headerTitle.getStyle().set("margin", "0").set("font-size", "20px").set("font-weight", "700");
 
-        String subtitleText = (currentStep == 6) ? "Murojaat yuborildi 🎉" : "Qadam " + currentStep + " / 5";
+        boolean cleanFlow = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
+        int progressStep = cleanFlow
+                ? Math.min(currentStep, 7)
+                : currentStep == 6 ? 5 : currentStep;
+        int totalSteps = cleanFlow ? 7 : 5;
+        String subtitleText = currentStep == completionStep
+                ? "Murojaat yuborildi 🎉"
+                : "Qadam " + progressStep + " / " + totalSteps;
         Span headerSubtitle = new Span(subtitleText);
         headerSubtitle.getStyle().set("font-size", "13px").set("color", "#64748b").set("margin-left", "8px");
         headerTitle.add(headerSubtitle);
@@ -163,8 +182,10 @@ public class ReportWasteView extends VerticalLayout {
                 .set("width", "100%")
                 .set("gap", "12px");
 
-        String[] stepNames = {"Rasm", "Joylashuv", "Tafsilotlar", "Yo'lni tanlang", "Tasdiqlash"};
-        for (int i = 1; i <= 5; i++) {
+        String[] stepNames = cleanFlow
+                ? new String[]{"Oldin rasm", "Joylashuv", "Tafsilotlar", "Harakat", "Tozalash", "Keyin rasm", "Tasdiqlash"}
+                : new String[]{"Rasm", "Joylashuv", "Tafsilotlar", "Harakat", "Tasdiqlash"};
+        for (int i = 1; i <= totalSteps; i++) {
             Div stepCol = new Div();
             stepCol.getStyle()
                     .set("flex", "1")
@@ -178,13 +199,13 @@ public class ReportWasteView extends VerticalLayout {
                     .set("width", "100%")
                     .set("height", "6px")
                     .set("border-radius", "3px")
-                    .set("background-color", (i <= currentStep || currentStep == 6) ? "#15803d" : "#cbd5e1");
+                    .set("background-color", (i <= progressStep || currentStep == completionStep) ? "#15803d" : "#cbd5e1");
 
             Span label = new Span(stepNames[i - 1]);
             label.getStyle()
                     .set("font-size", "12px")
-                    .set("font-weight", (i == currentStep || currentStep == 6) ? "700" : "600")
-                    .set("color", (i <= currentStep || currentStep == 6) ? "#15803d" : "#64748b");
+                    .set("font-weight", (i == progressStep || currentStep == completionStep) ? "700" : "600")
+                    .set("color", (i <= progressStep || currentStep == completionStep) ? "#15803d" : "#64748b");
 
             stepCol.add(barLine, label);
             barsRow.add(stepCol);
@@ -204,8 +225,17 @@ public class ReportWasteView extends VerticalLayout {
             case 2 -> cardContainer.add(buildStep2LocationCard());
             case 3 -> cardContainer.add(buildStep3DetailsCard());
             case 4 -> cardContainer.add(buildStep4ActionChoiceCard());
-            case 5 -> cardContainer.add(buildStep5ConfirmationCard());
-            case 6 -> cardContainer.add(buildStep6SuccessCard());
+            case 5 -> cardContainer.add(wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF
+                    ? buildCleaningTimerCard() : buildStep5ConfirmationCard());
+            case 6 -> {
+                cardContainer.add(buildAfterPhotoCard());
+                if (openAfterPhotoCameraOnEntry) {
+                    openAfterPhotoCameraOnEntry = false;
+                    startOrCaptureCamera(true);
+                }
+            }
+            case 7 -> cardContainer.add(buildStep5ConfirmationCard());
+            case 8 -> cardContainer.add(buildStep6SuccessCard());
         }
     }
 
@@ -238,8 +268,8 @@ public class ReportWasteView extends VerticalLayout {
         cameraBox.addClassName("camera-preview-dashed-box");
         cameraBox.setId("camera-stream-box");
 
-        if (wasterReportDto.getImageUrl() != null) {
-            Image imgPreview = new Image(wasterReportDto.getImageUrl(), "Captured Camera Photo");
+        if (wasterReportDto.getBeforeImageUrl() != null) {
+            Image imgPreview = new Image(wasterReportDto.getBeforeImageUrl(), "Tozalashdan oldingi surat");
             imgPreview.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
             cameraBox.removeAll();
             cameraBox.add(imgPreview);
@@ -254,15 +284,13 @@ public class ReportWasteView extends VerticalLayout {
 
         btnCapture.addClassName("btn-camera-capture");
         btnCapture.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnCapture.addClickListener(e -> startOrCaptureCamera());
 
         Paragraph note = new Paragraph("Suiiste'molning oldini olish uchun surat faqat kameradan olinadi.");
         note.addClassName("camera-note-text");
 
         btnNextStep1.addClassName("btn-step-next-green");
         btnNextStep1.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnNextStep1.setEnabled(wasterReportDto.getImageUrl() != null);
-        btnNextStep1.addClickListener(e -> renderStepCard(2));
+        btnNextStep1.setEnabled(wasterReportDto.getBeforeImageUrl() != null);
 
         card.add(title, subtitle, cameraBox, btnCapture, note, btnNextStep1);
         return card;
@@ -563,7 +591,6 @@ public class ReportWasteView extends VerticalLayout {
         btnNextStep4.addClassName("btn-step-next-green");
         btnNextStep4.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         btnNextStep4.setEnabled(wasterReportDto.getReportAction() != null);
-        btnNextStep4.addClickListener(e -> renderStepCard(5));
 
         card.add(headerEmoji, title, subtitle, option1Card, option2Card, noticeBox, btnNextStep4);
         return card;
@@ -639,10 +666,124 @@ public class ReportWasteView extends VerticalLayout {
 
             wasterReportDto.setReportAction(actionType);
             wasterReportDto.setRewardCoins(rewardCoins);
+            if (actionType == ReportActionEnum.CLEAN_MYSELF && cleaningStartedAt == null) {
+                cleaningStartedAt = Instant.now();
+            }
             btnNextStep4.setEnabled(true);
         });
 
         return optionCard;
+    }
+
+    private void advanceFromActionChoice() {
+        if (wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF) {
+            if (cleaningStartedAt == null) {
+                cleaningStartedAt = Instant.now();
+            }
+            renderStepCard(5);
+        } else if (wasterReportDto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS) {
+            renderStepCard(5);
+        }
+    }
+
+    private Div buildCleaningTimerCard() {
+        Div card = createBaseCard();
+        card.addClassName("cleaning-timer-card");
+
+        Span icon = new Span("🧹");
+        icon.addClassName("cleaning-timer-icon");
+        H2 title = new H2("Tozalash vaqti");
+        Paragraph subtitle = new Paragraph(
+                "Ishni boshlang. Tayyor bo'lgach, keyingi tugmani bosib tozalangan joyni suratga oling.");
+        subtitle.addClassName("cleaning-timer-description");
+
+        Span timer = new Span("00:00");
+        timer.setId("cleaning-elapsed-timer");
+        timer.addClassName("cleaning-elapsed-timer");
+        long startedAtMillis = cleaningStartedAt == null ? System.currentTimeMillis() : cleaningStartedAt.toEpochMilli();
+        long completedDuration = cleaningDurationMillis == null ? -1 : cleaningDurationMillis;
+        UI.getCurrent().getPage().executeJs(
+                "if (window._tozaCleaningTimer) clearInterval(window._tozaCleaningTimer);" +
+                "const timer = document.getElementById('cleaning-elapsed-timer');" +
+                        "if (timer) {" +
+                        "  const startedAt = $0;" +
+                        "  const stoppedAt = $1;" +
+                        "  const render = () => {" +
+                        "    const total = Math.floor((stoppedAt >= 0 ? stoppedAt : Date.now() - startedAt) / 1000);" +
+                        "    const hours = Math.floor(total / 3600);" +
+                        "    const minutes = Math.floor((total % 3600) / 60);" +
+                        "    const seconds = total % 60;" +
+                        "    timer.textContent = (hours ? String(hours).padStart(2, '0') + ':' : '') +" +
+                        "      String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');" +
+                        "  };" +
+                        "  render();" +
+                        "  if (stoppedAt < 0) window._tozaCleaningTimer = setInterval(render, 1000);" +
+                        "}",
+                startedAtMillis, completedDuration
+        );
+
+        Span transparencyNote = new Span("Vaqt saqlanadi va admin ko'rib chiqishi uchun yuboriladi.");
+        transparencyNote.addClassName("cleaning-timer-note");
+
+        Button finishCleaning = new Button("Tozalash tugadi — suratga olish →");
+        finishCleaning.addClassName("btn-step-next-green");
+        finishCleaning.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        finishCleaning.addClickListener(event -> {
+            if (cleaningDurationMillis == null && cleaningStartedAt != null) {
+                cleaningDurationMillis = Math.max(0, Duration.between(cleaningStartedAt, Instant.now()).toMillis());
+                wasterReportDto.setCleanPeriod(cleaningDurationMillis / 1000.0);
+            }
+            UI.getCurrent().getPage().executeJs(
+                    "if (window._tozaCleaningTimer) clearInterval(window._tozaCleaningTimer);" +
+                            "window._tozaCleaningTimer = null;");
+            openAfterPhotoCameraOnEntry = true;
+            renderStepCard(6);
+        });
+
+        card.add(icon, title, subtitle, timer, transparencyNote, finishCleaning);
+        return card;
+    }
+
+    private Div buildAfterPhotoCard() {
+        Div card = createBaseCard();
+        H2 title = new H2("Tozalashdan keyingi surat");
+        Paragraph subtitle = new Paragraph(
+                "Xuddi shu joyni kameradan suratga oling. Admin ikkala surat va sarflangan vaqtni ko'rib chiqadi.");
+        subtitle.addClassName("camera-note-text");
+
+        afterPhotoBox.setId("camera-after-stream-box");
+        afterPhotoBox.addClassName("camera-preview-dashed-box");
+        afterPhotoBox.removeAll();
+        if (wasterReportDto.getAfterImageUrl() != null) {
+            Image preview = new Image(wasterReportDto.getAfterImageUrl(), "Tozalashdan keyingi surat");
+            preview.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
+            afterPhotoBox.add(preview);
+        } else {
+            Div placeholder = new Div();
+            placeholder.addClassName("camera-placeholder-content");
+            placeholder.add(new Span("📷"), new H3("Tozalash tugagach suratga oling"),
+                    new Paragraph("Surat admin tasdig'i uchun hisobotga biriktiriladi."));
+            afterPhotoBox.add(placeholder);
+        }
+
+        btnAfterPhotoCapture.addClassName("btn-camera-capture");
+        btnAfterPhotoCapture.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnAfterPhotoNext.addClassName("btn-step-next-green");
+        btnAfterPhotoNext.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnAfterPhotoNext.setEnabled(wasterReportDto.getAfterImageUrl() != null);
+
+        card.add(title, subtitle, afterPhotoBox, btnAfterPhotoCapture, btnAfterPhotoNext);
+        return card;
+    }
+
+    private static String formatDuration(Double secondsValue) {
+        long totalSeconds = secondsValue == null ? 0 : Math.max(0, (long) Math.floor(secondsValue));
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return hours > 0
+                ? String.format("%d soat %02d daqiqa %02d soniya", hours, minutes, seconds)
+                : String.format("%d daqiqa %02d soniya", minutes, seconds);
     }
 
     private void applyActionSelectedStyle(Div card) {
@@ -658,25 +799,14 @@ public class ReportWasteView extends VerticalLayout {
     private Div buildStep5ConfirmationCard() {
         Div card = createBaseCard();
 
-        H2 title = new H2("Xulosa");
+        boolean cleaning = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
+        H2 title = new H2(cleaning ? "Tozalash hisoboti" : "Xulosa");
 
-        // Photo Preview Banner
         Div photoBanner = new Div();
-        photoBanner.getStyle()
-                .set("width", "100%")
-                .set("height", "200px")
-                .set("border-radius", "16px")
-                .set("overflow", "hidden")
-                .set("border", "1px solid #e2e8f0");
-
-        String previewSrc = (this.capturedBase64Image != null && !this.capturedBase64Image.isBlank())
-                ? this.capturedBase64Image
-                : wasterReportDto.getImageUrl();
-
-        if (previewSrc != null) {
-            Image img = new Image(previewSrc, "Captured Photo");
-            img.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
-            photoBanner.add(img);
+        photoBanner.addClassName("report-photo-comparison");
+        photoBanner.add(buildReportPhoto("Tozalashdan oldin", wasterReportDto.getBeforeImageUrl()));
+        if (cleaning) {
+            photoBanner.add(buildReportPhoto("Tozalashdan keyin", wasterReportDto.getAfterImageUrl()));
         }
 
         // Summary Recap Rows
@@ -694,6 +824,9 @@ public class ReportWasteView extends VerticalLayout {
                 createRecapRow("Joylashuv", wasterReportDto.getLocation().getDistrict() + ", " + wasterReportDto.getLocation().getRegion()),
                 createRecapRow("Harakat", wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? "O'zim tozalayman" : "Mas'ul tashkilotga yuborish")
         );
+        if (cleaning) {
+            summaryList.add(createRecapRow("Tozalash vaqti", formatDuration(wasterReportDto.getCleanPeriod())));
+        }
 
         // Expected Reward Card
         Div rewardBox = new Div();
@@ -706,7 +839,9 @@ public class ReportWasteView extends VerticalLayout {
                 .set("justify-content", "space-between")
                 .set("align-items", "center");
 
-        Div rewardLabelGroup = new Div(new Span("Kutilayotgan mukofot"));
+        Div rewardLabelGroup = new Div(new Span(cleaning
+                ? "Admin tasdiqlagandan keyin beriladi"
+                : "Xabar yuborilganda hisobga qo'shiladi"));
         rewardLabelGroup.getStyle().set("color", "#0369a1").set("font-weight", "600");
 
         int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 15;
@@ -723,6 +858,22 @@ public class ReportWasteView extends VerticalLayout {
 
         card.add(title, photoBanner, summaryList, rewardBox, btnSubmitFinal);
         return card;
+    }
+
+    private Div buildReportPhoto(String label, String imageUrl) {
+        Div photo = new Div();
+        photo.addClassName("report-photo-preview");
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            Image image = new Image(imageUrl, label);
+            image.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
+            photo.add(image);
+        } else {
+            photo.add(new Span("Surat mavjud emas"));
+        }
+        Span caption = new Span(label);
+        caption.addClassName("report-photo-caption");
+        photo.add(caption);
+        return photo;
     }
 
     private Div createRecapRow(String label, String value) {
@@ -750,20 +901,25 @@ public class ReportWasteView extends VerticalLayout {
             Notification.show("Something went wrong", 4000, Notification.Position.MIDDLE);
             return;
         }
-        renderStepCard(6);
+        renderStepCard(wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 8 : 6);
     }
 
     private Div buildStep6SuccessCard() {
         Div card = createBaseCard();
         card.getStyle().set("text-align", "center").set("align-items", "center");
 
-        Div celebrationBadge = new Div(new Span("🎉 🪙"));
+        boolean cleaning = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
+        Div celebrationBadge = new Div(new Span(cleaning ? "🧹 📋" : "🎉 🪙"));
         celebrationBadge.getStyle().set("font-size", "54px").set("margin-bottom", "8px");
 
-        H2 title = new H2("Murojaatingiz muvaffaqiyatli qabul qilindi!");
+        H2 title = new H2(cleaning
+                ? "Tozalash hisoboti admin tasdig'iga yuborildi!"
+                : "Xabaringiz qabul qilindi va mukofot hisobingizga qo'shildi!");
         title.getStyle().set("margin", "0").set("color", "#15803d").set("font-size", "22px").set("font-weight", "800");
 
-        Paragraph subtitle = new Paragraph("Rasm va joylashuv ma'lumotlari tizimga saqlandi.");
+        Paragraph subtitle = new Paragraph(cleaning
+                ? "Oldin-keyin suratlari va tozalash vaqti admin ko'rib chiqishi uchun saqlandi."
+                : "Surat va joylashuv ma'lumotlari tizimga saqlandi.");
         subtitle.getStyle().set("color", "#64748b").set("margin", "4px 0 20px 0").set("font-size", "14px");
 
         // Gamified Reward Box
@@ -780,14 +936,20 @@ public class ReportWasteView extends VerticalLayout {
                 .set("gap", "8px")
                 .set("box-shadow", "0 4px 14px rgba(245, 158, 11, 0.15)");
 
-        Span rewardTitle = new Span("Hisoblangan mukofot");
+        Span rewardTitle = new Span(cleaning
+                ? "Admin tasdiqlagandan keyin beriladi"
+                : "Mukofot hisobingizga qo'shildi");
         rewardTitle.getStyle().set("font-size", "13px").set("font-weight", "700").set("color", "#b45309");
 
         int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 15;
-        H1 coinAmount = new H1("+" + coins + " Tanga 🪙");
+        H1 coinAmount = new H1(cleaning
+                ? coins + " tanga kutilmoqda"
+                : "+" + coins + " tanga olindi 🪙");
         coinAmount.getStyle().set("margin", "0").set("font-size", "32px").set("font-weight", "900").set("color", "#d97706");
 
-        Span statusBadge = new Span("🟡 Holati: Ko'rib chiqilmoqda (Pending)");
+        Span statusBadge = new Span(cleaning
+                ? "🟡 Holati: Admin tasdig'ini kutmoqda"
+                : "✅ Holati: Yuborildi");
         statusBadge.getStyle()
                 .set("background-color", "#ffffff")
                 .set("color", "#92400e")
@@ -833,7 +995,9 @@ public class ReportWasteView extends VerticalLayout {
     }
 
     private void resetFormState() {
-        wasterReportDto.setImageUrl(null);
+        wasterReportDto.setBeforeImageUrl(null);
+        wasterReportDto.setAfterImageUrl(null);
+        wasterReportDto.setCleanPeriod(null);
         wasterReportDto.setWasteType(null);
         wasterReportDto.setSeverityLevel(null);
         wasterReportDto.setDescription(null);
@@ -841,7 +1005,9 @@ public class ReportWasteView extends VerticalLayout {
         wasterReportDto.setRewardCoins(null);
         wasterReportDto.setReportStatus(ReportStatus.PENDING);
 
-        this.capturedBase64Image = null;
+        this.cleaningStartedAt = null;
+        this.cleaningDurationMillis = null;
+        this.openAfterPhotoCameraOnEntry = false;
         this.selectedCategoryCard = null;
         this.selectedSeverityCard = null;
         this.selectedActionCard = null;
@@ -855,6 +1021,11 @@ public class ReportWasteView extends VerticalLayout {
 
         btnCapture.setText("📷 Kamera orqali rasm olish");
         btnNextStep1.setEnabled(false);
+        btnAfterPhotoCapture.setText("📷 Tozalangandan keyingi surat");
+        btnAfterPhotoNext.setEnabled(false);
+        UI.getCurrent().getPage().executeJs(
+                "if (window._tozaCleaningTimer) clearInterval(window._tozaCleaningTimer);" +
+                        "window._tozaCleaningTimer = null;");
     }
 
     private String formatCategoryName(WasteTypeEnum cat) {
@@ -879,75 +1050,150 @@ public class ReportWasteView extends VerticalLayout {
     }
 
     // Camera JS methods
-    private void startOrCaptureCamera() {
+    private void startOrCaptureCamera(boolean afterPhoto) {
         UI.getCurrent().getPage().executeJs(
-                "let overlay = document.querySelector('#camera-fullscreen-overlay');" +
-                        "if (overlay) overlay.remove();" +
-                        "overlay = document.createElement('div');" +
-                        "overlay.id = 'camera-fullscreen-overlay';" +
-                        "overlay.className = 'fullscreen-camera-overlay';" +
-                        "const video = document.createElement('video');" +
-                        "video.id = 'live-camera-video';" +
-                        "video.autoplay = true;" +
-                        "video.playsInline = true;" +
-                        "video.className = 'fullscreen-video-stream';" +
-                        "video.style.transform = 'scaleX(-1)';" +
-                        "const topControls = document.createElement('div');" +
-                        "topControls.className = 'camera-top-controls';" +
-                        "const closeBtn = document.createElement('button');" +
-                        "closeBtn.className = 'btn-close-camera';" +
-                        "closeBtn.innerHTML = '❌ Yopish';" +
-                        "closeBtn.onclick = function() {" +
-                        "   if (video.srcObject) { video.srcObject.getTracks().forEach(t => t.stop()); }" +
-                        "   overlay.remove();" +
-                        "};" +
-                        "topControls.appendChild(closeBtn);" +
-                        "const bottomControls = document.createElement('div');" +
-                        "bottomControls.className = 'camera-bottom-controls';" +
-                        "const shutterBtn = document.createElement('button');" +
-                        "shutterBtn.className = 'btn-shutter-capture';" +
-                        "shutterBtn.innerHTML = '📸 Suratga olish';" +
-                        "const element = $0;" +
-                        "shutterBtn.onclick = function() {" +
-                        "   const canvas = document.createElement('canvas');" +
-                        "   canvas.width = video.videoWidth || 1920;" +
-                        "   canvas.height = video.videoHeight || 1080;" +
-                        "   const ctx = canvas.getContext('2d');" +
-                        "   ctx.translate(canvas.width, 0);" +
-                        "   ctx.scale(-1, 1);" +
-                        "   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);" +
-                        "   const base64Data = canvas.toDataURL('image/jpeg', 0.85);" +
-                        "   if (video.srcObject) { video.srcObject.getTracks().forEach(t => t.stop()); }" +
-                        "   overlay.remove();" +
-                        "   const box = document.querySelector('#camera-stream-box');" +
-                        "   if (box) {" +
-                        "       box.innerHTML = '<img src=\"' + base64Data + '\" style=\"width:100%; height:100%; object-fit:contain; background-color:#0f172a; border-radius:14px;\" />';" +
-                        "   }" +
-                        "   element.$server.saveCameraSnapshot(base64Data);" +
-                        "};" +
-                        "bottomControls.appendChild(shutterBtn);" +
-                        "overlay.appendChild(video);" +
-                        "overlay.appendChild(topControls);" +
-                        "overlay.appendChild(bottomControls);" +
-                        "document.body.appendChild(overlay);" +
-                        "navigator.mediaDevices.getUserMedia({" +
-                        "   video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }" +
-                        "})" +
-                        ".then(stream => { video.srcObject = stream; })" +
-                        ".catch(err => { alert('Kamerani ochishda xatolik: ' + err); overlay.remove(); });",
-                this.getElement()
+                """
+                const previousOverlay = document.querySelector('#camera-fullscreen-overlay');
+                if (previousOverlay) previousOverlay.remove();
+
+                const overlay = document.createElement('div');
+                overlay.id = 'camera-fullscreen-overlay';
+                overlay.className = 'fullscreen-camera-overlay';
+                const video = document.createElement('video');
+                video.id = 'live-camera-video';
+                video.autoplay = true;
+                video.playsInline = true;
+                video.muted = true;
+                video.className = 'fullscreen-video-stream';
+                const topControls = document.createElement('div');
+                topControls.className = 'camera-top-controls';
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'btn-close-camera';
+                closeBtn.type = 'button';
+                closeBtn.textContent = '❌ Yopish';
+                closeBtn.onclick = function() {
+                    if (video.srcObject) video.srcObject.getTracks().forEach(track => track.stop());
+                    overlay.remove();
+                };
+                topControls.appendChild(closeBtn);
+
+                const status = document.createElement('div');
+                status.className = 'camera-status-message';
+                status.textContent = 'Kamera ishga tushmoqda...';
+                const bottomControls = document.createElement('div');
+                bottomControls.className = 'camera-bottom-controls';
+                const shutterBtn = document.createElement('button');
+                shutterBtn.className = 'btn-shutter-capture';
+                shutterBtn.type = 'button';
+                shutterBtn.textContent = '📸 Suratga olish';
+                shutterBtn.disabled = true;
+                const element = $0;
+                const isAfterPhoto = $1;
+
+                video.addEventListener('loadeddata', function() {
+                    if (video.videoWidth > 0 && video.videoHeight > 0) {
+                        shutterBtn.disabled = false;
+                        status.textContent = 'Suratga olishga tayyor';
+                    }
+                }, { once: true });
+
+                shutterBtn.onclick = function() {
+                    if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA
+                            || !video.videoWidth || !video.videoHeight) {
+                        shutterBtn.disabled = true;
+                        status.textContent = 'Kamera tasviri hali tayyor emas. Biroz kuting.';
+                        return;
+                    }
+
+                    shutterBtn.disabled = true;
+                    status.textContent = 'Surat saqlanmoqda...';
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const context = canvas.getContext('2d');
+                    if (!context) {
+                        status.textContent = 'Suratni tayyorlab bo‘lmadi. Qayta urinib ko‘ring.';
+                        shutterBtn.disabled = false;
+                        return;
+                    }
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.85);
+                    if (video.srcObject) video.srcObject.getTracks().forEach(track => track.stop());
+                    overlay.remove();
+
+                    const box = document.querySelector(
+                        isAfterPhoto ? '#camera-after-stream-box' : '#camera-stream-box');
+                    if (box) {
+                        box.innerHTML = '<img src="' + base64Data
+                            + '" style="width:100%; height:100%; object-fit:contain; background-color:#0f172a; border-radius:14px;" />';
+                    }
+                    element.$server.saveCameraSnapshot(base64Data, isAfterPhoto);
+                };
+
+                bottomControls.appendChild(status);
+                bottomControls.appendChild(shutterBtn);
+                overlay.appendChild(video);
+                overlay.appendChild(topControls);
+                overlay.appendChild(bottomControls);
+                document.body.appendChild(overlay);
+
+                const showCameraError = function(error) {
+                    if (video.srcObject) video.srcObject.getTracks().forEach(track => track.stop());
+                    shutterBtn.disabled = true;
+                    if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                        status.textContent = 'Kameraga ruxsat berilmadi. Brauzer sozlamalarida ruxsat bering.';
+                    } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+                        status.textContent = 'Qurilmada kamera topilmadi.';
+                    } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
+                        status.textContent = 'Kamera boshqa ilovada band. Uni yoping va qayta urinib ko‘ring.';
+                    } else if (error.name === 'SecurityError' || !navigator.mediaDevices) {
+                        status.textContent = 'Kamera uchun xavfsiz HTTPS ulanishidan yoki localhost manzilidan foydalaning.';
+                    } else {
+                        status.textContent = 'Kamera ochilmadi: ' + (error.message || error.name || 'noma’lum xatolik');
+                    }
+                };
+
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    showCameraError({ name: 'SecurityError' });
+                } else {
+                    navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: { ideal: 'environment' },
+                            width: { ideal: 1920 },
+                            height: { ideal: 1080 }
+                        },
+                        audio: false
+                    }).then(function(stream) {
+                        if (!overlay.isConnected) {
+                            stream.getTracks().forEach(track => track.stop());
+                            return;
+                        }
+                        video.srcObject = stream;
+                        return video.play();
+                    }).catch(showCameraError);
+                }
+                """,
+                this.getElement(), afterPhoto
         );
     }
 
     @ClientCallable
-    public void saveCameraSnapshot(String base64Image) {
+    public void saveCameraSnapshot(String base64Image, boolean afterPhoto) {
         try {
-            this.capturedBase64Image = base64Image;
             AttachDto attachDTO = attachService.uploadBase64CameraPhoto(base64Image);
-            this.wasterReportDto.setImageUrl(attachDTO.getPath());
-
-            btnCapture.setText("🔄 Qayta rasmga olish");
-            btnNextStep1.setEnabled(true);
+            if (afterPhoto) {
+                wasterReportDto.setAfterImageUrl(attachDTO.getPath());
+                btnAfterPhotoCapture.setText("🔄 Keyingi suratni qayta olish");
+                btnAfterPhotoNext.setEnabled(true);
+                afterPhotoBox.removeAll();
+                Image preview = new Image(attachDTO.getPath(), "Tozalashdan keyingi surat");
+                preview.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
+                afterPhotoBox.add(preview);
+            } else {
+                wasterReportDto.setBeforeImageUrl(attachDTO.getPath());
+                btnCapture.setText("🔄 Qayta rasmga olish");
+                btnNextStep1.setEnabled(true);
+            }
 
             Notification.show("Surat muvaffaqiyatli olindi! ✅", 2500, Notification.Position.BOTTOM_END);
         } catch (Exception e) {

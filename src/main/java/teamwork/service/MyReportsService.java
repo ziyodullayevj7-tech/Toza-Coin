@@ -82,7 +82,8 @@ public class MyReportsService {
     public MyReportResponseDto toDto(WasteReportEntity entity) {
         MyReportResponseDto dto = new MyReportResponseDto();
         dto.setId(entity.getId());
-        dto.setPhotoUrl(entity.getImageUrl());
+        dto.setPhotoUrl(entity.getAfterImageUrl() != null
+                ? entity.getAfterImageUrl() : entity.getBeforeImageUrl());
         dto.setReportStatus(entity.getReportStatus());
         dto.setSeverityLevel(entity.getSeverity());
         dto.setWasteType(entity.getCategory());

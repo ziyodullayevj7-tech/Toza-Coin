@@ -44,7 +44,7 @@ public class MapService {
     public LiveWasteMapDto toDto(WasteReportEntity entity) {
         LiveWasteMapDto dto = new LiveWasteMapDto();
         dto.setId(entity.getId());
-        dto.setImageUrl(entity.getImageUrl());
+        dto.setImageUrl(entity.getBeforeImageUrl());
         dto.setWasteType(entity.getCategory());
         dto.setSeverityLevel(entity.getSeverity());
         dto.setRewardCoins(entity.getRewardCoins());

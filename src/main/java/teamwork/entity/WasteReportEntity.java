@@ -22,8 +22,11 @@ public class WasteReportEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, name = "image_url")
-    private String imageUrl;
+    @Column(nullable = false, name = "before_image_url")
+    private String beforeImageUrl;
+
+    @Column(name = "after_image_url")
+    private String afterImageUrl;
 
     @Column(name = "is_live_camera")
     @Builder.Default
@@ -66,6 +69,9 @@ public class WasteReportEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)
     private ProfileEntity reporter;
+
+    @Column(name = "clean_period")
+    private Double cleanPeriod;
 
     @Column(name = "created_date")
     @CreationTimestamp

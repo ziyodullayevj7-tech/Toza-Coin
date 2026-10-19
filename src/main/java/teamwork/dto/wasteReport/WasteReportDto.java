@@ -13,7 +13,8 @@ import teamwork.enums.WasteTypeEnum;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WasteReportDto {
-    private String imageUrl;
+    private String beforeImageUrl;
+    private String afterImageUrl;
     private String capturedDate;
     private WasteTypeEnum wasteType;
     private SeverityLevelEnum  severityLevel;
@@ -22,4 +23,6 @@ public class WasteReportDto {
     private Integer rewardCoins;
     private ReportStatus reportStatus;
     private LocationDto location;
+    /** Elapsed cleanup time in seconds. */
+    private Double cleanPeriod;
 }
