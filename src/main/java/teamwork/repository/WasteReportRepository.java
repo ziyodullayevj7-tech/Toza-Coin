@@ -10,6 +10,7 @@ import teamwork.enums.ReportActionEnum;
 import teamwork.enums.ReportStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WasteReportRepository extends JpaRepository<WasteReportEntity, String> {
     Page<WasteReportEntity> findAllByReporterId(String reporterId, Pageable pageable);
@@ -26,4 +27,13 @@ public interface WasteReportRepository extends JpaRepository<WasteReportEntity, 
     List<WasteReportEntity> findAllLiveWaste(@Param("reportAction") ReportActionEnum reportAction,
                                              @Param("reportStatus") ReportStatus reportStatus,
                                              Pageable pageable);
+
+    Optional<WasteReportEntity> findByReporterIdIs(String reporterId);
+
+    @Query("SELECT wr FROM WasteReportEntity AS wr " +
+            "WHERE wr.reportStatus = :reportStatus1 " +
+            "OR wr.reportStatus = :reportStatus2")
+    Page<WasteReportEntity> findAllUnresolved(@Param("reportStatus1") ReportStatus reportStatus1,
+                                              @Param("reportStatus2") ReportStatus reportStatus2,
+                                              Pageable pageable);
 }

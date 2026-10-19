@@ -185,4 +185,8 @@ public class AuthService {
         Optional<Integer> optional = profileRepository.getBalanceById(userId);
         return optional.orElse(0);
     }
+
+    public Optional<ProfileEntity> getProfileById(String reporterId) {
+        return profileRepository.findById(reporterId);
+    }
 }

@@ -3,9 +3,10 @@ package teamwork.service;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import teamwork.dto.coinTransaction.CoinTransactionDto;
+import teamwork.dto.wasteReport.ConfirmWasteDto;
 import teamwork.dto.wasteReport.WasteReportDto;
 import teamwork.dto.wasteReport.WasteReportForMyReportDto;
 import teamwork.entity.LocationEntity;
@@ -20,6 +21,8 @@ import teamwork.util.SecurityUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -36,6 +39,17 @@ public class WasteReportService {
 
     @Transactional
     public boolean create(WasteReportDto dto) {
+        if (dto.getReportAction() == null || dto.getBeforeImageUrl() == null
+                || dto.getBeforeImageUrl().isBlank()) {
+            throw new AppBadRequestException("A report action and before photo are required");
+        }
+        if (dto.getReportAction() == ReportActionEnum.CLEAN_MYSELF
+                && (dto.getAfterImageUrl() == null || dto.getAfterImageUrl().isBlank()
+                || dto.getCleanPeriod() == null || !Double.isFinite(dto.getCleanPeriod())
+                || dto.getCleanPeriod() <= 0)) {
+            throw new AppBadRequestException("A cleanup report requires an after photo and a valid cleaning duration");
+        }
+
         // CURRENT USER ID
         String currentProfileId = SecurityUtils.getCurrentUserId();
 
@@ -52,37 +66,8 @@ public class WasteReportService {
             throw new AppBadRequestException("Something went wrong");
         }
 
-        CoinTransactionDto coinTransaction =  new CoinTransactionDto();
-        coinTransaction.setCoinType(CoinType.EARN);
-        // SET DESCRIPTION
-        String actionTitle = (dto.getReportAction() == ReportActionEnum.CLEAN_MYSELF)
-                ? "O'zi tozalash"
-                : "Mas'ul tashkilotga yuborish";
-
-        String description = String.format("Ifloslik xabari (%s, %s, %s) - %s",
-                dto.getWasteType() != null ? dto.getWasteType().name() : "Chiqindi",
-                dto.getLocation() != null ? dto.getLocation().getDistrict() : "Manzil",
-                dto.getLocation() != null ? dto.getLocation().getRegion() : "Toshkent",
-                actionTitle);
-
-        coinTransaction.setDescription(description);
-        coinTransaction.setAmount(rewardCoins);
-        // SAVE COIN TRANSACTION
-        boolean coinTransactionSuccess = coinTransactionService.save(coinTransaction, reporter);
-        if (!coinTransactionSuccess){
-            throw new AppBadRequestException("Something went wrong");
-        }
-
-        // UPDATE USER COIN BALANCE
-        boolean updateUserBalance = authService.updateUserBalance(currentProfileId, rewardCoins);
-        if (!updateUserBalance) {
-            log.warn("Update user balance failed because user not found with this id");
-            throw new AppBadRequestException("Something went wrong");
-        }
-
         // IF LOCATION ID IS AVAILABLE
         WasteReportEntity wasteReport = new WasteReportEntity();
-        wasteReport.setImageUrl(dto.getImageUrl());
         LocalDateTime capturedDate = (dto.getCapturedDate() != null && !dto.getCapturedDate().isBlank())
                 ? LocalDateTime.parse(dto.getCapturedDate())
                 : LocalDateTime.now();
@@ -93,10 +78,31 @@ public class WasteReportService {
         wasteReport.setDescription(dto.getDescription());
         wasteReport.setReportAction(dto.getReportAction());
         wasteReport.setRewardCoins(rewardCoins);
-        wasteReport.setReportStatus(dto.getReportStatus());
         wasteReport.setReporter(reporter);
         wasteReport.setCreatedDate(LocalDateTime.now());
-
+        if (dto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS){
+            CoinTransactionDto coinTransaction = new CoinTransactionDto();
+            coinTransaction.setCoinType(CoinType.EARN);
+            String actionTitle = "Mas'ul tashkilotga yuborish";
+            String description = String.format("Ifloslik xabari (%s, %s, %s) - %s",
+                    wasteReport.getCategory() != null ? wasteReport.getCategory().name() : "Chiqindi",
+                    wasteReport.getLocation() != null ? wasteReport.getLocation().getDistrict() : "Manzil",
+                    wasteReport.getLocation() != null ? wasteReport.getLocation().getRegion() : "Toshkent",
+                    actionTitle);
+            coinTransaction.setDescription(description);
+            coinTransaction.setAmount(rewardCoins);
+            boolean coinTransactionSuccess = coinTransactionService.save(coinTransaction, reporter);
+            if (!coinTransactionSuccess) throw new AppBadRequestException("Something went wrong");
+            authService.updateUserBalance(currentProfileId, rewardCoins);
+            wasteReport.setReportStatus(ReportStatus.RESOLVED);
+            wasteReport.setBeforeImageUrl(dto.getBeforeImageUrl());
+            wasteReport.setCleanPeriod(0.0);
+        }else {
+            wasteReport.setReportStatus(ReportStatus.PENDING);
+            wasteReport.setBeforeImageUrl(dto.getBeforeImageUrl());
+            wasteReport.setAfterImageUrl(dto.getAfterImageUrl());
+            wasteReport.setCleanPeriod(dto.getCleanPeriod());
+        }
         wasteReportRepository.save(wasteReport);
         return true;
     }
@@ -109,7 +115,8 @@ public class WasteReportService {
         }
         WasteReportEntity entity = optional.get();
 
-        dto.setPhotoUrl(entity.getImageUrl());
+        dto.setPhotoUrl(entity.getAfterImageUrl() != null
+                ? entity.getAfterImageUrl() : entity.getBeforeImageUrl());
         dto.setReportStatus(entity.getReportStatus());
         dto.setSeverityLevel(entity.getSeverity());
         dto.setWasteType(entity.getCategory());
@@ -135,5 +142,34 @@ public class WasteReportService {
 
     public Integer balanceByUserId(String userId) {
         return authService.getBalanceByUserId(userId);
+    }
+
+    public Page<ConfirmWasteDto> getUnresolvedReports(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").ascending());
+        Page<WasteReportEntity> wasteReportEntities = wasteReportRepository.findAllUnresolved(ReportStatus.PENDING,
+                ReportStatus.IN_PROGRESS,
+                pageable);
+
+        List<WasteReportEntity> entityList = wasteReportEntities.getContent();
+        long totalElements = wasteReportEntities.getTotalElements();
+
+        List<ConfirmWasteDto> dtoList = new ArrayList<>();
+
+        entityList.forEach(entity -> dtoList.add(toConfirmWasteDto(entity)));
+        return new PageImpl<>(dtoList, pageable, totalElements);
+    }
+
+    public ConfirmWasteDto toConfirmWasteDto(WasteReportEntity entity){
+        ConfirmWasteDto dto = new ConfirmWasteDto();
+        dto.setReportId(entity.getId());
+        dto.setReporterId(entity.getReporter().getId());
+        dto.setReporterFullName(entity.getReporter().getName() + " " + entity.getReporter().getSurname());
+        dto.setDistrict(entity.getLocation().getDistrict());
+        dto.setBeforeImageUrl(entity.getBeforeImageUrl());
+        dto.setAfterImageUrl(entity.getAfterImageUrl());
+        dto.setCleanPeriod(entity.getCleanPeriod());
+        dto.setStatus(entity.getReportStatus());
+        dto.setReportedDateTime(entity.getCreatedDate());
+        return dto;
     }
 }
