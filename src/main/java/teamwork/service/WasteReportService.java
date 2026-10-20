@@ -36,6 +36,8 @@ public class WasteReportService {
     private CoinTransactionService coinTransactionService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private AiCleanupAnaliseService aiCleanupAnaliseService;
 
     @Transactional
     public boolean create(WasteReportDto dto) {
@@ -103,7 +105,15 @@ public class WasteReportService {
             wasteReport.setAfterImageUrl(dto.getAfterImageUrl());
             wasteReport.setCleanPeriod(dto.getCleanPeriod());
         }
-        wasteReportRepository.save(wasteReport);
+
+        WasteReportEntity savedReport = wasteReportRepository.save(wasteReport);
+        if (savedReport.getReportAction() == ReportActionEnum.CLEAN_MYSELF) {
+            try {
+                aiCleanupAnaliseService.analyzeReport(savedReport.getId());
+            } catch (RuntimeException e) {
+                log.error("AI analysis failed for waste report {}", savedReport.getId(), e);
+            }
+        }
         return true;
     }
 
@@ -170,6 +180,8 @@ public class WasteReportService {
         dto.setCleanPeriod(entity.getCleanPeriod());
         dto.setStatus(entity.getReportStatus());
         dto.setReportedDateTime(entity.getCreatedDate());
+        dto.setConfidenceScore(entity.getConfidenceScore());
+        dto.setReasoning(entity.getAiReasoning());
         return dto;
     }
 }

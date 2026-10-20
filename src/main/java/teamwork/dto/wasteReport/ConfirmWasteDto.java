@@ -21,5 +21,7 @@ public class ConfirmWasteDto {
     private String afterImageUrl;
     private ReportStatus status;
     private Double cleanPeriod;
+    private Integer confidenceScore;
+    private String reasoning;
     private LocalDateTime reportedDateTime;
 }
