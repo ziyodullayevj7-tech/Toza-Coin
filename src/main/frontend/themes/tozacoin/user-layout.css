@@ -1,5 +1,348 @@
 /* User Layout & Dashboard Stylesheet */
 
+.profile-page-shell {
+  width: 100%;
+  padding: 28px 32px 40px;
+  box-sizing: border-box;
+  background: #f2f1ee;
+}
+
+.profile-card {
+  width: min(1200px, 100%);
+  background: #f3f2f0;
+  border: 1px solid #e0ddd8;
+  border-radius: 26px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  padding-bottom: 20px;
+}
+
+.profile-banner {
+  height: 180px;
+  background: linear-gradient(90deg, #0f613f 0%, #1d7f4e 25%, #a9b81f 100%);
+  padding: 26px 28px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.profile-avatar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-sizing: border-box;
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -1px;
+}
+
+.profile-edit-btn {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dfe7df;
+  color: #1a1a1a;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 10px 18px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.profile-summary {
+  background: #f3f2f0;
+  padding: 28px 32px 14px;
+  margin-top: -12px;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: 2.3rem;
+  line-height: 1.2;
+  color: #1d1d1d;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: #555;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.profile-meta-dot {
+  color: #20b06b;
+  font-size: 0.8rem;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.profile-bio {
+  display: block;
+  margin-top: 16px;
+  color: #2d2d2d;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.profile-tier-badge,
+.profile-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.profile-tier-badge {
+  background: rgba(255, 189, 89, 0.18);
+  color: #b67300;
+  border: 1px solid rgba(255, 170, 54, 0.45);
+}
+
+.profile-rank-badge {
+  background: rgba(52, 168, 83, 0.12);
+  color: #1d7f4e;
+  border: 1px solid rgba(29, 127, 78, 0.22);
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 18px;
+  padding: 0 32px 18px;
+}
+
+.profile-stat-card {
+  background: #f9f8f7;
+  border: 1px solid #d8d3cf;
+  border-radius: 18px;
+  padding: 18px 18px 14px;
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.profile-stat-value-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-stat-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.05em;
+}
+
+.profile-stat-icon {
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+}
+
+.profile-stat-label {
+  font-size: 0.95rem;
+  color: #4d4d4d;
+  font-weight: 500;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 14px;
+  padding: 0 32px 10px;
+}
+
+.profile-tab {
+  border: 1px solid #d7d3cd;
+  background: #f4f3f2;
+  color: #2a2a2a;
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.profile-tab.active {
+  background: #1d7f4e;
+  color: #ffffff;
+  border-color: #1d7f4e;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 18px;
+  padding: 10px 32px 12px;
+}
+
+.achievement-card {
+  background: #f9f8f7;
+  border: 1px solid #d8d3cf;
+  border-radius: 18px;
+  min-height: 180px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.achievement-card.bronze .achievement-icon { background: rgba(133, 222, 152, 0.12); }
+.achievement-card.silver .achievement-icon { background: rgba(233, 193, 127, 0.18); }
+.achievement-card.orange .achievement-icon { background: rgba(255, 121, 91, 0.12); }
+.achievement-card.blue .achievement-icon { background: rgba(94, 156, 255, 0.12); }
+
+.achievement-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.achievement-title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: #1a1a1a;
+  font-weight: 800;
+}
+
+.achievement-text {
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: #545454;
+}
+
+.profile-edit-form {
+  padding: 0 32px 16px;
+}
+
+.profile-edit-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.profile-edit-form vaadin-text-field,
+.profile-edit-form vaadin-email-field {
+  width: 100%;
+}
+
+.profile-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.profile-save-btn,
+.profile-cancel-btn {
+  min-width: 140px;
+  border-radius: 10px;
+  font-weight: 700;
+  height: 42px;
+}
+
+.profile-save-btn {
+  background: linear-gradient(135deg, #1d7f4e 0%, #0f613f 100%);
+  color: #ffffff;
+}
+
+.profile-cancel-btn {
+  background: #ffffff;
+  border: 1px solid #d9d5d0;
+  color: #2e2e2e;
+}
+
+@media (max-width: 980px) {
+  .profile-stats-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+
+  .achievements-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-page-shell {
+    padding: 18px 12px 24px;
+  }
+
+  .profile-banner {
+    padding: 18px 18px 0;
+    height: 150px;
+  }
+
+  .profile-summary,
+  .profile-stats-grid,
+  .profile-tabs,
+  .achievements-grid,
+  .profile-edit-form {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .profile-name {
+    font-size: 1.8rem;
+  }
+
+  .profile-stats-grid,
+  .achievements-grid,
+  .profile-edit-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-badges {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* Vaadin AppLayout Shadow Part Overrides */
 vaadin-app-layout::part(drawer) {
   width: 256px;

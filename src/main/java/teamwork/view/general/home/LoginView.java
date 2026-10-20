@@ -85,7 +85,7 @@ public class LoginView extends HorizontalLayout {
 
         // Statistika kartochkalari (2x2 grid)
         Div statsGrid = new Div();
-        statsGrid.addClassName("stats-grid");
+        statsGrid.addClassName("login-stats-grid");
         statsGrid.add(
                 statCard("12,847", "Faol ko'ngillilar"),
                 statCard("247T kg", "Tozalangan"),
@@ -109,13 +109,13 @@ public class LoginView extends HorizontalLayout {
 
     private Div statCard(String value, String label) {
         Div card = new Div();
-        card.addClassName("stat-card");
+        card.addClassName("login-stat-card");
 
         Span valueSpan = new Span(value);
-        valueSpan.addClassName("stat-value");
+        valueSpan.addClassName("login-stat-value");
 
         Span labelSpan = new Span(label);
-        labelSpan.addClassName("stat-label");
+        labelSpan.addClassName("login-stat-label");
 
         card.add(valueSpan, labelSpan);
         return card;

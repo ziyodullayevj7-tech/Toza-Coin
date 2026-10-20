@@ -71,14 +71,14 @@
     margin: 0 0 40px 0;
 }
 
-.stats-grid {
+.login-stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     max-width: 420px;
 }
 
-.stat-card {
+.login-stat-card {
     background: rgba(255, 255, 255, 0.10);
     border-radius: 12px;
     padding: 18px 20px;
@@ -87,13 +87,13 @@
     gap: 4px;
 }
 
-.stat-value {
+.login-stat-value {
     font-size: 22px;
     font-weight: 800;
     color: #ffffff;
 }
 
-.stat-label {
+.login-stat-label {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.75);
 }
