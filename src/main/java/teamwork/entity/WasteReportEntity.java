@@ -73,6 +73,12 @@ public class WasteReportEntity {
     @Column(name = "clean_period")
     private Double cleanPeriod;
 
+    @Column(name = "confidence_score")
+    private Integer confidenceScore;
+
+    @Column(name = "ai_reasoning", columnDefinition = "TEXT")
+    private String aiReasoning;
+
     @Column(name = "created_date")
     @CreationTimestamp
     private LocalDateTime createdDate;

@@ -272,4 +272,32 @@ public class AttachService {
         boolean isPng = (bytes[0] & 0xFF) == 0x89 && (bytes[1] & 0xFF) == 0x50 && (bytes[2] & 0xFF) == 0x4E && (bytes[3] & 0xFF) == 0x47;
         return isJpeg || isPng;
     }
+
+    public record ImageData(byte[] bytes,
+                            String mimeType) {}
+
+    public ImageData readImageByStoredPath(String storedPath) {
+        if (storedPath == null || storedPath.isBlank()) throw new AppBadRequestException("Report image not found");
+
+        String fileName = storedPath.substring(storedPath.lastIndexOf("/") + 1);
+        AttachEntity entity = getEntity(fileName);
+
+        if (!getPublicUrl(entity).equals(storedPath)) throw new AppBadRequestException("Report image path is invalid");
+
+        Path filePath = getFilePath(entity);
+        String mimeType = entity.getType();
+
+        if (filePath == null || !Files.isRegularFile(filePath)) throw new AppBadRequestException("Report image not found");
+
+        if (mimeType == null || !Set.of("image/jpeg", "image/png", "image/webp")
+                .contains(mimeType.toLowerCase(Locale.ROOT))) {
+            throw new AppBadRequestException("Report image type is not supported");
+        }
+
+        try {
+            return new ImageData(Files.readAllBytes(filePath), mimeType);
+        } catch (IOException e) {
+            throw new AppBadRequestException("Could not read report image");
+        }
+    }
 }
