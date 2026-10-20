@@ -187,6 +187,10 @@ public class AuthService {
         return optional.orElse(0);
     }
 
+    public Optional<ProfileEntity> getProfileById(String reporterId) {
+        return profileRepository.findById(reporterId);
+    }
+
     public ProfileEntity getCurrentProfileEntity() {
         String currentUserId = SecurityUtils.getCurrentUserId();
         if (currentUserId == null || currentUserId.isBlank()) {
