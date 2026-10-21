@@ -6,11 +6,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import teamwork.view.layout.user.UserLayout;
 
 @Route(value = "user/wallet", layout = UserLayout.class)
 @PageTitle("Tanga hamyon | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class WalletView extends VerticalLayout {
 

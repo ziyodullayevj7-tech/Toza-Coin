@@ -16,6 +16,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import teamwork.dto.myReport.MyReportResponseDto;
@@ -36,7 +37,7 @@ import java.util.Optional;
 
 @Route(value = "user/my-reports", layout = UserLayout.class)
 @PageTitle("Mening xabarlarim | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class MyReportsView extends VerticalLayout {
 

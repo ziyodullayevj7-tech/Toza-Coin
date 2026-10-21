@@ -29,6 +29,7 @@ import teamwork.dto.ProfileDto;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.service.AuthService;
 import teamwork.util.SecurityUtils;
+import teamwork.view.admin.AdminDashboard;
 import teamwork.view.user.UserDashboard;
 
 @Route("login")
@@ -230,10 +231,17 @@ public class LoginView extends HorizontalLayout {
             LoginDto dto = new LoginDto(identifier, password);
             ProfileDto profile = authService.login(dto);
 
-            Notification.show("Xush kelibsiz, " + SecurityUtils.getCurrentUser().get().getName() + "!")
-                    .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-            UI.getCurrent().navigate(UserDashboard.class);
+            boolean isAdmin = profile.getRoles() != null && profile.getRoles().stream()
+                    .anyMatch(role -> role.equalsIgnoreCase("ROLE_ADMIN") || role.equalsIgnoreCase("ADMIN"));
+            if (isAdmin) {
+                Notification.show("Xush kelibsiz, " + SecurityUtils.getCurrentUser().get().getName() + "!")
+                        .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                UI.getCurrent().navigate(AdminDashboard.class);
+            } else {
+                Notification.show("Xush kelibsiz, " + SecurityUtils.getCurrentUser().get().getName() + "!")
+                        .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                UI.getCurrent().navigate(UserDashboard.class);
+            }
         } catch (AppBadRequestException e) {
             showError(e.getMessage());
         } catch (Exception e) {

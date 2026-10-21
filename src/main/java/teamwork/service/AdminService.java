@@ -8,7 +8,6 @@ import teamwork.dto.wasteReport.ConfirmWasteDto;
 import teamwork.entity.ProfileEntity;
 import teamwork.entity.WasteReportEntity;
 import teamwork.enums.CoinType;
-import teamwork.enums.ReportActionEnum;
 import teamwork.enums.ReportStatus;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.WasteReportRepository;
@@ -23,6 +22,8 @@ public class AdminService {
     private AuthService authService;
     @Autowired
     private CoinTransactionService coinTransactionService;
+
+
     @Transactional
     public boolean confirmReport(ConfirmWasteDto dto) {
         Optional<WasteReportEntity> optional = wasteReportRepository.findById((dto.getReportId()));

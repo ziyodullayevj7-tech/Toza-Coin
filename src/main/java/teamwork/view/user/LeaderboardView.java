@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import teamwork.dto.leaderBoard.LeaderBoardDto;
@@ -27,7 +28,7 @@ import java.util.Objects;
 
 @Route(value = "user/leaderboard", layout = UserLayout.class)
 @PageTitle("Reyting | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class LeaderboardView extends VerticalLayout {
 
