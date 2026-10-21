@@ -1116,6 +1116,10 @@ public class ReportWasteView extends VerticalLayout {
                         shutterBtn.disabled = false;
                         return;
                     }
+                    if (video.dataset.mirror === 'true') {
+                        context.translate(canvas.width, 0);
+                        context.scale(-1, 1);
+                    }
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
                     const base64Data = canvas.toDataURL('image/jpeg', 0.85);
                     if (video.srcObject) video.srcObject.getTracks().forEach(track => track.stop());
@@ -1169,6 +1173,11 @@ public class ReportWasteView extends VerticalLayout {
                             return;
                         }
                         video.srcObject = stream;
+                        const videoTrack = stream.getVideoTracks()[0];
+                        const isFrontCamera = videoTrack && videoTrack.getSettings
+                                && videoTrack.getSettings().facingMode === 'user';
+                        video.dataset.mirror = String(isFrontCamera);
+                        if (isFrontCamera) video.style.transform = 'scaleX(-1)';
                         return video.play();
                     }).catch(showCameraError);
                 }
