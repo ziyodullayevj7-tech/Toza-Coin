@@ -20,6 +20,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,7 @@ import java.util.Locale;
 
 @Route(value = "admin/moderation", layout = AdminLayout.class)
 @PageTitle("Moderatsiya | TozaCoin")
-@PermitAll
+@RolesAllowed("ADMIN")
 @CssImport("./themes/tozacoin/user-layout.css")
 public class AdminModerationView extends VerticalLayout {
 

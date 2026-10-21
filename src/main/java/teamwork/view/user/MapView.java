@@ -12,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import teamwork.dto.liveWasteMap.LiveWasteMapDto;
 import teamwork.enums.SeverityLevelEnum;
 import teamwork.enums.WasteTypeEnum;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Route(value = "user/map", layout = UserLayout.class)
 @PageTitle("Jonli Xarita | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class MapView extends VerticalLayout {
 

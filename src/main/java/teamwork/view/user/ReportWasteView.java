@@ -13,6 +13,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import teamwork.dto.attach.AttachDto;
 import teamwork.dto.location.LocationDto;
@@ -31,7 +32,7 @@ import java.time.Instant;
 
 @Route(value = "user/report", layout = UserLayout.class)
 @PageTitle("Ifloslik xabar berish | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class ReportWasteView extends VerticalLayout {
 

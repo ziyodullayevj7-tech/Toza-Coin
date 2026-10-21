@@ -154,6 +154,7 @@ public class WasteReportService {
         return authService.getBalanceByUserId(userId);
     }
 
+    @Transactional
     public Page<ConfirmWasteDto> getUnresolvedReports(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").ascending());
         Page<WasteReportEntity> wasteReportEntities = wasteReportRepository.findAllUnresolved(ReportStatus.PENDING,

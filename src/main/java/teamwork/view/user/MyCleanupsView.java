@@ -1,4 +1,5 @@
 package teamwork.view.user;
+import jakarta.annotation.security.RolesAllowed;
 import teamwork.dto.myReport.MyReportResponseDto;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -16,6 +17,7 @@ import teamwork.view.layout.user.UserLayout;
 
 @Route(value = "dashboard/my-cleanups", layout = UserLayout.class)
 @PageTitle("Mening tozalashlarim")
+@RolesAllowed({"USER", "ADMIN"})
 public class MyCleanupsView extends VerticalLayout {
 
     private final MyReportsService myReportsService;

@@ -12,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import teamwork.config.CustomUserDetails;
 import teamwork.util.SecurityUtils;
 import teamwork.view.layout.user.UserLayout;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 @Route(value = "user/dashboard", layout = UserLayout.class)
 @PageTitle("Boshqaruv paneli | TozaCoin")
-@PermitAll
+@RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
 public class UserDashboard extends VerticalLayout {
 
