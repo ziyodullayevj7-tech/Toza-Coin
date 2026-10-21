@@ -26,6 +26,7 @@ import teamwork.enums.ProfileStatus;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.ProfileRepository;
 import teamwork.repository.ProfileRoleRepository;
+import teamwork.util.SecurityUtils;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -188,5 +189,59 @@ public class AuthService {
 
     public Optional<ProfileEntity> getProfileById(String reporterId) {
         return profileRepository.findById(reporterId);
+    }
+
+    public ProfileEntity getCurrentProfileEntity() {
+        String currentUserId = SecurityUtils.getCurrentUserId();
+        if (currentUserId == null || currentUserId.isBlank()) {
+            return null;
+        }
+        return profileRepository.findById(currentUserId).orElse(null);
+    }
+
+    @Transactional
+    public ProfileEntity updateCurrentProfile(String firstName, String lastName, String email,
+                                             String phone, String district, String mahalla) {
+        ProfileEntity profile = getCurrentProfileEntity();
+        if (profile == null) {
+            throw new AppBadRequestException("Current profile not found");
+        }
+
+        String trimmedName = normalizeText(firstName);
+        String trimmedSurname = normalizeText(lastName);
+        String trimmedEmail = normalizeText(email);
+        String trimmedPhone = normalizeText(phone);
+        String trimmedDistrict = normalizeText(district);
+        String trimmedMahalla = normalizeText(mahalla);
+
+        if (trimmedName.isEmpty() || trimmedSurname.isEmpty()) {
+            throw new AppBadRequestException("Ism va familiya maydonlari to'ldirilishi shart.");
+        }
+
+        if (trimmedEmail.isEmpty()) {
+            throw new AppBadRequestException("Email manzilini kiriting.");
+        }
+
+        String normalizedEmail = trimmedEmail.toLowerCase();
+        Optional<ProfileEntity> existingUser = profileRepository.findByUsername(normalizedEmail);
+        if (existingUser.isPresent() && !existingUser.get().getId().equals(profile.getId())) {
+            throw new AppBadRequestException("Bu email allaqachon ishlatilmoqda.");
+        }
+
+        profile.setName(trimmedName);
+        profile.setSurname(trimmedSurname);
+        profile.setUsername(normalizedEmail);
+        profile.setPhoneNumber(trimmedPhone);
+        profile.setDistrict(trimmedDistrict);
+        profile.setMahalla(trimmedMahalla);
+
+        return profileRepository.save(profile);
+    }
+
+    private String normalizeText(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim();
     }
 }
