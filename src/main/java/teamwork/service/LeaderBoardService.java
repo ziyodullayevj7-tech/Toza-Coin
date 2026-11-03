@@ -17,20 +17,10 @@ import java.util.List;
 @Service
 public class LeaderBoardService {
     @Autowired
-    private ProfileRepository profileRepository;
+    private AuthService authService;
 
-    @Transactional
     public Page<LeaderBoardDto> getLeaderBoard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-
-        Page<ProfileEntity> profiles = profileRepository.findAllOrderByCount(pageable);
-        List<ProfileEntity> entities = profiles.getContent();
-        long totalElements = profiles.getTotalElements();
-
-        List<LeaderBoardDto> dtos = new ArrayList<>();
-        entities.forEach(entity -> dtos.add(toDto(entity)));
-
-        return new PageImpl<>(dtos, pageable, totalElements);
+        return authService.getUsersByRanking(page, size);
     }
 
     public LeaderBoardDto toDto(ProfileEntity entity) {
@@ -41,6 +31,9 @@ public class LeaderBoardService {
         dto.setReportCount(entity.getReportCount());
         dto.setStreakDays(entity.getStreakDays());
         dto.setTotalEarnedCoins(entity.getTotalEarnedCoins());
+        dto.setCoinBalance(entity.getCoinBalance());
+        dto.setStatus(entity.getStatus());
+        dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
 }

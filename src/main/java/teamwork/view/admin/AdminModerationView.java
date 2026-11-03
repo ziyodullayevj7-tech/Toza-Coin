@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import teamwork.dto.wasteReport.ConfirmWasteDto;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportStatus;
 import teamwork.service.AdminService;
 import teamwork.service.WasteReportService;
@@ -264,6 +265,18 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Span buildConfidenceBadge(ConfirmWasteDto report) {
+        if (report.getAiReviewStatus() == AiReviewStatus.PENDING) {
+            Span badge = new Span("AI tekshiruvi kutilmoqda");
+            badge.addClassName("moderation-ai-badge");
+            badge.addClassName("unavailable");
+            return badge;
+        }
+        if (report.getAiReviewStatus() == AiReviewStatus.FAILED) {
+            Span badge = new Span("AI tekshiruvi bajarilmadi");
+            badge.addClassName("moderation-ai-badge");
+            badge.addClassName("unavailable");
+            return badge;
+        }
         if (report.getConfidenceScore() == null) {
             Span badge = new Span("Tahlil yo'q");
             badge.addClassName("moderation-ai-badge");
@@ -374,7 +387,30 @@ public class AdminModerationView extends VerticalLayout {
         Paragraph reasoning = new Paragraph(nonBlank(report.getReasoning(),
                 "AI tahlili uchun izoh mavjud emas."));
         reasoning.addClassName("moderation-ai-reasoning");
-        aiCard.add(aiTitle, score, reasoning);
+        Span reviewStatus = new Span(report.getAiReviewStatus() == AiReviewStatus.COMPLETED
+                ? "AI tekshiruvi yakunlandi"
+                : report.getAiReviewStatus() == AiReviewStatus.FAILED
+                ? "AI tekshiruvini bajarib bo'lmadi"
+                : "AI tekshiruvi kutilmoqda");
+        reviewStatus.addClassName("moderation-ai-score");
+        List<String> findings = new ArrayList<>();
+        if (report.getWastePresent() != null) {
+            findings.add(report.getWastePresent() ? "Chiqindi aniqlandi" : "Chiqindi aniqlanmadi");
+        }
+        if (report.getSameLocation() != null) {
+            findings.add(report.getSameLocation() ? "Joy bir xil" : "Joy mos kelmadi");
+        }
+        if (report.getWasteCleared() != null) {
+            findings.add(report.getWasteCleared() ? "Tozalangan" : "Tozalanmagan");
+        }
+        if (report.getDetectedAnchors() != null && !report.getDetectedAnchors().isBlank()) {
+            findings.add("Belgilar: " + report.getDetectedAnchors());
+        }
+        Paragraph evaluation = new Paragraph(findings.isEmpty()
+                ? "AI baholash tafsilotlari hozircha mavjud emas."
+                : String.join(" · ", findings));
+        evaluation.addClassName("moderation-ai-reasoning");
+        aiCard.add(aiTitle, reviewStatus, score, evaluation, reasoning);
 
         content.add(meta, photoSection, aiCard);
         dialog.add(content);

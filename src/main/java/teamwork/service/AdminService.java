@@ -2,17 +2,15 @@ package teamwork.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import teamwork.dto.coinTransaction.CoinTransactionDto;
+import teamwork.dto.leaderBoard.LeaderBoardDto;
 import teamwork.dto.wasteReport.ConfirmWasteDto;
-import teamwork.entity.ProfileEntity;
 import teamwork.entity.WasteReportEntity;
-import teamwork.enums.CoinType;
+import teamwork.enums.ProfileStatus;
 import teamwork.enums.ReportStatus;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.WasteReportRepository;
-
-import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -20,51 +18,51 @@ public class AdminService {
     private WasteReportRepository wasteReportRepository;
     @Autowired
     private AuthService authService;
-    @Autowired
-    private CoinTransactionService coinTransactionService;
 
 
     @Transactional
     public boolean confirmReport(ConfirmWasteDto dto) {
-        Optional<WasteReportEntity> optional = wasteReportRepository.findById((dto.getReportId()));
-        if (optional.isPresent()) {
-            WasteReportEntity wasteReport = optional.get();
-            if (dto.getStatus().equals(ReportStatus.RESOLVED)) {
-                // UPDATE REPORT STATUS TO RESOLVED
-                wasteReport.setReportStatus(dto.getStatus());
-                wasteReportRepository.save(wasteReport);
-
-                // UPDATE USER BALANCE
-                authService.updateUserBalance(dto.getReporterId(), wasteReport.getRewardCoins());
-
-                // CREATE COIN TRANSACTION
-                CoinTransactionDto coinTransaction =  new CoinTransactionDto();
-                coinTransaction.setCoinType(CoinType.EARN);
-                String actionTitle = "O'zi tozalash";
-                String description = String.format("Ifloslik xabari (%s, %s, %s) - %s",
-                        wasteReport.getCategory() != null ? wasteReport.getCategory().name() : "Chiqindi",
-                        wasteReport.getLocation() != null ? wasteReport.getLocation().getDistrict() : "Manzil",
-                        wasteReport.getLocation() != null ? wasteReport.getLocation().getRegion() : "Toshkent",
-                        actionTitle);
-                coinTransaction.setDescription(description);
-                coinTransaction.setAmount(wasteReport.getRewardCoins());
-                Optional<ProfileEntity> profile = authService.getProfileById(dto.getReporterId());
-                if (profile.isEmpty()) throw new AppBadRequestException("Profile not found");
-                boolean coinTransactionSuccess = coinTransactionService.save(coinTransaction, profile.get());
-                if (!coinTransactionSuccess){
-                    throw new AppBadRequestException("Something went wrong");
-                }
-                return true;
-            } else if (dto.getStatus().equals(ReportStatus.REJECTED)) {
-                wasteReport.setReportStatus(dto.getStatus());
-                wasteReportRepository.save(wasteReport);
-                return true;
-            } else if (dto.getStatus().equals(ReportStatus.IN_PROGRESS)) {
-                wasteReport.setReportStatus(dto.getStatus());
-                wasteReportRepository.save(wasteReport);
-                return true;
-            }
+        if (dto == null || dto.getReportId() == null || dto.getReportId().isBlank()
+                || dto.getStatus() == null) {
+            throw new AppBadRequestException("Report ID and status are required");
         }
-        throw new AppBadRequestException("Report not found");
+
+        WasteReportEntity report = wasteReportRepository.findByIdForUpdate(dto.getReportId())
+                .orElseThrow(() -> new AppBadRequestException("Report not found"));
+        if (report.getReportStatus() == ReportStatus.RESOLVED
+                || report.getReportStatus() == ReportStatus.REJECTED) {
+            throw new AppBadRequestException("This report has already been reviewed");
+        }
+
+        if (dto.getStatus() == ReportStatus.REJECTED) {
+            report.setReportStatus(ReportStatus.REJECTED);
+            wasteReportRepository.save(report);
+            return true;
+        }
+
+        if (dto.getStatus() == ReportStatus.IN_PROGRESS) {
+            if (report.getReportStatus() != ReportStatus.PENDING) {
+                throw new AppBadRequestException("Only pending reports can enter review");
+            }
+            report.setReportStatus(ReportStatus.IN_PROGRESS);
+            wasteReportRepository.save(report);
+            return true;
+        }
+
+        if (dto.getStatus() != ReportStatus.RESOLVED) {
+            throw new AppBadRequestException("Unsupported report status");
+        }
+
+        report.setReportStatus(ReportStatus.RESOLVED);
+        wasteReportRepository.save(report);
+        return true;
+    }
+
+    public Page<LeaderBoardDto> getUsers(int page, int size) {
+        return authService.getUsersByRanking(page, size);
+    }
+
+    public Boolean blockUser(String userId) {
+        return authService.updateProfileStatus(userId, ProfileStatus.BLOCKED);
     }
 }

@@ -2,19 +2,21 @@ package teamwork.service;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import teamwork.dto.coinTransaction.CoinTransactionDto;
+import teamwork.dto.wasteReport.CleanReportedWasteDto;
 import teamwork.dto.wasteReport.ConfirmWasteDto;
 import teamwork.dto.wasteReport.WasteReportDto;
 import teamwork.dto.wasteReport.WasteReportForMyReportDto;
 import teamwork.entity.LocationEntity;
 import teamwork.entity.ProfileEntity;
 import teamwork.entity.WasteReportEntity;
-import teamwork.enums.CoinType;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportActionEnum;
 import teamwork.enums.ReportStatus;
+import teamwork.event.WasteReportCreatedEvent;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.WasteReportRepository;
 import teamwork.util.SecurityUtils;
@@ -33,11 +35,9 @@ public class WasteReportService {
     @Autowired
     private LocationService locationService;
     @Autowired
-    private CoinTransactionService coinTransactionService;
-    @Autowired
     private AuthService authService;
     @Autowired
-    private AiCleanupAnaliseService aiCleanupAnaliseService;
+    private ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public boolean create(WasteReportDto dto) {
@@ -56,8 +56,9 @@ public class WasteReportService {
         String currentProfileId = SecurityUtils.getCurrentUserId();
 
         ProfileEntity reporter = authService.getCurrentProfile(currentProfileId);
-        // DOUBLE CHECK THE REWARD AMOUNT BASED ON THE ACTION
-        int rewardCoins = (dto.getReportAction() == ReportActionEnum.CLEAN_MYSELF) ? 50 : 15;
+        int cleanerRewardCoins = dto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 50 : 0;
+        int reporterRewardCoins = dto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS ? 15 : 0;
+
 
         // SET LOCATION FIRST BECAUSE WE NEED THE ID OF LOCATION TO SET IT FOR WASTE REPORT ENTITY
 
@@ -79,41 +80,85 @@ public class WasteReportService {
         wasteReport.setSeverity(dto.getSeverityLevel());
         wasteReport.setDescription(dto.getDescription());
         wasteReport.setReportAction(dto.getReportAction());
-        wasteReport.setRewardCoins(rewardCoins);
-        wasteReport.setReporter(reporter);
+        wasteReport.setAiReviewStatus(AiReviewStatus.PENDING);
+        wasteReport.setReporterRewardCoins(reporterRewardCoins);
+        wasteReport.setCleanerRewardCoins(cleanerRewardCoins);
         wasteReport.setCreatedDate(LocalDateTime.now());
-        if (dto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS){
-            CoinTransactionDto coinTransaction = new CoinTransactionDto();
-            coinTransaction.setCoinType(CoinType.EARN);
-            String actionTitle = "Mas'ul tashkilotga yuborish";
-            String description = String.format("Ifloslik xabari (%s, %s, %s) - %s",
-                    wasteReport.getCategory() != null ? wasteReport.getCategory().name() : "Chiqindi",
-                    wasteReport.getLocation() != null ? wasteReport.getLocation().getDistrict() : "Manzil",
-                    wasteReport.getLocation() != null ? wasteReport.getLocation().getRegion() : "Toshkent",
-                    actionTitle);
-            coinTransaction.setDescription(description);
-            coinTransaction.setAmount(rewardCoins);
-            boolean coinTransactionSuccess = coinTransactionService.save(coinTransaction, reporter);
-            if (!coinTransactionSuccess) throw new AppBadRequestException("Something went wrong");
-            authService.updateUserBalance(currentProfileId, rewardCoins);
-            wasteReport.setReportStatus(ReportStatus.RESOLVED);
+        wasteReport.setReporter(reporter);
+        if (dto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS) {
+            wasteReport.setReportStatus(ReportStatus.PENDING);
             wasteReport.setBeforeImageUrl(dto.getBeforeImageUrl());
-            wasteReport.setCleanPeriod(0.0);
-        }else {
+        } else {
             wasteReport.setReportStatus(ReportStatus.PENDING);
             wasteReport.setBeforeImageUrl(dto.getBeforeImageUrl());
             wasteReport.setAfterImageUrl(dto.getAfterImageUrl());
             wasteReport.setCleanPeriod(dto.getCleanPeriod());
+            wasteReport.setCleaner(reporter);
         }
 
         WasteReportEntity savedReport = wasteReportRepository.save(wasteReport);
-        if (savedReport.getReportAction() == ReportActionEnum.CLEAN_MYSELF) {
-            try {
-                aiCleanupAnaliseService.analyzeReport(savedReport.getId());
-            } catch (RuntimeException e) {
-                log.error("AI analysis failed for waste report {}", savedReport.getId(), e);
-            }
+        eventPublisher.publishEvent(new WasteReportCreatedEvent(savedReport.getId()));
+        return true;
+    }
+
+    @Transactional
+    public boolean claimReportForCleaning(String reportId) {
+        if (reportId == null || reportId.isBlank()) {
+            throw new AppBadRequestException("Waste report ID is required");
         }
+
+        String currentProfileId = SecurityUtils.getCurrentUserId();
+        Optional<WasteReportEntity> optional = wasteReportRepository.findByIdForUpdate(reportId);
+        if (optional.isEmpty()) throw new AppBadRequestException("Waste Report not found");
+
+        WasteReportEntity report = optional.get();
+        if (report.getReportAction() != ReportActionEnum.SEND_TO_OTHERS
+                || report.getReportStatus() != ReportStatus.IN_PROGRESS
+                || report.getCleaner() != null) {
+            throw new AppBadRequestException("This report is not available for cleaning");
+        }
+        if (currentProfileId.equals(report.getReporterId())) {
+            throw new AppBadRequestException("You cannot clean your own reported waste");
+        }
+
+        report.setCleaner(authService.getCurrentProfile(currentProfileId));
+        wasteReportRepository.save(report);
+        return true;
+    }
+
+    @Transactional
+    public boolean updateReportCleaner(CleanReportedWasteDto dto) {
+        if (dto == null || dto.getWasteReportId() == null || dto.getWasteReportId().isBlank()
+                || dto.getCleanedImageUrl() == null || dto.getCleanedImageUrl().isBlank()
+                || dto.getCleanPeriod() == null || !Double.isFinite(dto.getCleanPeriod())
+                || dto.getCleanPeriod() <= 0) {
+            throw new AppBadRequestException("A cleaned photo and valid cleaning duration are required");
+        }
+
+        String currentProfileId = SecurityUtils.getCurrentUserId();
+        ProfileEntity cleaner = authService.getCurrentProfile(currentProfileId);
+
+        Optional<WasteReportEntity> optional = wasteReportRepository.findByIdForUpdate(dto.getWasteReportId());
+        if (optional.isEmpty()) throw new AppBadRequestException("Waste Report not found");
+
+        WasteReportEntity wasteReport = optional.get();
+        if (wasteReport.getReportAction() != ReportActionEnum.SEND_TO_OTHERS
+                || wasteReport.getReportStatus() != ReportStatus.IN_PROGRESS
+                || (wasteReport.getCleaner() != null
+                && !currentProfileId.equals(wasteReport.getCleaner().getId()))) {
+            throw new AppBadRequestException("This report is not assigned to you for cleaning");
+        }
+        if (currentProfileId.equals(wasteReport.getReporterId())) {
+            throw new AppBadRequestException("You cannot clean your own reported waste");
+        }
+
+        if (wasteReport.getCleaner() == null) {
+            wasteReport.setCleaner(cleaner);
+        }
+        wasteReport.setAfterImageUrl(dto.getCleanedImageUrl());
+        wasteReport.setCleanPeriod(dto.getCleanPeriod());
+        wasteReport.setReportStatus(ReportStatus.PENDING);
+        wasteReportRepository.save(wasteReport);
         return true;
     }
 
@@ -131,7 +176,10 @@ public class WasteReportService {
         dto.setSeverityLevel(entity.getSeverity());
         dto.setWasteType(entity.getCategory());
         dto.setDescription(entity.getDescription());
-        dto.setCoins(entity.getRewardCoins());
+        dto.setReporterRewardCoins(entity.getReporterRewardCoins());
+        dto.setCleanerRewardCoins(entity.getCleanerRewardCoins());
+        dto.setAiReviewStatus(entity.getAiReviewStatus());
+        dto.setAiRewardGranted(entity.getAiRewardGranted());
         dto.setRegion(entity.getLocation().getRegion());
         dto.setDistrict(entity.getLocation().getDistrict());
         dto.setStreetAddress(entity.getLocation().getStreetAddress());
@@ -157,9 +205,8 @@ public class WasteReportService {
     @Transactional
     public Page<ConfirmWasteDto> getUnresolvedReports(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").ascending());
-        Page<WasteReportEntity> wasteReportEntities = wasteReportRepository.findAllUnresolved(ReportStatus.PENDING,
-                ReportStatus.IN_PROGRESS,
-                pageable);
+        Page<WasteReportEntity> wasteReportEntities = wasteReportRepository.findAllUnresolved(
+                ReportStatus.PENDING, ReportStatus.IN_PROGRESS, ReportActionEnum.CLEAN_MYSELF, pageable);
 
         List<WasteReportEntity> entityList = wasteReportEntities.getContent();
         long totalElements = wasteReportEntities.getTotalElements();
@@ -174,6 +221,7 @@ public class WasteReportService {
         ConfirmWasteDto dto = new ConfirmWasteDto();
         dto.setReportId(entity.getId());
         dto.setReporterId(entity.getReporter().getId());
+        dto.setCleanerId(entity.getCleaner() == null ? null : entity.getCleaner().getId());
         dto.setReporterFullName(entity.getReporter().getName() + " " + entity.getReporter().getSurname());
         dto.setDistrict(entity.getLocation().getDistrict());
         dto.setBeforeImageUrl(entity.getBeforeImageUrl());
@@ -183,6 +231,11 @@ public class WasteReportService {
         dto.setReportedDateTime(entity.getCreatedDate());
         dto.setConfidenceScore(entity.getConfidenceScore());
         dto.setReasoning(entity.getAiReasoning());
+        dto.setAiReviewStatus(entity.getAiReviewStatus());
+        dto.setWastePresent(entity.getAiWastePresent());
+        dto.setSameLocation(entity.getAiSameLocation());
+        dto.setWasteCleared(entity.getAiWasteCleared());
+        dto.setDetectedAnchors(entity.getAiDetectedAnchors());
         return dto;
     }
 }

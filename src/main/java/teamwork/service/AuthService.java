@@ -5,6 +5,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -12,13 +16,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import teamwork.config.CustomUserDetails;
 import teamwork.config.PasswordEncoderConfig;
 import teamwork.dto.LoginDto;
 import teamwork.dto.ProfileDto;
+import teamwork.dto.leaderBoard.LeaderBoardDto;
 import teamwork.entity.ProfileEntity;
 import teamwork.entity.ProfileRoleEntity;
 import teamwork.enums.ProfileRole;
@@ -29,6 +33,8 @@ import teamwork.repository.ProfileRoleRepository;
 import teamwork.util.SecurityUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -178,6 +184,28 @@ public class AuthService {
         return true;
     }
 
+    @Transactional
+    public boolean creditAiReviewReward(String profileId, int amount) {
+        Optional<ProfileEntity> optional = profileRepository.findById(profileId);
+        if (optional.isEmpty()) return false;
+
+        ProfileEntity profile = optional.get();
+        profile.setCoinBalance((profile.getCoinBalance() == null ? 0 : profile.getCoinBalance()) + amount);
+        profile.setTotalEarnedCoins((profile.getTotalEarnedCoins() == null
+                ? 0 : profile.getTotalEarnedCoins()) + amount);
+        profile.setReportCount((profile.getReportCount() == null ? 0 : profile.getReportCount()) + 1);
+        LocalDateTime now = LocalDateTime.now();
+        if (profile.getLastReportDate() != null
+                && profile.getLastReportDate().isAfter(now.minusDays(1))) {
+            profile.setStreakDays((profile.getStreakDays() == null ? 0 : profile.getStreakDays()) + 1);
+        } else {
+            profile.setStreakDays(1);
+        }
+        profile.setLastReportDate(now);
+        profileRepository.save(profile);
+        return true;
+    }
+
     public ProfileEntity getCurrentProfile(String id) {
         return profileRepository.getReferenceById(id);
     }
@@ -243,5 +271,44 @@ public class AuthService {
             return "";
         }
         return value.trim();
+    }
+
+    @Transactional
+    public Page<LeaderBoardDto> getUsersByRanking(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<ProfileEntity> profiles = profileRepository.findAllOrderByCount(pageable);
+        List<ProfileEntity> entities = profiles.getContent();
+        long totalElements = profiles.getTotalElements();
+
+        List<LeaderBoardDto> dtos = new ArrayList<>();
+        entities.forEach(entity -> dtos.add(toDto(entity)));
+
+        return new PageImpl<>(dtos, pageable, totalElements);
+    }
+
+    public LeaderBoardDto toDto(ProfileEntity entity) {
+        LeaderBoardDto dto = new LeaderBoardDto();
+        dto.setProfileId(entity.getId());
+        dto.setFullName(entity.getName() + " " + entity.getSurname());
+        dto.setDistrict(entity.getDistrict());
+        dto.setReportCount(entity.getReportCount());
+        dto.setStreakDays(entity.getStreakDays());
+        dto.setTotalEarnedCoins(entity.getTotalEarnedCoins());
+        dto.setCoinBalance(entity.getCoinBalance());
+        dto.setStatus(entity.getStatus());
+        dto.setCreatedDate(entity.getCreatedDate());
+        return dto;
+    }
+
+    public Boolean updateProfileStatus(String profileId, ProfileStatus status) {
+        Optional<ProfileEntity> optional = profileRepository.findById(profileId);
+        if (optional.isPresent()) {
+            ProfileEntity profile = optional.get();
+            profile.setStatus(status);
+            profileRepository.save(profile);
+            return true;
+        }
+        return false;
     }
 }

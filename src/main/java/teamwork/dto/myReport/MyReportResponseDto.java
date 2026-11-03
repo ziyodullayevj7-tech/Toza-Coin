@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import teamwork.enums.ReportStatus;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.SeverityLevelEnum;
 import teamwork.enums.WasteTypeEnum;
 
@@ -24,4 +25,6 @@ public class MyReportResponseDto {
     private String streetAddress;
     private LocalDate date;
     private Integer rewardCoins;
+    private AiReviewStatus aiReviewStatus;
+    private Boolean aiRewardGranted;
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportStatus;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class ConfirmWasteDto {
     private String reportId;
     private String reporterId;
+    private String cleanerId;
     private String reporterFullName;
     private String district;
     private String beforeImageUrl;
@@ -23,5 +25,10 @@ public class ConfirmWasteDto {
     private Double cleanPeriod;
     private Integer confidenceScore;
     private String reasoning;
+    private AiReviewStatus aiReviewStatus;
+    private Boolean wastePresent;
+    private Boolean sameLocation;
+    private Boolean wasteCleared;
+    private String detectedAnchors;
     private LocalDateTime reportedDateTime;
 }

@@ -12,7 +12,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import teamwork.dto.attach.AttachDto;
@@ -550,13 +549,13 @@ public class ReportWasteView extends VerticalLayout {
         H2 title = new H2("Yo'lni tanlang");
         title.getStyle().set("text-align", "center").set("margin", "0");
 
-        Paragraph subtitle = new Paragraph("Harakatingizga qarab mukofot miqdori farq qiladi");
+        Paragraph subtitle = new Paragraph("Tozalashni o'zingiz bajaring yoki muammo haqida xabar bering");
         subtitle.getStyle().set("text-align", "center").set("color", "#64748b").set("margin", "0 0 16px 0");
 
         // Option 1: O'zim tozalayman (+50 coins)
         Div option1Card = buildActionOptionCard(
                 "O'zim tozalayman",
-                "Joyni tozalab, keyingi holat suratini yuborasiz — ko'proq tanga",
+                "Joyni tozalang. AI tekshiruvdan o'tsa 50 tanga beriladi.",
                 "🧹",
                 "🪙 50",
                 "#fef3c7",
@@ -565,10 +564,10 @@ public class ReportWasteView extends VerticalLayout {
                 50
         );
 
-        // Option 2: Mas'ul tashkilotga yuborish (+15 coins)
+        // Option 2: Report a problem for another user to clean.
         Div option2Card = buildActionOptionCard(
-                "Mas'ul tashkilotga yuborish",
-                "Murojaat tegishli xizmatga yo'naltiriladi — kamroq tanga",
+                "Xabar berish",
+                "Faqat suratni yuboring. AI tasdiqlasa 15 tanga beriladi.",
                 "📬",
                 "🪙 15",
                 "#e0f2fe",
@@ -586,11 +585,13 @@ public class ReportWasteView extends VerticalLayout {
                 .set("padding", "16px")
                 .set("color", "#92400e")
                 .set("font-size", "13px");
-        noticeBox.add(new Paragraph("ℹ️ Eslatma: o'zingiz qayd etgan muammo uchun ball minimal. To'liq tanga boshqa fuqaro qayd etgan muammoni tozalaganda beriladi."));
+        noticeBox.add(new Paragraph("ℹ️ Surat yuborilgach, AI tekshiruvi fonda bajariladi. Kutishingiz shart emas."));
 
         // Next Button
         btnNextStep4.addClassName("btn-step-next-green");
         btnNextStep4.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btnNextStep4.setText(wasterReportDto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS
+                ? "Xabarni yuborish →" : "Davom etish →");
         btnNextStep4.setEnabled(wasterReportDto.getReportAction() != null);
 
         card.add(headerEmoji, title, subtitle, option1Card, option2Card, noticeBox, btnNextStep4);
@@ -667,9 +668,8 @@ public class ReportWasteView extends VerticalLayout {
 
             wasterReportDto.setReportAction(actionType);
             wasterReportDto.setRewardCoins(rewardCoins);
-            if (actionType == ReportActionEnum.CLEAN_MYSELF && cleaningStartedAt == null) {
-                cleaningStartedAt = Instant.now();
-            }
+            btnNextStep4.setText(actionType == ReportActionEnum.SEND_TO_OTHERS
+                    ? "Xabarni yuborish →" : "Davom etish →");
             btnNextStep4.setEnabled(true);
         });
 
@@ -683,7 +683,7 @@ public class ReportWasteView extends VerticalLayout {
             }
             renderStepCard(5);
         } else if (wasterReportDto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS) {
-            renderStepCard(5);
+            onFinalSubmitConfirmed();
         }
     }
 
@@ -723,7 +723,7 @@ public class ReportWasteView extends VerticalLayout {
                 startedAtMillis, completedDuration
         );
 
-        Span transparencyNote = new Span("Vaqt saqlanadi va admin ko'rib chiqishi uchun yuboriladi.");
+        Span transparencyNote = new Span("Tozalash vaqti saqlanadi va AI tekshiruviga yuboriladi.");
         transparencyNote.addClassName("cleaning-timer-note");
 
         Button finishCleaning = new Button("Tozalash tugadi — suratga olish →");
@@ -749,7 +749,7 @@ public class ReportWasteView extends VerticalLayout {
         Div card = createBaseCard();
         H2 title = new H2("Tozalashdan keyingi surat");
         Paragraph subtitle = new Paragraph(
-                "Xuddi shu joyni kameradan suratga oling. Admin ikkala surat va sarflangan vaqtni ko'rib chiqadi.");
+                "Xuddi shu joyni kameradan suratga oling. AI ikkala surat va sarflangan vaqtni tekshiradi.");
         subtitle.addClassName("camera-note-text");
 
         afterPhotoBox.setId("camera-after-stream-box");
@@ -823,7 +823,8 @@ public class ReportWasteView extends VerticalLayout {
                 createRecapRow("Toifa", formatCategoryName(wasterReportDto.getWasteType())),
                 createRecapRow("Og'irlik", formatSeverityName(wasterReportDto.getSeverityLevel())),
                 createRecapRow("Joylashuv", wasterReportDto.getLocation().getDistrict() + ", " + wasterReportDto.getLocation().getRegion()),
-                createRecapRow("Harakat", wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? "O'zim tozalayman" : "Mas'ul tashkilotga yuborish")
+                createRecapRow("Harakat", wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF
+                        ? "O'zim tozalayman" : "Xabar berish")
         );
         if (cleaning) {
             summaryList.add(createRecapRow("Tozalash vaqti", formatDuration(wasterReportDto.getCleanPeriod())));
@@ -841,12 +842,14 @@ public class ReportWasteView extends VerticalLayout {
                 .set("align-items", "center");
 
         Div rewardLabelGroup = new Div(new Span(cleaning
-                ? "Admin tasdiqlagandan keyin beriladi"
-                : "Xabar yuborilganda hisobga qo'shiladi"));
+                ? "AI tasdiqlasa beriladi"
+                : "AI tasdiqlasa beriladi"));
         rewardLabelGroup.getStyle().set("color", "#0369a1").set("font-weight", "600");
 
-        int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 15;
-        Div rewardAmountGroup = new Div(new Span("🪙 " + coins + " tanga"));
+        int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 0;
+        Div rewardAmountGroup = new Div(new Span(cleaning
+                ? "🪙 " + coins + " tanga"
+                : "🪙 " + coins + " tanga"));
         rewardAmountGroup.getStyle().set("color", "#0284c7").set("font-weight", "800").set("font-size", "22px");
 
         rewardBox.add(rewardLabelGroup, rewardAmountGroup);
@@ -902,7 +905,7 @@ public class ReportWasteView extends VerticalLayout {
             Notification.show("Something went wrong", 4000, Notification.Position.MIDDLE);
             return;
         }
-        renderStepCard(wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 8 : 6);
+        renderStepCard(8);
     }
 
     private Div buildStep6SuccessCard() {
@@ -914,13 +917,13 @@ public class ReportWasteView extends VerticalLayout {
         celebrationBadge.getStyle().set("font-size", "54px").set("margin-bottom", "8px");
 
         H2 title = new H2(cleaning
-                ? "Tozalash hisoboti admin tasdig'iga yuborildi!"
-                : "Xabaringiz qabul qilindi va mukofot hisobingizga qo'shildi!");
+                ? "Tozalash hisoboti yuborildi!"
+                : "Xabaringiz qabul qilindi!");
         title.getStyle().set("margin", "0").set("color", "#15803d").set("font-size", "22px").set("font-weight", "800");
 
         Paragraph subtitle = new Paragraph(cleaning
-                ? "Oldin-keyin suratlari va tozalash vaqti admin ko'rib chiqishi uchun saqlandi."
-                : "Surat va joylashuv ma'lumotlari tizimga saqlandi.");
+                ? "Suratlar va tozalash vaqti saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas."
+                : "Surat va joylashuv saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas.");
         subtitle.getStyle().set("color", "#64748b").set("margin", "4px 0 20px 0").set("font-size", "14px");
 
         // Gamified Reward Box
@@ -938,19 +941,17 @@ public class ReportWasteView extends VerticalLayout {
                 .set("box-shadow", "0 4px 14px rgba(245, 158, 11, 0.15)");
 
         Span rewardTitle = new Span(cleaning
-                ? "Admin tasdiqlagandan keyin beriladi"
-                : "Mukofot hisobingizga qo'shildi");
+                ? "AI tasdiqlasa beriladi"
+                : "AI tasdiqlasa beriladi");
         rewardTitle.getStyle().set("font-size", "13px").set("font-weight", "700").set("color", "#b45309");
 
-        int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 15;
-        H1 coinAmount = new H1(cleaning
-                ? coins + " tanga kutilmoqda"
-                : "+" + coins + " tanga olindi 🪙");
+        int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 0;
+        H1 coinAmount = new H1(coins + " tanga kutilmoqda");
         coinAmount.getStyle().set("margin", "0").set("font-size", "32px").set("font-weight", "900").set("color", "#d97706");
 
         Span statusBadge = new Span(cleaning
-                ? "🟡 Holati: Admin tasdig'ini kutmoqda"
-                : "✅ Holati: Yuborildi");
+                ? "🟡 AI tekshiruvi kutilmoqda"
+                : "🟡 AI tekshiruvi kutilmoqda");
         statusBadge.getStyle()
                 .set("background-color", "#ffffff")
                 .set("color", "#92400e")

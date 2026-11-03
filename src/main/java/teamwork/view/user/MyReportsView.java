@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import teamwork.dto.myReport.MyReportResponseDto;
 import teamwork.entity.AttachEntity;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportStatus;
 import teamwork.enums.SeverityLevelEnum;
 import teamwork.enums.WasteTypeEnum;
@@ -246,7 +247,7 @@ public class MyReportsView extends VerticalLayout {
         filterTabsRow.add(
                 createTabButton("Barchasi (" + allCount + ")", null),
                 createTabButton("Kutilmoqda (" + pendingCount + ")", ReportStatus.PENDING),
-                createTabButton("Tasdiqlandi (" + inProgressCount + ")", ReportStatus.IN_PROGRESS),
+                createTabButton("Ko'rib chiqilmoqda (" + inProgressCount + ")", ReportStatus.IN_PROGRESS),
                 createTabButton("Hal qilindi (" + resolvedCount + ")", ReportStatus.RESOLVED),
                 createTabButton("Rad etildi (" + rejectedCount + ")", ReportStatus.REJECTED)
         );
@@ -384,11 +385,12 @@ public class MyReportsView extends VerticalLayout {
 
         Span statusBadge = buildStatusBadge(dto.getReportStatus());
 
-        Span coinsSpan = new Span("🪙 +" + (dto.getRewardCoins() != null ? dto.getRewardCoins() : 15));
+        int rewardCoins = dto.getRewardCoins() == null ? 0 : dto.getRewardCoins();
+        Span coinsSpan = new Span(rewardStatusText(dto, rewardCoins));
         coinsSpan.getStyle()
                 .set("font-size", "14px")
                 .set("font-weight", "700")
-                .set("color", "#d97706");
+                .set("color", Boolean.TRUE.equals(dto.getAiRewardGranted()) ? "#d97706" : "#64748b");
 
         String dateStr = (dto.getDate() != null) ? dto.getDate().format(dateFormatter) : "";
         Span dateSpan = new Span(dateStr);
@@ -611,7 +613,7 @@ public class MyReportsView extends VerticalLayout {
 
         locDateRow.add(modalLoc, modalDate);
 
-        // Bottom Yellow Alert Box ("+15 tanga hisoblandi")
+        // Explain the reward outcome for this report.
         Div yellowRewardBox = new Div();
         yellowRewardBox.getStyle()
                 .set("background-color", "#fef9c3")
@@ -623,11 +625,11 @@ public class MyReportsView extends VerticalLayout {
                 .set("gap", "10px")
                 .set("margin-top", "8px");
 
-        Span coinEmoji = new Span("🪙");
+        int coins = dto.getRewardCoins() == null ? 0 : dto.getRewardCoins();
+        Span coinEmoji = new Span(coins > 0 ? "🪙" : "ℹ️");
         coinEmoji.getStyle().set("font-size", "20px");
 
-        int coins = (dto.getRewardCoins() != null) ? dto.getRewardCoins() : 15;
-        Span rewardText = new Span("+" + coins + " tanga hisoblandi");
+        Span rewardText = new Span(rewardStatusText(dto, coins));
         rewardText.getStyle()
                 .set("font-size", "14px")
                 .set("font-weight", "700")
@@ -640,6 +642,21 @@ public class MyReportsView extends VerticalLayout {
         modalContainer.add(imageBanner, bodyContent);
         dialog.add(modalContainer);
         dialog.open();
+    }
+
+    private String rewardStatusText(MyReportResponseDto dto, int coins) {
+        if (dto.getAiReviewStatus() == AiReviewStatus.PENDING) {
+            return "AI tekshiruvi kutilmoqda (+ " + coins + " tanga)";
+        }
+        if (dto.getAiReviewStatus() == AiReviewStatus.FAILED) {
+            return "AI tekshiruvi bajarilmadi";
+        }
+        if (dto.getAiReviewStatus() == AiReviewStatus.COMPLETED) {
+            return Boolean.TRUE.equals(dto.getAiRewardGranted())
+                    ? "+" + coins + " tanga berildi"
+                    : "AI mukofotni tasdiqlamadi";
+        }
+        return coins > 0 ? "+" + coins + " tanga kutilmoqda" : "AI tekshiruvi kutilmoqda";
     }
 
     /* =========================================================================
@@ -662,8 +679,8 @@ public class MyReportsView extends VerticalLayout {
                 badge.getStyle().set("background-color", "#e0f2fe").set("color", "#0284c7");
             }
             case IN_PROGRESS -> {
-                badge.setText("Tasdiqlandi");
-                badge.getStyle().set("background-color", "#dcfce7").set("color", "#16a34a");
+                badge.setText("Ko'rib chiqilmoqda");
+                badge.getStyle().set("background-color", "#fef3c7").set("color", "#d97706");
             }
             case REJECTED -> {
                 badge.setText("Rad etildi");
