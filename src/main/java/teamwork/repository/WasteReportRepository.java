@@ -3,12 +3,14 @@ package teamwork.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import teamwork.entity.WasteReportEntity;
 import teamwork.enums.ReportActionEnum;
 import teamwork.enums.ReportStatus;
 
+import jakarta.persistence.LockModeType;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,8 @@ public interface WasteReportRepository extends JpaRepository<WasteReportEntity, 
     long countByReporterIdAndReportStatus(String reporterId, ReportStatus reportStatus);
 
     @Query("SELECT wr FROM WasteReportEntity wr JOIN FETCH wr.location " +
-            "WHERE wr.reportAction = :reportAction OR wr.reportStatus = :reportStatus " +
+            "WHERE wr.reportAction = :reportAction AND wr.reportStatus = :reportStatus " +
+            "AND wr.cleaner IS NULL " +
             "ORDER BY wr.createdDate DESC")
     List<WasteReportEntity> findAllLiveWaste(@Param("reportAction") ReportActionEnum reportAction,
                                              @Param("reportStatus") ReportStatus reportStatus,
@@ -30,10 +33,16 @@ public interface WasteReportRepository extends JpaRepository<WasteReportEntity, 
 
     Optional<WasteReportEntity> findByReporterIdIs(String reporterId);
 
-    @Query("SELECT wr FROM WasteReportEntity AS wr " +
-            "WHERE wr.reportStatus = :reportStatus1 " +
-            "OR wr.reportStatus = :reportStatus2")
-    Page<WasteReportEntity> findAllUnresolved(@Param("reportStatus1") ReportStatus reportStatus1,
-                                              @Param("reportStatus2") ReportStatus reportStatus2,
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT wr FROM WasteReportEntity wr WHERE wr.id = :reportId")
+    Optional<WasteReportEntity> findByIdForUpdate(@Param("reportId") String reportId);
+
+    @Query("SELECT wr FROM WasteReportEntity wr " +
+            "WHERE wr.reportStatus = :pendingStatus " +
+            "OR (wr.reportStatus = :inProgressStatus " +
+            "AND wr.reportAction = :cleanMyself)")
+    Page<WasteReportEntity> findAllUnresolved(@Param("pendingStatus") ReportStatus pendingStatus,
+                                              @Param("inProgressStatus") ReportStatus inProgressStatus,
+                                              @Param("cleanMyself") ReportActionEnum cleanMyself,
                                               Pageable pageable);
 }

@@ -11,6 +11,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class AiAnaliseResultDto {
+    @JsonProperty("wastePresent")
+    private Boolean wastePresent;
+
     @JsonProperty("isSameLocation")
     private Boolean sameLocation;
 
@@ -26,7 +29,7 @@ public class AiAnaliseResultDto {
     @JsonProperty("reasoning")
     private String reasoning;
 
-    public void validate() {
+    public void validateCleanup() {
         if (sameLocation == null || wasteCleared == null
                 || confidenceScore == null
                 || confidenceScore < 0 || confidenceScore > 100) {
@@ -34,9 +37,22 @@ public class AiAnaliseResultDto {
         }
     }
 
-    public boolean isEligibleForReward() {
+    public void validateReport() {
+        if (wastePresent == null || confidenceScore == null
+                || confidenceScore < 0 || confidenceScore > 100) {
+            throw new IllegalArgumentException("AI returned an incomplete or invalid report analysis");
+        }
+    }
+
+    public boolean isEligibleForCleanupReward() {
         return Boolean.TRUE.equals(sameLocation)
                 && Boolean.TRUE.equals(wasteCleared)
+                && confidenceScore != null
+                && confidenceScore >= 80;
+    }
+
+    public boolean isEligibleForReportReward() {
+        return Boolean.TRUE.equals(wastePresent)
                 && confidenceScore != null
                 && confidenceScore >= 80;
     }

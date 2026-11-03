@@ -14,6 +14,7 @@ import teamwork.enums.ReportStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MyReportsService {
@@ -40,6 +41,8 @@ public class MyReportsService {
         dto.setDistrict(wasteReportForMyReportDto.getDistrict());
         dto.setStreetAddress(wasteReportForMyReportDto.getStreetAddress());
         dto.setDate(wasteReportForMyReportDto.getDate());
+        dto.setAiReviewStatus(wasteReportForMyReportDto.getAiReviewStatus());
+        dto.setAiRewardGranted(wasteReportForMyReportDto.getAiRewardGranted());
 
         return dto;
     }
@@ -88,7 +91,12 @@ public class MyReportsService {
         dto.setSeverityLevel(entity.getSeverity());
         dto.setWasteType(entity.getCategory());
         dto.setDescription(entity.getDescription());
-        dto.setRewardCoins(entity.getRewardCoins() != null ? entity.getRewardCoins() : 0);
+        Integer rewardCoins = Objects.equals(entity.getReporterId(), entity.getCleanerId())
+                ? entity.getCleanerRewardCoins()
+                : entity.getReporterRewardCoins();
+        dto.setRewardCoins(rewardCoins == null ? 0 : rewardCoins);
+        dto.setAiReviewStatus(entity.getAiReviewStatus());
+        dto.setAiRewardGranted(entity.getAiRewardGranted());
 
         if (entity.getLocation() != null) {
             dto.setRegion(entity.getLocation().getRegion());

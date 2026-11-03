@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import teamwork.enums.ReportActionEnum;
 import teamwork.enums.ReportStatus;
+import teamwork.enums.AiReviewStatus;
 import teamwork.enums.SeverityLevelEnum;
 import teamwork.enums.WasteTypeEnum;
 
@@ -57,8 +58,11 @@ public class WasteReportEntity {
     @Column(name = "report_action", nullable = false)
     private ReportActionEnum reportAction;
 
-    @Column(name = "reward_coins")
-    private Integer rewardCoins;
+    @Column(name = "reporter_reward_coins")
+    private Integer reporterRewardCoins;
+
+    @Column(name = "cleaner_reward_coins")
+    private Integer cleanerRewardCoins;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "report_status", nullable = false)
@@ -70,6 +74,12 @@ public class WasteReportEntity {
     @JoinColumn(name = "reporter_id", nullable = false)
     private ProfileEntity reporter;
 
+    @Column(name = "cleaner_id", insertable = false, updatable = false)
+    private String cleanerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cleaner_id")
+    private ProfileEntity cleaner;
+
     @Column(name = "clean_period")
     private Double cleanPeriod;
 
@@ -78,6 +88,28 @@ public class WasteReportEntity {
 
     @Column(name = "ai_reasoning", columnDefinition = "TEXT")
     private String aiReasoning;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ai_review_status")
+    private AiReviewStatus aiReviewStatus;
+
+    @Column(name = "ai_waste_present")
+    private Boolean aiWastePresent;
+
+    @Column(name = "ai_same_location")
+    private Boolean aiSameLocation;
+
+    @Column(name = "ai_waste_cleared")
+    private Boolean aiWasteCleared;
+
+    @Column(name = "ai_detected_anchors", columnDefinition = "TEXT")
+    private String aiDetectedAnchors;
+
+    @Column(name = "ai_reviewed_at")
+    private LocalDateTime aiReviewedAt;
+
+    @Column(name = "ai_reward_granted")
+    private Boolean aiRewardGranted;
 
     @Column(name = "created_date")
     @CreationTimestamp

@@ -21,13 +21,10 @@ import java.util.List;
 @Service
 public class MapService {
     @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
     private WasteReportRepository wasteReportRepository;
 
     /**
-     * Fetches up to 100 most recent waste reports that are either REJECTED or SEND_TO_OTHERS.
+     * Fetches up to 100 most recent reports approved for community cleanup.
      * Single SQL query — no COUNT, no N+1 (location is JOIN FETCHed).
      */
     @Transactional
@@ -35,7 +32,7 @@ public class MapService {
         Pageable limit = PageRequest.of(0, 100, Sort.by("createdDate").descending());
 
         return wasteReportRepository
-                .findAllLiveWaste(ReportActionEnum.SEND_TO_OTHERS, ReportStatus.REJECTED, limit)
+                .findAllLiveWaste(ReportActionEnum.SEND_TO_OTHERS, ReportStatus.IN_PROGRESS, limit)
                 .stream()
                 .map(this::toDto)
                 .toList();
@@ -47,7 +44,7 @@ public class MapService {
         dto.setImageUrl(entity.getBeforeImageUrl());
         dto.setWasteType(entity.getCategory());
         dto.setSeverityLevel(entity.getSeverity());
-        dto.setRewardCoins(entity.getRewardCoins());
+        dto.setRewardCoins(entity.getCleanerRewardCoins());
         dto.setReporterId(entity.getReporterId());
 
         LocationDto location = new LocationDto();
