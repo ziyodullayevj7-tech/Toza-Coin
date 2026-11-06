@@ -1,5 +1,6 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -12,22 +13,22 @@ import java.util.List;
 @CssImport("./themes/tozacoin/review.css")
 public class ReviewSection extends Div {
 
-    private final Div grid = new Div();
+    private final Div grid = I18n.localize(new Div());
 
     public ReviewSection() {
         addClassName("review-wrapper");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("review-container");
 
         // Header Title Block
-        Div headerBlock = new Div();
+        Div headerBlock = I18n.localize(new Div());
         headerBlock.addClassName("review-header");
 
-        Span badge = new Span("FIKRLAR");
+        Span badge = I18n.localize(new Span("FIKRLAR"));
         badge.addClassName("review-badge");
 
-        H2 title = new H2("Ko'ngillilar nima deyishadi");
+        H2 title = I18n.localize(new H2("Ko'ngillilar nima deyishadi"));
         title.addClassName("review-title");
 
         headerBlock.add(badge, title);
@@ -55,45 +56,45 @@ public class ReviewSection extends Div {
     }
 
     private Div createReviewCard(ReviewItem item) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassName("review-card");
 
         // Stars Rating
-        Div stars = new Div();
-        stars.setText("★★★★★");
+        Div stars = I18n.localize(new Div());
+        I18n.text(stars, "★★★★★");
         stars.addClassName("review-stars");
 
         // Quote
-        Paragraph quote = new Paragraph(item.getQuoteText());
+        Paragraph quote = I18n.localize(new Paragraph(item.getQuoteText()));
         quote.addClassName("review-quote");
 
         // User Footer Row
-        Div userRow = new Div();
+        Div userRow = I18n.localize(new Div());
         userRow.addClassName("review-user-row");
 
-        Div userLeft = new Div();
+        Div userLeft = I18n.localize(new Div());
         userLeft.addClassName("review-user-left");
 
-        Div avatar = new Div();
-        avatar.setText(item.getInitials());
+        Div avatar = I18n.localize(new Div());
+        I18n.text(avatar, item.getInitials());
         avatar.addClassName("review-user-avatar");
         avatar.addClassName(item.getAvatarColor());
 
-        Div userInfo = new Div();
+        Div userInfo = I18n.localize(new Div());
         userInfo.addClassName("review-user-info");
 
-        Span name = new Span(item.getName());
+        Span name = I18n.localize(new Span(item.getName()));
         name.addClassName("review-user-name");
 
-        Span city = new Span(item.getCity());
+        Span city = I18n.localize(new Span(item.getCity()));
         city.addClassName("review-user-city");
 
         userInfo.add(name, city);
         userLeft.add(avatar, userInfo);
 
-        Span coins = new Span();
+        Span coins = I18n.localize(new Span());
         coins.addClassName("review-coins-badge");
-        coins.add(new Span("🪙"), new Span(item.getCoinsEarned()));
+        coins.add(I18n.localize(new Span("🪙")), I18n.localize(new Span(item.getCoinsEarned())));
 
         userRow.add(userLeft, coins);
 
@@ -119,7 +120,8 @@ public class ReviewSection extends Div {
         private String coinsEarned;
         private String avatarColor;
 
-        public ReviewItem() {}
+        public ReviewItem() {
+        }
 
         public ReviewItem(String id, String initials, String name, String city, String quoteText, String coinsEarned, String avatarColor) {
             this.id = id;
@@ -131,25 +133,60 @@ public class ReviewSection extends Div {
             this.avatarColor = avatarColor;
         }
 
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getInitials() { return initials; }
-        public void setInitials(String initials) { this.initials = initials; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
+        public String getInitials() {
+            return initials;
+        }
 
-        public String getCity() { return city; }
-        public void setCity(String city) { this.city = city; }
+        public void setInitials(String initials) {
+            this.initials = initials;
+        }
 
-        public String getQuoteText() { return quoteText; }
-        public void setQuoteText(String quoteText) { this.quoteText = quoteText; }
+        public String getName() {
+            return name;
+        }
 
-        public String getCoinsEarned() { return coinsEarned; }
-        public void setCoinsEarned(String coinsEarned) { this.coinsEarned = coinsEarned; }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-        public String getAvatarColor() { return avatarColor; }
-        public void setAvatarColor(String avatarColor) { this.avatarColor = avatarColor; }
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getQuoteText() {
+            return quoteText;
+        }
+
+        public void setQuoteText(String quoteText) {
+            this.quoteText = quoteText;
+        }
+
+        public String getCoinsEarned() {
+            return coinsEarned;
+        }
+
+        public void setCoinsEarned(String coinsEarned) {
+            this.coinsEarned = coinsEarned;
+        }
+
+        public String getAvatarColor() {
+            return avatarColor;
+        }
+
+        public void setAvatarColor(String avatarColor) {
+            this.avatarColor = avatarColor;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -19,23 +20,23 @@ import java.util.Map;
 @CssImport("./themes/tozacoin/waste-category.css")
 public class WasteCategorySection extends Div {
 
-    private final Div grid = new Div();
+    private final Div grid = I18n.localize(new Div());
     private final Map<String, Div> categoryCardsMap = new HashMap<>();
 
     public WasteCategorySection() {
         addClassName("waste-category-wrapper");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("waste-category-container");
 
         // Header Block
-        Div headerBlock = new Div();
+        Div headerBlock = I18n.localize(new Div());
         headerBlock.addClassName("waste-category-header");
 
-        Span badge = new Span("TOIFALAR");
+        Span badge = I18n.localize(new Span("TOIFALAR"));
         badge.addClassName("waste-category-badge");
 
-        H2 title = new H2("Ifloslanish turlari");
+        H2 title = I18n.localize(new H2("Ifloslanish turlari"));
         title.addClassName("waste-category-title");
 
         headerBlock.add(badge, title);
@@ -73,14 +74,14 @@ public class WasteCategorySection extends Div {
     }
 
     private Div createCategoryCard(CategoryItem item) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassName("category-card");
 
-        Span iconBadge = new Span(item.getIconEmoji());
+        Span iconBadge = I18n.localize(new Span(item.getIconEmoji()));
         iconBadge.addClassName("category-icon-badge");
         iconBadge.addClassName(item.getBadgeColor());
 
-        Span label = new Span(item.getTitle());
+        Span label = I18n.localize(new Span(item.getTitle()));
         label.addClassName("category-card-label");
 
         card.add(iconBadge, label);
@@ -107,7 +108,8 @@ public class WasteCategorySection extends Div {
         private String iconEmoji;
         private String badgeColor;
 
-        public CategoryItem() {}
+        public CategoryItem() {
+        }
 
         public CategoryItem(String id, String title, String iconEmoji, String badgeColor) {
             this.id = id;
@@ -116,16 +118,36 @@ public class WasteCategorySection extends Div {
             this.badgeColor = badgeColor;
         }
 
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getTitle() { return title; }
-        public void setTitle(String title) { this.title = title; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public String getIconEmoji() { return iconEmoji; }
-        public void setIconEmoji(String iconEmoji) { this.iconEmoji = iconEmoji; }
+        public String getTitle() {
+            return title;
+        }
 
-        public String getBadgeColor() { return badgeColor; }
-        public void setBadgeColor(String badgeColor) { this.badgeColor = badgeColor; }
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getIconEmoji() {
+            return iconEmoji;
+        }
+
+        public void setIconEmoji(String iconEmoji) {
+            this.iconEmoji = iconEmoji;
+        }
+
+        public String getBadgeColor() {
+            return badgeColor;
+        }
+
+        public void setBadgeColor(String badgeColor) {
+            this.badgeColor = badgeColor;
+        }
     }
 }

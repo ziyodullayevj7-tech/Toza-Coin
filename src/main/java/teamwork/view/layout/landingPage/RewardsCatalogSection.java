@@ -1,5 +1,6 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
@@ -22,27 +23,27 @@ import java.util.Map;
 @CssImport("./themes/tozacoin/rewards-catalog.css")
 public class RewardsCatalogSection extends Div {
 
-    private final Button btnViewAllRewards = new Button("Barcha mukofotlarni ko'rish →");
-    private final Div grid = new Div();
+    private final Button btnViewAllRewards = I18n.localize(new Button("Barcha mukofotlarni ko'rish →"));
+    private final Div grid = I18n.localize(new Div());
     private final Map<String, Div> rewardCardsMap = new HashMap<>();
 
     public RewardsCatalogSection() {
         addClassName("rewards-catalog-wrapper");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("rewards-catalog-container");
 
         // Header Block
-        Div headerBlock = new Div();
+        Div headerBlock = I18n.localize(new Div());
         headerBlock.addClassName("rewards-catalog-header");
 
-        Span badge = new Span("MUKOFOTLAR");
+        Span badge = I18n.localize(new Span("MUKOFOTLAR"));
         badge.addClassName("rewards-catalog-badge");
 
-        H2 title = new H2("Tangangizni haqiqiy narsalarga almashtiring");
+        H2 title = I18n.localize(new H2("Tangangizni haqiqiy narsalarga almashtiring"));
         title.addClassName("rewards-catalog-title");
 
-        Paragraph subtitle = new Paragraph("Ishlagan tangangizni Internet, transport, kino va boshqa mukofotlarga almashtiring.");
+        Paragraph subtitle = I18n.localize(new Paragraph("Ishlagan tangangizni Internet, transport, kino va boshqa mukofotlarga almashtiring."));
         subtitle.addClassName("rewards-catalog-subtitle");
 
         headerBlock.add(badge, title, subtitle);
@@ -93,32 +94,32 @@ public class RewardsCatalogSection extends Div {
     }
 
     private Div createRewardCard(RewardItem item) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassName("reward-card");
 
-        Div leftGroup = new Div();
+        Div leftGroup = I18n.localize(new Div());
         leftGroup.addClassName("reward-card-left");
 
-        Span iconBadge = new Span(item.getIconEmoji());
+        Span iconBadge = I18n.localize(new Span(item.getIconEmoji()));
         iconBadge.addClassName("reward-icon-badge");
         iconBadge.addClassName(item.getBadgeColor());
 
-        Div info = new Div();
+        Div info = I18n.localize(new Div());
         info.addClassName("reward-info");
 
-        Span title = new Span(item.getTitle());
+        Span title = I18n.localize(new Span(item.getTitle()));
         title.addClassName("reward-title");
 
-        Span category = new Span(item.getCategoryLabel());
+        Span category = I18n.localize(new Span(item.getCategoryLabel()));
         category.addClassName("reward-category");
         category.addClassName(item.getCategoryTextColor());
 
         info.add(title, category);
         leftGroup.add(iconBadge, info);
 
-        Span priceBadge = new Span();
+        Span priceBadge = I18n.localize(new Span());
         priceBadge.addClassName("reward-price-badge");
-        priceBadge.add(new Span("🪙"), new Span(item.getCoinCost() + " tanga"));
+        priceBadge.add(I18n.localize(new Span("🪙")), I18n.localize(new Span(item.getCoinCost() + " tanga")));
 
         card.add(leftGroup, priceBadge);
         rewardCardsMap.put(item.getId(), card);
@@ -147,7 +148,8 @@ public class RewardsCatalogSection extends Div {
         private String categoryTextColor;
         private int coinCost;
 
-        public RewardItem() {}
+        public RewardItem() {
+        }
 
         public RewardItem(String id, String title, String categoryLabel, String iconEmoji, String badgeColor, String categoryTextColor, int coinCost) {
             this.id = id;
@@ -159,25 +161,60 @@ public class RewardsCatalogSection extends Div {
             this.coinCost = coinCost;
         }
 
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getTitle() { return title; }
-        public void setTitle(String title) { this.title = title; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public String getCategoryLabel() { return categoryLabel; }
-        public void setCategoryLabel(String categoryLabel) { this.categoryLabel = categoryLabel; }
+        public String getTitle() {
+            return title;
+        }
 
-        public String getIconEmoji() { return iconEmoji; }
-        public void setIconEmoji(String iconEmoji) { this.iconEmoji = iconEmoji; }
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-        public String getBadgeColor() { return badgeColor; }
-        public void setBadgeColor(String badgeColor) { this.badgeColor = badgeColor; }
+        public String getCategoryLabel() {
+            return categoryLabel;
+        }
 
-        public String getCategoryTextColor() { return categoryTextColor; }
-        public void setCategoryTextColor(String categoryTextColor) { this.categoryTextColor = categoryTextColor; }
+        public void setCategoryLabel(String categoryLabel) {
+            this.categoryLabel = categoryLabel;
+        }
 
-        public int getCoinCost() { return coinCost; }
-        public void setCoinCost(int coinCost) { this.coinCost = coinCost; }
+        public String getIconEmoji() {
+            return iconEmoji;
+        }
+
+        public void setIconEmoji(String iconEmoji) {
+            this.iconEmoji = iconEmoji;
+        }
+
+        public String getBadgeColor() {
+            return badgeColor;
+        }
+
+        public void setBadgeColor(String badgeColor) {
+            this.badgeColor = badgeColor;
+        }
+
+        public String getCategoryTextColor() {
+            return categoryTextColor;
+        }
+
+        public void setCategoryTextColor(String categoryTextColor) {
+            this.categoryTextColor = categoryTextColor;
+        }
+
+        public int getCoinCost() {
+            return coinCost;
+        }
+
+        public void setCoinCost(int coinCost) {
+            this.coinCost = coinCost;
+        }
     }
 }

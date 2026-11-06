@@ -1,5 +1,7 @@
 package teamwork.view.admin;
 
+import teamwork.i18n.I18n;
+
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -8,7 +10,10 @@ import jakarta.annotation.security.RolesAllowed;
 import teamwork.view.layout.admin.AdminLayout;
 
 @Route(value = "admin/statistics", layout = AdminLayout.class)
-@PageTitle("Statistics | TozaCoin")
 @RolesAllowed("ADMIN")
-public class AdminStatisticsView extends VerticalLayout {
+public class AdminStatisticsView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Statistics | TozaCoin");
+    }
 }

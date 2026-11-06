@@ -1,5 +1,6 @@
 package teamwork.view.layout.admin;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
@@ -25,22 +26,22 @@ public class AdminFooter extends Div {
                 ? "" : user.getUsername();
         String initials = user == null ? "AD" : initials(user);
 
-        Div avatar = new Div(new Span(initials));
+        Div avatar = I18n.localize(new Div(I18n.localize(new Span(initials))));
         avatar.addClassName("admin-footer-avatar");
 
-        Div details = new Div();
+        Div details = I18n.localize(new Div());
         details.addClassName("admin-footer-details");
-        Span name = new Span(fullName);
+        Span name = I18n.userText(new Span(), user == null ? null : fullName, "Administrator");
         name.addClassName("admin-footer-name");
         name.setTitle(fullName);
-        Span email = new Span(username);
+        Span email = I18n.localize(new Span(username));
         email.addClassName("admin-footer-email");
         details.add(name, email);
 
-        Button logout = new Button("⏻");
+        Button logout = I18n.localize(new Button("⏻"));
         logout.addClassName("admin-footer-logout");
-        logout.getElement().setAttribute("title", "Chiqish");
-        logout.getElement().setAttribute("aria-label", "Chiqish");
+        I18n.attribute(logout, "title", "Chiqish");
+        I18n.attribute(logout, "aria-label", "Chiqish");
         logout.addClickListener(event -> UI.getCurrent().getPage().setLocation("/logout"));
 
         add(avatar, details, logout);

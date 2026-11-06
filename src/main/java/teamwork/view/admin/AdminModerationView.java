@@ -1,5 +1,6 @@
 package teamwork.view.admin;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
@@ -38,10 +39,9 @@ import java.util.List;
 import java.util.Locale;
 
 @Route(value = "admin/moderation", layout = AdminLayout.class)
-@PageTitle("Moderatsiya | TozaCoin")
 @RolesAllowed("ADMIN")
 @CssImport("./themes/tozacoin/user-layout.css")
-public class AdminModerationView extends VerticalLayout {
+public class AdminModerationView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     private static final Logger log = LoggerFactory.getLogger(AdminModerationView.class);
     private static final int PAGE_SIZE = 10;
@@ -52,14 +52,14 @@ public class AdminModerationView extends VerticalLayout {
     private final AdminService adminService;
     private final List<ConfirmWasteDto> reports = new ArrayList<>();
     private final Grid<ConfirmWasteDto> reportsGrid = new Grid<>();
-    private final Span queueCount = new Span("0");
-    private final Span pageSummary = new Span();
-    private final Span emptyMessage = new Span("Hozircha ko'rib chiqilishi kerak bo'lgan xabar yo'q.");
-    private final Button previousButton = new Button("← Oldingi");
-    private final Button nextButton = new Button("Keyingi →");
-    private final Div statusFilters = new Div();
-    private final Div errorMessage = new Div();
-    private final TextField searchField = new TextField();
+    private final Span queueCount = I18n.localize(new Span("0"));
+    private final Span pageSummary = I18n.localize(new Span());
+    private final Span emptyMessage = I18n.localize(new Span("Hozircha ko'rib chiqilishi kerak bo'lgan xabar yo'q."));
+    private final Button previousButton = I18n.localize(new Button("← Oldingi"));
+    private final Button nextButton = I18n.localize(new Button("Keyingi →"));
+    private final Div statusFilters = I18n.localize(new Div());
+    private final Div errorMessage = I18n.localize(new Div());
+    private final TextField searchField = I18n.localize(new TextField());
 
     private int currentPage;
     private int pageCount;
@@ -82,36 +82,36 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Div buildPageHeader() {
-        Div header = new Div();
+        Div header = I18n.localize(new Div());
         header.addClassName("moderation-page-header");
 
-        Div titleBlock = new Div();
-        H2 title = new H2("Moderatsiya navbati");
+        Div titleBlock = I18n.localize(new Div());
+        H2 title = I18n.localize(new H2("Moderatsiya navbati"));
         title.addClassName("moderation-page-title");
-        Paragraph subtitle = new Paragraph("Kiruvchi xabarlar va tozalash tasdiqlarini ko'rib chiqing");
+        Paragraph subtitle = I18n.localize(new Paragraph("Kiruvchi xabarlar va tozalash tasdiqlarini ko'rib chiqing"));
         subtitle.addClassName("moderation-page-subtitle");
         titleBlock.add(title, subtitle);
 
-        Div countCard = new Div();
+        Div countCard = I18n.localize(new Div());
         countCard.addClassName("moderation-queue-badge");
-        countCard.add(new Span("⏳"), queueCount, new Span("ta navbatda"));
+        countCard.add(I18n.localize(new Span("⏳")), queueCount, I18n.localize(new Span("ta navbatda")));
         header.add(titleBlock, countCard);
         return header;
     }
 
     private Div buildToolbar() {
-        Div toolbar = new Div();
+        Div toolbar = I18n.localize(new Div());
         toolbar.addClassName("moderation-toolbar");
 
         statusFilters.addClassName("moderation-status-filters");
         updateStatusFilters();
 
-        searchField.setPlaceholder("Joriy sahifadagi foydalanuvchi, tuman yoki ID...");
+        I18n.placeholder(searchField, "Joriy sahifadagi foydalanuvchi, tuman yoki ID...");
         searchField.setClearButtonVisible(true);
-        searchField.setPrefixComponent(new Span("⌕"));
+        searchField.setPrefixComponent(I18n.localize(new Span("⌕")));
         searchField.addClassName("moderation-search");
 
-        Button refreshButton = new Button("Yangilash", event -> loadReports());
+        Button refreshButton = I18n.localize(new Button("Yangilash", event -> loadReports()));
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("moderation-refresh-button");
 
@@ -120,7 +120,7 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Div buildReportsPanel() {
-        Div panel = new Div();
+        Div panel = I18n.localize(new Div());
         panel.addClassName("moderation-grid-panel");
 
         errorMessage.addClassName("moderation-error");
@@ -167,31 +167,31 @@ public class AdminModerationView extends VerticalLayout {
         reportsGrid.removeAllColumns();
 
         reportsGrid.addComponentColumn(this::buildPhotoPreview)
-                .setHeader("Suratlar")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Suratlar")))
                 .setWidth("150px")
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildReporterCell)
-                .setHeader("Foydalanuvchi / tuman")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchi / tuman")))
                 .setAutoWidth(true)
                 .setFlexGrow(1);
         reportsGrid.addColumn(report -> formatDate(report))
-                .setHeader("Sana")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Sana")))
                 .setAutoWidth(true)
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildConfidenceBadge)
-                .setHeader("AI tahlili")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("AI tahlili")))
                 .setWidth("130px")
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildStatusBadge)
-                .setHeader("Holat")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Holat")))
                 .setWidth("155px")
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(report -> {
-                    Button viewButton = new Button("Ko'rish", event -> openReportDetails(report));
+                    Button viewButton = I18n.localize(new Button("Ko'rish", event -> openReportDetails(report)));
                     viewButton.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
                     return viewButton;
                 })
-                .setHeader("Amallar")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Amallar")))
                 .setWidth("115px")
                 .setFlexGrow(0);
     }
@@ -211,7 +211,7 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Button createStatusFilter(String label, ReportStatus status) {
-        Button button = new Button(label);
+        Button button = I18n.localize(new Button(label));
         button.addClassName("moderation-filter-button");
         if (selectedStatus == status) {
             button.addClassName("active");
@@ -234,15 +234,15 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Div createThumbnail(String imageUrl, String altText) {
-        Div thumbnail = new Div();
+        Div thumbnail = I18n.localize(new Div());
         thumbnail.addClassName("moderation-thumbnail");
         if (imageUrl == null || imageUrl.isBlank()) {
             thumbnail.addClassName("moderation-thumbnail-missing");
-            thumbnail.setText("—");
-            thumbnail.setTitle(altText + " mavjud emas");
+            I18n.text(thumbnail, "—");
+            I18n.title(thumbnail, altText + " mavjud emas");
             return thumbnail;
         }
-        Image image = new Image(imageUrl, altText);
+        Image image = I18n.localize(new Image(imageUrl, altText));
         image.addClassName("moderation-thumbnail-image");
         thumbnail.add(image);
         return thumbnail;
@@ -254,11 +254,11 @@ public class AdminModerationView extends VerticalLayout {
         cell.setPadding(false);
         cell.setSpacing(false);
 
-        Span name = new Span(nonBlank(report.getReporterFullName(), "Noma'lum foydalanuvchi"));
+        Span name = I18n.userText(new Span(), report.getReporterFullName(), "Noma'lum foydalanuvchi");
         name.addClassName("moderation-reporter-name");
-        Span district = new Span(nonBlank(report.getDistrict(), "Manzil ko'rsatilmagan"));
+        Span district = I18n.userText(new Span(), report.getDistrict(), "Manzil ko'rsatilmagan");
         district.addClassName("moderation-district");
-        Span id = new Span("ID: " + nonBlank(report.getReportId(), "—"));
+        Span id = I18n.localize(new Span("ID: " + nonBlank(report.getReportId(), "—")));
         id.addClassName("moderation-report-id");
         cell.add(name, district, id);
         return cell;
@@ -266,31 +266,31 @@ public class AdminModerationView extends VerticalLayout {
 
     private Span buildConfidenceBadge(ConfirmWasteDto report) {
         if (report.getAiReviewStatus() == AiReviewStatus.PENDING) {
-            Span badge = new Span("AI tekshiruvi kutilmoqda");
+            Span badge = I18n.localize(new Span("AI tekshiruvi kutilmoqda"));
             badge.addClassName("moderation-ai-badge");
             badge.addClassName("unavailable");
             return badge;
         }
         if (report.getAiReviewStatus() == AiReviewStatus.FAILED) {
-            Span badge = new Span("AI tekshiruvi bajarilmadi");
+            Span badge = I18n.localize(new Span("AI tekshiruvi bajarilmadi"));
             badge.addClassName("moderation-ai-badge");
             badge.addClassName("unavailable");
             return badge;
         }
         if (report.getConfidenceScore() == null) {
-            Span badge = new Span("Tahlil yo'q");
+            Span badge = I18n.localize(new Span("Tahlil yo'q"));
             badge.addClassName("moderation-ai-badge");
             badge.addClassName("unavailable");
             return badge;
         }
-        Span badge = new Span(report.getConfidenceScore() + "% ishonch");
+        Span badge = I18n.localize(new Span(report.getConfidenceScore() + "% ishonch"));
         badge.addClassName("moderation-ai-badge");
         badge.addClassName(report.getConfidenceScore() >= 75 ? "high" : "low");
         return badge;
     }
 
     private Span buildStatusBadge(ConfirmWasteDto report) {
-        Span badge = new Span(statusLabel(report.getStatus()));
+        Span badge = I18n.localize(new Span(statusLabel(report.getStatus())));
         badge.addClassName("moderation-report-status");
         badge.addClassName(report.getStatus() == ReportStatus.IN_PROGRESS ? "in-progress" : "pending");
         return badge;
@@ -310,18 +310,18 @@ public class AdminModerationView extends VerticalLayout {
             totalReports = page.getTotalElements();
             pageCount = page.getTotalPages();
             errorMessage.setVisible(false);
-            errorMessage.setText("");
-            queueCount.setText(String.valueOf(totalReports));
+            I18n.text(errorMessage, "");
+            I18n.text(queueCount, String.valueOf(totalReports));
             updateGridItems();
             updatePagination();
         } catch (RuntimeException e) {
             log.error("Could not load moderation queue", e);
-            errorMessage.setText("Xabarlarni yuklab bo'lmadi. Iltimos, qayta urinib ko'ring.");
+            I18n.text(errorMessage, "Xabarlarni yuklab bo'lmadi. Iltimos, qayta urinib ko'ring.");
             errorMessage.setVisible(true);
             reports.clear();
             updateGridItems();
             updatePagination();
-            Notification.show("Moderatsiya navbatini yuklashda xatolik yuz berdi.",
+            I18n.notify("Moderatsiya navbatini yuklashda xatolik yuz berdi.",
                     4500, Position.TOP_END);
         }
     }
@@ -344,7 +344,7 @@ public class AdminModerationView extends VerticalLayout {
 
     private void updatePagination() {
         int shownPage = pageCount == 0 ? 0 : currentPage + 1;
-        pageSummary.setText(String.format(
+        I18n.text(pageSummary, I18n.format(
                 Locale.ROOT, "Sahifa %d / %d · %d ta xabar", shownPage, pageCount, totalReports));
         previousButton.setEnabled(currentPage > 0);
         nextButton.setEnabled(currentPage + 1 < pageCount);
@@ -353,7 +353,7 @@ public class AdminModerationView extends VerticalLayout {
     private void openReportDetails(ConfirmWasteDto report) {
         Dialog dialog = new Dialog();
         dialog.addClassName("moderation-detail-dialog");
-        dialog.setHeaderTitle("Xabar tafsilotlari");
+        I18n.headerTitle(dialog, "Xabar tafsilotlari");
         dialog.setWidth("min(940px, 96vw)");
 
         VerticalLayout content = new VerticalLayout();
@@ -361,7 +361,7 @@ public class AdminModerationView extends VerticalLayout {
         content.setPadding(false);
         content.setSpacing(true);
 
-        Div meta = new Div();
+        Div meta = I18n.localize(new Div());
         meta.addClassName("moderation-detail-meta");
         meta.add(detailValue("Foydalanuvchi",
                         nonBlank(report.getReporterFullName(), "Noma'lum foydalanuvchi")),
@@ -371,27 +371,26 @@ public class AdminModerationView extends VerticalLayout {
                         ? "Ko'rsatilmagan"
                         : report.getCleanPeriod() + " daqiqa"));
 
-        Div photoSection = new Div();
+        Div photoSection = I18n.localize(new Div());
         photoSection.addClassName("moderation-detail-photos");
         photoSection.add(buildDetailImage(report.getBeforeImageUrl(), "Tozalashdan oldin"),
                 buildDetailImage(report.getAfterImageUrl(), "Tozalashdan keyin"));
 
-        Div aiCard = new Div();
+        Div aiCard = I18n.localize(new Div());
         aiCard.addClassName("moderation-ai-review");
-        Span aiTitle = new Span("AI tahlili (qaror uchun yordamchi)");
+        Span aiTitle = I18n.localize(new Span("AI tahlili (qaror uchun yordamchi)"));
         aiTitle.addClassName("moderation-ai-title");
-        Span score = new Span(report.getConfidenceScore() == null
+        Span score = I18n.localize(new Span(report.getConfidenceScore() == null
                 ? "Ishonch darajasi mavjud emas"
-                : "Ishonch darajasi: " + report.getConfidenceScore() + "%");
+                : "Ishonch darajasi: " + report.getConfidenceScore() + "%"));
         score.addClassName("moderation-ai-score");
-        Paragraph reasoning = new Paragraph(nonBlank(report.getReasoning(),
-                "AI tahlili uchun izoh mavjud emas."));
+        Paragraph reasoning = I18n.userText(new Paragraph(), report.getReasoning(), "AI tahlili uchun izoh mavjud emas.");
         reasoning.addClassName("moderation-ai-reasoning");
-        Span reviewStatus = new Span(report.getAiReviewStatus() == AiReviewStatus.COMPLETED
+        Span reviewStatus = I18n.localize(new Span(report.getAiReviewStatus() == AiReviewStatus.COMPLETED
                 ? "AI tekshiruvi yakunlandi"
                 : report.getAiReviewStatus() == AiReviewStatus.FAILED
                 ? "AI tekshiruvini bajarib bo'lmadi"
-                : "AI tekshiruvi kutilmoqda");
+                : "AI tekshiruvi kutilmoqda"));
         reviewStatus.addClassName("moderation-ai-score");
         List<String> findings = new ArrayList<>();
         if (report.getWastePresent() != null) {
@@ -406,46 +405,46 @@ public class AdminModerationView extends VerticalLayout {
         if (report.getDetectedAnchors() != null && !report.getDetectedAnchors().isBlank()) {
             findings.add("Belgilar: " + report.getDetectedAnchors());
         }
-        Paragraph evaluation = new Paragraph(findings.isEmpty()
+        Paragraph evaluation = I18n.localize(new Paragraph(findings.isEmpty()
                 ? "AI baholash tafsilotlari hozircha mavjud emas."
-                : String.join(" · ", findings));
+                : String.join(" · ", findings)));
         evaluation.addClassName("moderation-ai-reasoning");
         aiCard.add(aiTitle, reviewStatus, score, evaluation, reasoning);
 
         content.add(meta, photoSection, aiCard);
         dialog.add(content);
 
-        Button closeButton = new Button("Yopish", event -> dialog.close());
+        Button closeButton = I18n.localize(new Button("Yopish", event -> dialog.close()));
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         dialog.getFooter().add(closeButton);
 
         if (report.getStatus() == ReportStatus.PENDING) {
-            Button startButton = new Button("Ko'rib chiqishni boshlash", event ->
-                    requestStatusChange(report, ReportStatus.IN_PROGRESS, dialog));
+            Button startButton = I18n.localize(new Button("Ko'rib chiqishni boshlash", event ->
+                    requestStatusChange(report, ReportStatus.IN_PROGRESS, dialog)));
             startButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
             dialog.getFooter().add(startButton);
         }
-        Button rejectButton = new Button("Rad etish", event ->
-                requestStatusChange(report, ReportStatus.REJECTED, dialog));
+        Button rejectButton = I18n.localize(new Button("Rad etish", event ->
+                requestStatusChange(report, ReportStatus.REJECTED, dialog)));
         rejectButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        Button approveButton = new Button("Tasdiqlash", event ->
-                requestStatusChange(report, ReportStatus.RESOLVED, dialog));
+        Button approveButton = I18n.localize(new Button("Tasdiqlash", event ->
+                requestStatusChange(report, ReportStatus.RESOLVED, dialog)));
         approveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         dialog.getFooter().add(rejectButton, approveButton);
         dialog.open();
     }
 
     private Div buildDetailImage(String imageUrl, String label) {
-        Div imageCard = new Div();
+        Div imageCard = I18n.localize(new Div());
         imageCard.addClassName("moderation-detail-image-card");
-        Span caption = new Span(label);
+        Span caption = I18n.localize(new Span(label));
         caption.addClassName("moderation-detail-image-caption");
         if (imageUrl == null || imageUrl.isBlank()) {
-            Div placeholder = new Div(new Span("Surat mavjud emas"));
+            Div placeholder = I18n.localize(new Div(I18n.localize(new Span("Surat mavjud emas"))));
             placeholder.addClassName("moderation-detail-image-placeholder");
             imageCard.add(caption, placeholder);
         } else {
-            Image image = new Image(imageUrl, label);
+            Image image = I18n.localize(new Image(imageUrl, label));
             image.addClassName("moderation-detail-image");
             imageCard.add(caption, image);
         }
@@ -453,11 +452,11 @@ public class AdminModerationView extends VerticalLayout {
     }
 
     private Div detailValue(String label, String value) {
-        Div item = new Div();
+        Div item = I18n.localize(new Div());
         item.addClassName("moderation-detail-value");
-        Span key = new Span(label);
+        Span key = I18n.localize(new Span(label));
         key.addClassName("moderation-detail-key");
-        Span text = new Span(value);
+        Span text = I18n.localize(new Span(value));
         text.addClassName("moderation-detail-text");
         item.add(key, text);
         return item;
@@ -487,10 +486,10 @@ public class AdminModerationView extends VerticalLayout {
 
         ConfirmDialog confirmation = new ConfirmDialog();
         confirmation.setHeader(title);
-        confirmation.setText(message);
+        I18n.text(confirmation, message);
         confirmation.setCancelable(true);
-        confirmation.setCancelText("Bekor qilish");
-        confirmation.setConfirmText(confirmLabel);
+        I18n.property(confirmation, "cancelText", "Bekor qilish");
+        I18n.property(confirmation, "confirmText", confirmLabel);
         confirmation.setConfirmButtonTheme(theme);
         confirmation.addConfirmListener(event -> {
             try {
@@ -500,14 +499,14 @@ public class AdminModerationView extends VerticalLayout {
                 update.setStatus(status);
                 adminService.confirmReport(update);
                 detailsDialog.close();
-                Notification.show(statusSuccessMessage(status), 3500, Position.TOP_END);
+                I18n.notify(statusSuccessMessage(status), 3500, Position.TOP_END);
                 if (currentPage > 0 && reports.size() == 1) {
                     currentPage--;
                 }
                 loadReports();
             } catch (RuntimeException e) {
                 log.error("Could not update moderation status for report {}", report.getReportId(), e);
-                Notification.show("Xabar holatini yangilashda xatolik yuz berdi.",
+                I18n.notify("Xabar holatini yangilashda xatolik yuz berdi.",
                         4500, Position.TOP_END);
             }
         });
@@ -541,5 +540,10 @@ public class AdminModerationView extends VerticalLayout {
 
     private String nonBlank(String value, String fallback) {
         return value == null || value.isBlank() ? fallback : value;
+    }
+
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Moderatsiya | TozaCoin");
     }
 }

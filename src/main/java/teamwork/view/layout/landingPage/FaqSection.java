@@ -1,5 +1,6 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -17,22 +18,22 @@ import java.util.List;
 @CssImport("./themes/tozacoin/faq.css")
 public class FaqSection extends Div {
 
-    private final Div accordionList = new Div();
+    private final Div accordionList = I18n.localize(new Div());
 
     public FaqSection() {
         addClassName("faq-wrapper");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("faq-container");
 
         // Header Block
-        Div headerBlock = new Div();
+        Div headerBlock = I18n.localize(new Div());
         headerBlock.addClassName("faq-header");
 
-        Span badge = new Span("SAVOL-JAVOB");
+        Span badge = I18n.localize(new Span("SAVOL-JAVOB"));
         badge.addClassName("faq-badge");
 
-        H2 title = new H2("Ko'p so'raladigan savollar");
+        H2 title = I18n.localize(new H2("Ko'p so'raladigan savollar"));
         title.addClassName("faq-title");
 
         headerBlock.add(badge, title);
@@ -60,32 +61,32 @@ public class FaqSection extends Div {
     }
 
     private Div createFaqItemCard(FaqItem item, boolean initiallyExpanded) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassName("faq-item-card");
         if (initiallyExpanded) {
             card.addClassName("expanded");
         }
 
         // Question Row Header
-        Div headerRow = new Div();
+        Div headerRow = I18n.localize(new Div());
         headerRow.addClassName("faq-item-header");
 
-        H3 questionText = new H3(item.getQuestion());
+        H3 questionText = I18n.localize(new H3(item.getQuestion()));
         questionText.addClassName("faq-question-text");
 
-        Span chevron = new Span("v");
+        Span chevron = I18n.localize(new Span("v"));
         chevron.addClassName("faq-chevron");
 
         headerRow.add(questionText, chevron);
 
         // Answer Wrapper
-        Div answerWrapper = new Div();
+        Div answerWrapper = I18n.localize(new Div());
         answerWrapper.addClassName("faq-answer-wrapper");
 
-        Div divider = new Div();
+        Div divider = I18n.localize(new Div());
         divider.addClassName("faq-answer-divider");
 
-        Paragraph answerText = new Paragraph(item.getAnswer());
+        Paragraph answerText = I18n.localize(new Paragraph(item.getAnswer()));
         answerText.addClassName("faq-answer-text");
 
         answerWrapper.add(divider, answerText);
@@ -123,7 +124,8 @@ public class FaqSection extends Div {
         private String question;
         private String answer;
 
-        public FaqItem() {}
+        public FaqItem() {
+        }
 
         public FaqItem(String id, String question, String answer) {
             this.id = id;
@@ -131,13 +133,28 @@ public class FaqSection extends Div {
             this.answer = answer;
         }
 
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getQuestion() { return question; }
-        public void setQuestion(String question) { this.question = question; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public String getAnswer() { return answer; }
-        public void setAnswer(String answer) { this.answer = answer; }
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getAnswer() {
+            return answer;
+        }
+
+        public void setAnswer(String answer) {
+            this.answer = answer;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package teamwork.view.user;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -37,26 +38,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Route(value = "user/my-reports", layout = UserLayout.class)
-@PageTitle("Mening xabarlarim | TozaCoin")
 @RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
-public class MyReportsView extends VerticalLayout {
+public class MyReportsView extends VerticalLayout implements com.vaadin.flow.router.BeforeEnterObserver, com.vaadin.flow.router.HasDynamicTitle {
 
     private final MyReportsService myReportsService;
     private final AttachService attachService;
 
     private int currentPage = 0;
     private final int pageSize = 6;
-    private ReportStatus selectedStatus = null; // null means 'Barchasi' (All)
+    private Boolean selectedCleaned = null; // null means 'Barchasi' (All)
 
-    private final Div statsRow = new Div();
-    private final Div filterTabsRow = new Div();
-    private final Div cardsContainer = new Div();
+    private final Div filterTabsRow = I18n.localize(new Div());
+    private final Div cardsContainer = I18n.localize(new Div());
     private final HorizontalLayout paginationControls = new HorizontalLayout();
 
-    private final Span totalCountSpan = new Span("0");
-    private final Span resolvedCountSpan = new Span("0");
-    private final Span coinsEarnedSpan = new Span("0");
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -68,15 +64,12 @@ public class MyReportsView extends VerticalLayout {
         setWidthFull();
         setSpacing(false);
         setPadding(false);
-        addClassName("dashboard-content-wrapper");
+        addClassNames("dashboard-content-wrapper", "eco-work-page");
 
         // 1. Page Header (Title + Subtitle)
         add(buildHeaderSection());
 
-        // 2. Top Stats Bar (Jami xabar, Hal qilindi, Ishlandi)
-        add(buildTopStatsBar());
-
-        // 3. Filter Tabs Bar (Barchasi, Kutilmoqda, Tasdiqlandi, Hal qilindi, Rad etildi)
+        // Work type filters; moderation status remains visible on each card.
         add(buildFilterTabsBar());
 
         // 4. Cards Container
@@ -91,29 +84,27 @@ public class MyReportsView extends VerticalLayout {
         buildPaginationControls();
         add(paginationControls);
 
-        // Initial Data Load
-        refreshViewData();
     }
 
     /* =========================================================================
      * 1. HEADER SECTION
      * ========================================================================= */
     private Div buildHeaderSection() {
-        Div header = new Div();
+        Div header = I18n.localize(new Div());
         header.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "column")
                 .set("gap", "4px")
                 .set("margin-bottom", "8px");
 
-        H2 title = new H2("Mening xabarlarim");
+        H2 title = I18n.localize(new H2("Mening ishlarim"));
         title.getStyle()
                 .set("font-size", "26px")
                 .set("font-weight", "800")
                 .set("color", "#0f172a")
                 .set("margin", "0");
 
-        Span subtitle = new Span("Siz yuborgan barcha ifloslik xabarlari");
+        Span subtitle = I18n.localize(new Span("Xabarlaringiz va tozalashlaringiz — barchasi bir joyda."));
         subtitle.getStyle()
                 .set("font-size", "14px")
                 .set("color", "#64748b")
@@ -124,99 +115,7 @@ public class MyReportsView extends VerticalLayout {
     }
 
     /* =========================================================================
-     * 2. TOP METRICS CARDS BAR (Jami xabar | Hal qilindi | Ishlandi)
-     * ========================================================================= */
-    private Div buildTopStatsBar() {
-        statsRow.getStyle()
-                .set("display", "flex")
-                .set("justify-content", "flex-end")
-                .set("gap", "16px")
-                .set("margin-bottom", "12px")
-                .set("flex-wrap", "wrap");
-
-        statsRow.add(
-                createStatCard(totalCountSpan, "Jami xabar", "#0f172a"),
-                createStatCard(resolvedCountSpan, "Hal qilindi", "#16a34a"),
-                createCoinStatCard(coinsEarnedSpan, "Ishlandi")
-        );
-
-        return statsRow;
-    }
-
-    private Div createStatCard(Span valueSpan, String labelText, String textColor) {
-        Div card = new Div();
-        card.getStyle()
-                .set("background-color", "#ffffff")
-                .set("border", "1px solid #e2e8f0")
-                .set("border-radius", "14px")
-                .set("padding", "12px 28px")
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("align-items", "center")
-                .set("justify-content", "center")
-                .set("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.02)")
-                .set("min-width", "110px");
-
-        valueSpan.getStyle()
-                .set("font-size", "22px")
-                .set("font-weight", "800")
-                .set("color", textColor)
-                .set("line-height", "1.2");
-
-        Span label = new Span(labelText);
-        label.getStyle()
-                .set("font-size", "12px")
-                .set("color", "#64748b")
-                .set("font-weight", "600")
-                .set("margin-top", "2px");
-
-        card.add(valueSpan, label);
-        return card;
-    }
-
-    private Div createCoinStatCard(Span coinsSpan, String labelText) {
-        Div card = new Div();
-        card.getStyle()
-                .set("background-color", "#ffffff")
-                .set("border", "1px solid #e2e8f0")
-                .set("border-radius", "14px")
-                .set("padding", "12px 28px")
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("align-items", "center")
-                .set("justify-content", "center")
-                .set("box-shadow", "0 2px 4px rgba(0, 0, 0, 0.02)")
-                .set("min-width", "110px");
-
-        HorizontalLayout row = new HorizontalLayout();
-        row.setAlignItems(Alignment.CENTER);
-        row.setSpacing(true);
-        row.getStyle().set("gap", "6px");
-
-        Span coinIcon = new Span("🪙");
-        coinIcon.getStyle().set("font-size", "18px");
-
-        coinsSpan.getStyle()
-                .set("font-size", "22px")
-                .set("font-weight", "800")
-                .set("color", "#d97706")
-                .set("line-height", "1.2");
-
-        row.add(coinIcon, coinsSpan);
-
-        Span label = new Span(labelText);
-        label.getStyle()
-                .set("font-size", "12px")
-                .set("color", "#64748b")
-                .set("font-weight", "600")
-                .set("margin-top", "2px");
-
-        card.add(row, label);
-        return card;
-    }
-
-    /* =========================================================================
-     * 3. FILTER TABS BAR (Barchasi, Kutilmoqda, Tasdiqlandi, Hal qilindi, Rad etildi)
+     * WORK FILTERS
      * ========================================================================= */
     private Div buildFilterTabsBar() {
         filterTabsRow.getStyle()
@@ -229,62 +128,37 @@ public class MyReportsView extends VerticalLayout {
         return filterTabsRow;
     }
 
-    private void updateFilterTabs() {
-        filterTabsRow.removeAll();
-
-        long allCount = myReportsService.getCountByStatus(null);
-        long pendingCount = myReportsService.getCountByStatus(ReportStatus.PENDING);
-        long inProgressCount = myReportsService.getCountByStatus(ReportStatus.IN_PROGRESS);
-        long resolvedCount = myReportsService.getCountByStatus(ReportStatus.RESOLVED);
-        long rejectedCount = myReportsService.getCountByStatus(ReportStatus.REJECTED);
-        Integer totalCoins = myReportsService.getTotalCoinsEarned();
-
-        // Update Stat Cards with REAL numbers directly from DB
-        totalCountSpan.setText(String.valueOf(allCount));
-        resolvedCountSpan.setText(String.valueOf(resolvedCount));
-        coinsEarnedSpan.setText(String.valueOf(totalCoins));
-
-        filterTabsRow.add(
-                createTabButton("Barchasi (" + allCount + ")", null),
-                createTabButton("Kutilmoqda (" + pendingCount + ")", ReportStatus.PENDING),
-                createTabButton("Ko'rib chiqilmoqda (" + inProgressCount + ")", ReportStatus.IN_PROGRESS),
-                createTabButton("Hal qilindi (" + resolvedCount + ")", ReportStatus.RESOLVED),
-                createTabButton("Rad etildi (" + rejectedCount + ")", ReportStatus.REJECTED)
-        );
+    @Override
+    public void beforeEnter(com.vaadin.flow.router.BeforeEnterEvent event) {
+        String filter = event.getLocation().getQueryParameters().getParameters()
+                .getOrDefault("filter", java.util.List.of("all")).getFirst();
+        selectedCleaned = "cleaned".equals(filter) ? Boolean.TRUE : "reported".equals(filter) ? Boolean.FALSE : null;
+        currentPage = 0;
+        refreshViewData();
     }
 
-    private Button createTabButton(String label, ReportStatus status) {
-        Button btn = new Button(label);
-        boolean isActive = (selectedStatus == status);
+    private void updateFilterTabs() {
+        filterTabsRow.removeAll();
+        filterTabsRow.addClassName("eco-work-tabs");
+        filterTabsRow.getElement().setAttribute("role", "group");
+        I18n.attribute(filterTabsRow, "aria-label", "Ishlarni saralash");
+        filterTabsRow.add(createWorkTab("Barchasi", null), createWorkTab("Xabar berilgan", false), createWorkTab("Tozalangan", true));
+    }
 
-        btn.getStyle()
-                .set("border-radius", "20px")
-                .set("font-size", "13px")
-                .set("font-weight", "600")
-                .set("padding", "6px 18px")
-                .set("cursor", "pointer")
-                .set("transition", "all 0.18s ease");
-
-        if (isActive) {
-            btn.getStyle()
-                    .set("background-color", "#15803d")
-                    .set("color", "#ffffff")
-                    .set("border", "1px solid #15803d")
-                    .set("box-shadow", "0 2px 8px rgba(21, 128, 61, 0.25)");
-        } else {
-            btn.getStyle()
-                    .set("background-color", "#ffffff")
-                    .set("color", "#475569")
-                    .set("border", "1px solid #e2e8f0");
-        }
-
-        btn.addClickListener(e -> {
-            selectedStatus = status;
+    private Button createWorkTab(String label, Boolean cleaned) {
+        Button button = I18n.localize(new Button(label));
+        button.addClassName("eco-work-tab");
+        boolean active = java.util.Objects.equals(selectedCleaned, cleaned);
+        button.getElement().setAttribute("aria-pressed", String.valueOf(active));
+        if (active) button.addClassName("active");
+        button.addClickListener(e -> {
+            selectedCleaned = cleaned;
             currentPage = 0;
             refreshViewData();
+            String filter = cleaned == null ? "all" : cleaned ? "cleaned" : "reported";
+            UI.getCurrent().getPage().getHistory().replaceState(null, "user/my-reports?filter=" + filter);
         });
-
-        return btn;
+        return button;
     }
 
     /* =========================================================================
@@ -294,7 +168,7 @@ public class MyReportsView extends VerticalLayout {
         cardsContainer.removeAll();
         updateFilterTabs();
 
-        Page<MyReportResponseDto> pageData = myReportsService.getMyRprtsPagination(currentPage, pageSize, selectedStatus);
+        Page<MyReportResponseDto> pageData = myReportsService.getMyWork(currentPage, pageSize, selectedCleaned);
         List<MyReportResponseDto> reports = pageData.getContent();
 
         if (reports.isEmpty()) {
@@ -309,8 +183,11 @@ public class MyReportsView extends VerticalLayout {
     }
 
     private Div buildReportCard(MyReportResponseDto dto) {
-        Div card = new Div();
-        card.addClassName("dashboard-card");
+        Div card = I18n.localize(new Div());
+        card.addClassNames("dashboard-card", "eco-work-card");
+        card.getElement().setAttribute("role", "button");
+        card.getElement().setAttribute("tabindex", "0");
+        card.getElement().addEventListener("keydown", e -> openDetailModal(dto)).setFilter("event.key === 'Enter'");
         card.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "row")
@@ -337,14 +214,14 @@ public class MyReportsView extends VerticalLayout {
         Div photoBox = buildPhotoThumbnail(dto.getPhotoUrl(), getWasteTypeTitle(dto), dto.getWasteType());
 
         // MIDDLE: Content Details (Title, Location, Badges)
-        Div middleContent = new Div();
+        Div middleContent = I18n.localize(new Div());
         middleContent.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "column")
                 .set("gap", "6px")
                 .set("flex", "1");
 
-        H3 cardTitle = new H3(getWasteTypeTitle(dto));
+        H3 cardTitle = I18n.localize(new H3(getWasteTypeTitle(dto)));
         cardTitle.getStyle()
                 .set("font-size", "16px")
                 .set("font-weight", "700")
@@ -352,29 +229,26 @@ public class MyReportsView extends VerticalLayout {
                 .set("margin", "0");
 
         String locText = formatLocation(dto);
-        Span locSpan = new Span("📍 " + locText);
+        Span locSpan = I18n.localize(new Span("📍 " + locText));
         locSpan.getStyle()
                 .set("font-size", "13px")
                 .set("color", "#0284c7")
                 .set("font-weight", "500");
 
         // Badges Row (Severity & Waste Category)
-        Div badgesRow = new Div();
+        Div badgesRow = I18n.localize(new Div());
         badgesRow.getStyle()
                 .set("display", "flex")
                 .set("align-items", "center")
                 .set("gap", "8px")
                 .set("margin-top", "2px");
 
-        badgesRow.add(
-                buildSeverityBadge(dto.getSeverityLevel()),
-                buildCategoryBadge(dto.getWasteType())
-        );
+        badgesRow.add(I18n.localize(new Span(dto.isCleaned() ? "Tozalangan" : "Xabar berilgan")));
 
         middleContent.add(cardTitle, locSpan, badgesRow);
 
         // RIGHT: Status Badge, Reward Coins & Date
-        Div rightContent = new Div();
+        Div rightContent = I18n.localize(new Div());
         rightContent.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "column")
@@ -386,14 +260,14 @@ public class MyReportsView extends VerticalLayout {
         Span statusBadge = buildStatusBadge(dto.getReportStatus());
 
         int rewardCoins = dto.getRewardCoins() == null ? 0 : dto.getRewardCoins();
-        Span coinsSpan = new Span(rewardStatusText(dto, rewardCoins));
+        Span coinsSpan = I18n.localize(new Span(rewardStatusText(dto, rewardCoins)));
         coinsSpan.getStyle()
                 .set("font-size", "14px")
                 .set("font-weight", "700")
                 .set("color", Boolean.TRUE.equals(dto.getAiRewardGranted()) ? "#d97706" : "#64748b");
 
         String dateStr = (dto.getDate() != null) ? dto.getDate().format(dateFormatter) : "";
-        Span dateSpan = new Span(dateStr);
+        Span dateSpan = I18n.localize(new Span(dateStr));
         dateSpan.getStyle()
                 .set("font-size", "12px")
                 .set("color", "#94a3b8")
@@ -409,7 +283,7 @@ public class MyReportsView extends VerticalLayout {
      * Photo Thumbnail Box with Rounded Corners and Instant Real Image Streaming
      */
     private Div buildPhotoThumbnail(String photoUrl, String altTitle, WasteTypeEnum wasteType) {
-        Div box = new Div();
+        Div box = I18n.localize(new Div());
         box.getStyle()
                 .set("width", "110px")
                 .set("height", "90px")
@@ -431,7 +305,7 @@ public class MyReportsView extends VerticalLayout {
      * Creates Real Image using Senior Engineer standard static resource handler (/attaches/YYYY/MM/DD/file.jpg)
      */
     private Image createReportImage(String photoUrl, String altTitle, WasteTypeEnum wasteType) {
-        Image img = new Image();
+        Image img = I18n.localize(new Image());
         img.setAlt(altTitle);
         img.getStyle()
                 .set("width", "100%")
@@ -503,7 +377,7 @@ public class MyReportsView extends VerticalLayout {
         dialog.setCloseOnOutsideClick(true);
 
         // Outer Modal Container
-        Div modalContainer = new Div();
+        Div modalContainer = I18n.localize(new Div());
         modalContainer.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "column")
@@ -513,7 +387,7 @@ public class MyReportsView extends VerticalLayout {
                 .set("background-color", "#ffffff");
 
         // Top Banner Image with Close Button
-        Div imageBanner = new Div();
+        Div imageBanner = I18n.localize(new Div());
         imageBanner.getStyle()
                 .set("position", "relative")
                 .set("width", "100%")
@@ -527,7 +401,7 @@ public class MyReportsView extends VerticalLayout {
                 .set("object-fit", "cover");
 
         // Close X Button
-        Button closeBtn = new Button("✕");
+        Button closeBtn = I18n.localize(new Button("✕"));
         closeBtn.getStyle()
                 .set("position", "absolute")
                 .set("top", "12px")
@@ -551,7 +425,7 @@ public class MyReportsView extends VerticalLayout {
         imageBanner.add(modalImg, closeBtn);
 
         // Body Content
-        Div bodyContent = new Div();
+        Div bodyContent = I18n.localize(new Div());
         bodyContent.getStyle()
                 .set("padding", "20px 24px")
                 .set("display", "flex")
@@ -559,7 +433,7 @@ public class MyReportsView extends VerticalLayout {
                 .set("gap", "12px");
 
         // Title
-        H3 modalTitle = new H3(getWasteTypeTitle(dto));
+        H3 modalTitle = I18n.localize(new H3(getWasteTypeTitle(dto)));
         modalTitle.getStyle()
                 .set("font-size", "20px")
                 .set("font-weight", "800")
@@ -567,7 +441,7 @@ public class MyReportsView extends VerticalLayout {
                 .set("margin", "0");
 
         // Badges Row
-        Div modalBadges = new Div();
+        Div modalBadges = I18n.localize(new Div());
         modalBadges.getStyle()
                 .set("display", "flex")
                 .set("align-items", "center")
@@ -581,11 +455,8 @@ public class MyReportsView extends VerticalLayout {
         );
 
         // Description Paragraph
-        Paragraph descPara = new Paragraph(
-                (dto.getDescription() != null && !dto.getDescription().isBlank())
-                        ? dto.getDescription()
-                        : "Ushbu ifloslik joyi yuzasidan xabar qoldirilgan."
-        );
+        Paragraph descPara = I18n.userText(new Paragraph(), dto.getDescription(),
+                "Ushbu ifloslik joyi yuzasidan xabar qoldirilgan.");
         descPara.getStyle()
                 .set("font-size", "14px")
                 .set("color", "#475569")
@@ -598,14 +469,14 @@ public class MyReportsView extends VerticalLayout {
         locDateRow.setJustifyContentMode(JustifyContentMode.BETWEEN);
         locDateRow.setAlignItems(Alignment.CENTER);
 
-        Span modalLoc = new Span("📍 " + formatLocation(dto));
+        Span modalLoc = I18n.localize(new Span("📍 " + formatLocation(dto)));
         modalLoc.getStyle()
                 .set("font-size", "13px")
                 .set("color", "#64748b")
                 .set("font-weight", "500");
 
         String dateStr = (dto.getDate() != null) ? dto.getDate().format(dateFormatter) : "";
-        Span modalDate = new Span(dateStr);
+        Span modalDate = I18n.localize(new Span(dateStr));
         modalDate.getStyle()
                 .set("font-size", "13px")
                 .set("color", "#94a3b8")
@@ -614,7 +485,7 @@ public class MyReportsView extends VerticalLayout {
         locDateRow.add(modalLoc, modalDate);
 
         // Explain the reward outcome for this report.
-        Div yellowRewardBox = new Div();
+        Div yellowRewardBox = I18n.localize(new Div());
         yellowRewardBox.getStyle()
                 .set("background-color", "#fef9c3")
                 .set("border", "1px solid #fef08a")
@@ -626,10 +497,10 @@ public class MyReportsView extends VerticalLayout {
                 .set("margin-top", "8px");
 
         int coins = dto.getRewardCoins() == null ? 0 : dto.getRewardCoins();
-        Span coinEmoji = new Span(coins > 0 ? "🪙" : "ℹ️");
+        Span coinEmoji = I18n.localize(new Span(coins > 0 ? "🪙" : "ℹ️"));
         coinEmoji.getStyle().set("font-size", "20px");
 
-        Span rewardText = new Span(rewardStatusText(dto, coins));
+        Span rewardText = I18n.localize(new Span(rewardStatusText(dto, coins)));
         rewardText.getStyle()
                 .set("font-size", "14px")
                 .set("font-weight", "700")
@@ -646,24 +517,24 @@ public class MyReportsView extends VerticalLayout {
 
     private String rewardStatusText(MyReportResponseDto dto, int coins) {
         if (dto.getAiReviewStatus() == AiReviewStatus.PENDING) {
-            return "AI tekshiruvi kutilmoqda (+ " + coins + " tanga)";
+            return "Tekshiruv kutilmoqda (+ " + coins + " tanga)";
         }
         if (dto.getAiReviewStatus() == AiReviewStatus.FAILED) {
-            return "AI tekshiruvi bajarilmadi";
+            return "Tekshiruv qayta ko'rib chiqilishi kerak";
         }
         if (dto.getAiReviewStatus() == AiReviewStatus.COMPLETED) {
             return Boolean.TRUE.equals(dto.getAiRewardGranted())
                     ? "+" + coins + " tanga berildi"
-                    : "AI mukofotni tasdiqlamadi";
+                    : "Mukofot tasdiqlanmagan";
         }
-        return coins > 0 ? "+" + coins + " tanga kutilmoqda" : "AI tekshiruvi kutilmoqda";
+        return coins > 0 ? "+" + coins + " tanga kutilmoqda" : "Tekshiruv kutilmoqda";
     }
 
     /* =========================================================================
      * 6. BADGE & UI UTILITY METHODS
      * ========================================================================= */
     private Span buildStatusBadge(ReportStatus status) {
-        Span badge = new Span();
+        Span badge = I18n.localize(new Span());
         badge.getStyle()
                 .set("font-size", "12px")
                 .set("font-weight", "700")
@@ -675,19 +546,19 @@ public class MyReportsView extends VerticalLayout {
 
         switch (status) {
             case RESOLVED -> {
-                badge.setText("Hal qilindi");
+                I18n.text(badge, "Tozalash tasdiqlangan");
                 badge.getStyle().set("background-color", "#e0f2fe").set("color", "#0284c7");
             }
             case IN_PROGRESS -> {
-                badge.setText("Ko'rib chiqilmoqda");
+                I18n.text(badge, "Tozalash jarayonida");
                 badge.getStyle().set("background-color", "#fef3c7").set("color", "#d97706");
             }
             case REJECTED -> {
-                badge.setText("Rad etildi");
+                I18n.text(badge, "Rad etildi");
                 badge.getStyle().set("background-color", "#fef2f2").set("color", "#dc2626");
             }
             default -> {
-                badge.setText("Ko'rib chiqilmoqda");
+                I18n.text(badge, "Ko'rib chiqilmoqda");
                 badge.getStyle().set("background-color", "#fef3c7").set("color", "#d97706");
             }
         }
@@ -695,7 +566,7 @@ public class MyReportsView extends VerticalLayout {
     }
 
     private Span buildSeverityBadge(SeverityLevelEnum severity) {
-        Span badge = new Span();
+        Span badge = I18n.localize(new Span());
         badge.getStyle()
                 .set("font-size", "12px")
                 .set("font-weight", "600")
@@ -703,13 +574,13 @@ public class MyReportsView extends VerticalLayout {
                 .set("border-radius", "12px");
 
         if (severity == SeverityLevelEnum.HIGH) {
-            badge.setText("Yuqori");
+            I18n.text(badge, "Yuqori");
             badge.getStyle().set("background-color", "#fef2f2").set("color", "#ef4444");
         } else if (severity == SeverityLevelEnum.MEDIUM) {
-            badge.setText("O'rta");
+            I18n.text(badge, "O'rta");
             badge.getStyle().set("background-color", "#fff7ed").set("color", "#ea580c");
         } else {
-            badge.setText("Past");
+            I18n.text(badge, "Past");
             badge.getStyle().set("background-color", "#f0fdf4").set("color", "#16a34a");
         }
 
@@ -717,7 +588,7 @@ public class MyReportsView extends VerticalLayout {
     }
 
     private Span buildCategoryBadge(WasteTypeEnum wasteType) {
-        Span badge = new Span();
+        Span badge = I18n.localize(new Span());
         badge.getStyle()
                 .set("font-size", "12px")
                 .set("font-weight", "500")
@@ -732,7 +603,7 @@ public class MyReportsView extends VerticalLayout {
         else if (wasteType == WasteTypeEnum.WATER) label = "Suv ifloslanishi";
         else if (wasteType == WasteTypeEnum.AIR) label = "Havo ifloslanishi";
 
-        badge.setText(label);
+        I18n.text(badge, label);
         return badge;
     }
 
@@ -765,7 +636,8 @@ public class MyReportsView extends VerticalLayout {
     }
 
     private Div buildEmptyStateView() {
-        Div emptyBox = new Div();
+        Div emptyBox = I18n.localize(new Div());
+        emptyBox.addClassName("jungle-empty-state");
         emptyBox.getStyle()
                 .set("display", "flex")
                 .set("flex-direction", "column")
@@ -777,13 +649,13 @@ public class MyReportsView extends VerticalLayout {
                 .set("border", "1px solid #e2e8f0")
                 .set("gap", "12px");
 
-        Span icon = new Span("📋");
+        Span icon = I18n.localize(new Span("📋"));
         icon.getStyle().set("font-size", "44px");
 
-        H3 emptyTitle = new H3("Xabarlar topilmadi");
+        H3 emptyTitle = I18n.localize(new H3("Xabarlar topilmadi"));
         emptyTitle.getStyle().set("font-size", "18px").set("color", "#0f172a").set("margin", "0");
 
-        Span emptySub = new Span("Hozircha siz yuborgan bunday ifloslik xabarlari mavjud emas.");
+        Span emptySub = I18n.localize(new Span("Bu bo'limda hali ish yo'q. Report yuboring yoki boshqa bo'limni tanlang."));
         emptySub.getStyle().set("font-size", "14px").set("color", "#64748b");
 
         emptyBox.add(icon, emptyTitle, emptySub);
@@ -809,7 +681,7 @@ public class MyReportsView extends VerticalLayout {
             return;
         }
 
-        Button prevBtn = new Button("← Avvalgi");
+        Button prevBtn = I18n.localize(new Button("← Avvalgi"));
         prevBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         prevBtn.setEnabled(pageData.hasPrevious());
         prevBtn.addClickListener(e -> {
@@ -819,13 +691,13 @@ public class MyReportsView extends VerticalLayout {
             }
         });
 
-        Span pageInfo = new Span((currentPage + 1) + " / " + pageData.getTotalPages());
+        Span pageInfo = I18n.localize(new Span((currentPage + 1) + " / " + pageData.getTotalPages()));
         pageInfo.getStyle()
                 .set("font-size", "14px")
                 .set("font-weight", "600")
                 .set("color", "#475569");
 
-        Button nextBtn = new Button("Keyingi →");
+        Button nextBtn = I18n.localize(new Button("Keyingi →"));
         nextBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         nextBtn.setEnabled(pageData.hasNext());
         nextBtn.addClickListener(e -> {
@@ -836,5 +708,10 @@ public class MyReportsView extends VerticalLayout {
         });
 
         paginationControls.add(prevBtn, pageInfo, nextBtn);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Mening ishlarim | TozaCoin");
     }
 }
