@@ -1,100 +1,28 @@
 package teamwork.view.layout.landingPage;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
-import com.vaadin.flow.router.HighlightConditions;
+import teamwork.i18n.I18n;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.router.RouterLink;
 import teamwork.view.general.RegistrationView;
 import teamwork.view.general.home.LoginView;
+import teamwork.view.components.ScrollHeaderBehavior;
 
-@CssImport("./themes/tozacoin/header.css")
 public class Header extends Div {
-
-    private final Button btnKirish = new Button("Kirish");
-    private final Button btnRegister = new Button("Ro'yxatdan o'tish");
-
     public Header() {
-        addClassName("header-container");
-
-        // Brand Logo Block
-        RouterLink logoLink = new RouterLink("", teamwork.view.general.LandingView.class);
-        logoLink.addClassName("header-logo-link");
-        logoLink.setHighlightCondition(HighlightConditions.never());
-
-        Span logoBadge = new Span("TC");
-        logoBadge.addClassName("header-logo-badge");
-
-        Span logoText = new Span();
-        logoText.addClassName("header-logo-text");
-
-        Span textToza = new Span("Toza");
-        textToza.addClassName("text-toza");
-
-        Span textCoin = new Span("Coin");
-        textCoin.addClassName("text-coin");
-
-        logoText.add(textToza, textCoin);
-        logoLink.add(logoBadge, logoText);
-
-        // Navigation Links Block (8 Router Items)
-        Nav nav = new Nav();
-        UnorderedList navList = new UnorderedList();
-        navList.addClassName("header-nav");
-
-        navList.add(
-            createRouterNavItem("Asosiy", teamwork.view.general.LandingView.class, true),
-            createRouterNavItem("Qanday ishlaydi", HowItWorksSection.class, false),
-            createRouterNavItem("Xarita", MapPreviewSection.class, false),
-            createRouterNavItem("Kampaniyalar", FeaturedCampaignsSection.class, false),
-            createRouterNavItem("Mukofotlar", RewardsCatalogSection.class, false),
-            createRouterNavItem("Haqida", AboutUsSection.class, false),
-            createRouterNavItem("FAQ", FaqSection.class, false),
-            createRouterNavItem("Aloqa", ContactSection.class, false)
-        );
-
-        nav.add(navList);
-
-        // Action Buttons Block
-        Div actions = new Div();
-        actions.addClassName("header-actions");
-
-        btnKirish.addClassName("btn-kirish");
-        btnKirish.addClickListener(e -> UI.getCurrent().navigate(LoginView.class));
-        btnRegister.addClassName("btn-register");
-        btnRegister.addClickListener(e -> UI.getCurrent().navigate(RegistrationView.class));
-        btnRegister.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        actions.add(btnKirish, btnRegister);
-
-        add(logoLink, nav, actions);
-    }
-
-    private ListItem createRouterNavItem(String title, Class<? extends com.vaadin.flow.component.Component> target, boolean exact) {
-        ListItem item = new ListItem();
-        RouterLink link = new RouterLink(title, target);
-        link.addClassName("header-nav-link");
-        if (exact) {
-            link.setHighlightCondition(HighlightConditions.sameLocation());
-        }
-        item.add(link);
-        return item;
-    }
-
-    // Public methods for adding click listeners to Kirish and Register buttons
-    public void addLoginClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
-        btnKirish.addClickListener(listener);
-    }
-
-    public void addRegisterClickListener(ComponentEventListener<ClickEvent<Button>> listener) {
-        btnRegister.addClickListener(listener);
+        addClassName("eco-header");
+        getElement().setAttribute("role", "banner");
+        Anchor brand = I18n.localize(new Anchor("/", "TozaCoin"));
+        brand.addClassName("eco-brand");
+        Nav nav = new Nav(I18n.localize(new Anchor("/#how-it-works", "Qanday ishlaydi")), I18n.localize(new Anchor("/#map", "Xarita")), I18n.localize(new Anchor("/#about", "Haqida")), I18n.localize(new Anchor("/#contact", "Aloqa")));
+        nav.addClassName("eco-nav");
+        I18n.attribute(nav, "aria-label", "Asosiy navigatsiya");
+        RouterLink login = I18n.localize(new RouterLink("Kirish", LoginView.class));
+        RouterLink register = I18n.localize(new RouterLink("Qo'shilish ↗", RegistrationView.class));
+        register.addClassName("eco-button");
+        I18n.title(register, "Qo'shilish");
+        I18n.attribute(register, "aria-label", "Qo'shilish");
+        Div actions = I18n.localize(new Div(new teamwork.view.components.LanguageSelector(), login, register));
+        actions.addClassName("eco-header-actions");
+        add(brand, nav, actions, new ScrollHeaderBehavior());
     }
 }

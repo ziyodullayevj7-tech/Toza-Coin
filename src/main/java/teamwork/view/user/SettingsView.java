@@ -1,24 +1,15 @@
 package teamwork.view.user;
 
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.PermitAll;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.*;
 import jakarta.annotation.security.RolesAllowed;
 import teamwork.view.layout.user.UserLayout;
 
 @Route(value = "user/settings", layout = UserLayout.class)
-@PageTitle("Sozlamalar | TozaCoin")
 @RolesAllowed({"USER", "ADMIN"})
-@CssImport("./themes/tozacoin/user-layout.css")
-public class SettingsView extends VerticalLayout {
-
-    public SettingsView() {
-        setSizeFull();
-        setSpacing(true);
-        setPadding(true);
-        add(new H2("Sozlamalar"));
+public class SettingsView extends Div implements BeforeEnterObserver {
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        event.forwardTo(ProfileView.class);
     }
 }

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MyReportResponseDto {
     private String id;
+    private boolean cleaned;
     private String photoUrl;
     private ReportStatus reportStatus;
     private SeverityLevelEnum severityLevel;

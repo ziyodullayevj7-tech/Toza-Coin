@@ -1,5 +1,6 @@
 package teamwork.view.layout.admin;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -16,11 +17,13 @@ import teamwork.view.admin.AdminSettingsView;
 import teamwork.view.admin.AdminStatisticsView;
 import teamwork.view.admin.AdminSuspiciousActivityView;
 import teamwork.view.admin.AdminUsersView;
+import teamwork.util.NavigationGuard;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @CssImport("./themes/tozacoin/user-layout.css")
+@CssImport("./themes/tozacoin/trashout.css")
 public class AdminLayout extends AppLayout implements BeforeEnterObserver {
 
     private final AdminHeader header = new AdminHeader();
@@ -37,6 +40,9 @@ public class AdminLayout extends AppLayout implements BeforeEnterObserver {
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+        if (!NavigationGuard.requireAdmin(event)) {
+            return;
+        }
         Class<?> target = event.getNavigationTarget();
         navigationItems.forEach((view, item) -> {
             if (view.equals(target)) {
@@ -49,23 +55,23 @@ public class AdminLayout extends AppLayout implements BeforeEnterObserver {
     }
 
     private Div buildSidebar() {
-        Div sidebar = new Div();
+        Div sidebar = I18n.localize(new Div());
         sidebar.addClassName("admin-sidebar");
 
-        Div brand = new Div();
+        Div brand = I18n.localize(new Div());
         brand.addClassName("admin-brand");
-        Div logo = new Div(new Span("TC"));
+        Div logo = I18n.localize(new Div(I18n.localize(new Span("TC"))));
         logo.addClassName("admin-brand-logo");
-        Div brandText = new Div();
+        Div brandText = I18n.localize(new Div());
         brandText.addClassName("admin-brand-text");
-        Span name = new Span("TozaCoin");
+        Span name = I18n.localize(new Span("TozaCoin"));
         name.addClassName("admin-brand-name");
-        Span role = new Span("Admin panel");
+        Span role = I18n.localize(new Span("Admin panel"));
         role.addClassName("admin-brand-role");
         brandText.add(name, role);
         brand.add(logo, brandText);
 
-        Div navigation = new Div();
+        Div navigation = I18n.localize(new Div());
         navigation.addClassName("admin-navigation");
         navigation.add(
                 createNavigationItem("Boshqaruv paneli", "📊", AdminDashboard.class),
@@ -82,16 +88,16 @@ public class AdminLayout extends AppLayout implements BeforeEnterObserver {
     }
 
     private Div createNavigationItem(String title, String icon, Class<? extends Component> view) {
-        Div item = new Div();
+        Div item = I18n.localize(new Div());
         item.addClassName("admin-nav-item");
-        item.setTitle(title);
+        I18n.title(item, title);
         item.getElement().setAttribute("role", "link");
         item.getElement().setAttribute("tabindex", "0");
-        item.getElement().setAttribute("aria-label", title);
+        I18n.attribute(item, "aria-label", title);
 
-        Span iconSpan = new Span(icon);
+        Span iconSpan = I18n.localize(new Span(icon));
         iconSpan.addClassName("admin-nav-icon");
-        Span label = new Span(title);
+        Span label = I18n.localize(new Span(title));
         label.addClassName("admin-nav-label");
         item.add(iconSpan, label);
 

@@ -1,5 +1,6 @@
 package teamwork.view.user;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -10,15 +11,19 @@ import jakarta.annotation.security.RolesAllowed;
 import teamwork.view.layout.user.UserLayout;
 
 @Route(value = "user/notifications", layout = UserLayout.class)
-@PageTitle("Bildirishnomalar | TozaCoin")
 @RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
-public class NotificationsView extends VerticalLayout {
+public class NotificationsView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     public NotificationsView() {
         setSizeFull();
         setSpacing(true);
         setPadding(true);
-        add(new H2("Bildirishnomalar"));
+        add(I18n.localize(new H2("Bildirishnomalar")));
+    }
+
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Bildirishnomalar | TozaCoin");
     }
 }

@@ -52,7 +52,7 @@ public class MyReportsService {
         String userId = SecurityUtils.getCurrentUserId();
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-        
+
         Page<WasteReportEntity> wasteReportEntities;
         if (status == null) {
             wasteReportEntities = wasteReportRepository.findAllByReporterId(userId, pageable);
@@ -67,6 +67,23 @@ public class MyReportsService {
         entityList.forEach(entity -> dtoList.add(toDto(entity)));
 
         return new PageImpl<>(dtoList, pageable, totalElements);
+    }
+
+    /**
+     * All reports the current user reported or cleaned; no changes to report state.
+     */
+    @Transactional
+    public Page<MyReportResponseDto> getMyWork(int page, int size, Boolean cleaned) {
+        String userId = SecurityUtils.getCurrentUserId();
+        return wasteReportRepository.findMyWork(userId, cleaned,
+                PageRequest.of(page, size, Sort.by("createdDate").descending().and(Sort.by("id").descending()))).map(entity -> {
+            MyReportResponseDto dto = toDto(entity);
+            Integer coins = Objects.equals(userId, entity.getCleanerId())
+                    ? entity.getCleanerRewardCoins() : entity.getReporterRewardCoins();
+            dto.setRewardCoins(coins == null ? 0 : coins);
+            dto.setCleaned(entity.getAfterImageUrl() != null && !entity.getAfterImageUrl().isBlank());
+            return dto;
+        });
     }
 
     public long getCountByStatus(ReportStatus status) {

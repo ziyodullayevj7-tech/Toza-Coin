@@ -1,9 +1,13 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
@@ -22,62 +26,67 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @CssImport("./themes/tozacoin/contact.css")
 public class ContactSection extends Div {
 
-    private final TextField txtName = new TextField("Ism familiya");
-    private final EmailField txtEmail = new EmailField("Email");
-    private final Select<String> selectSubject = new Select<>();
-    private final TextArea txtMessage = new TextArea("Xabar");
-    private final Button btnSubmit = new Button("📩 Xabar yuborish");
+    private final TextField txtName = I18n.localize(new TextField("Ism familiya"));
+    private final EmailField txtEmail = I18n.localize(new EmailField("Email"));
+    private final Select<String> selectSubject = I18n.localize(new Select<>());
+    private final TextArea txtMessage = I18n.localize(new TextArea("Xabar"));
+    private final Button btnSubmit = I18n.localize(new Button("Xabar yuborish", VaadinIcon.PAPERPLANE.create()));
 
     public ContactSection() {
         addClassName("contact-wrapper");
+        setId("contact");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("contact-container");
 
         // Left Column (Info Block)
-        Div leftCol = new Div();
+        Div leftCol = I18n.localize(new Div());
         leftCol.addClassName("contact-left");
 
-        Span badge = new Span("ALOQA");
+        Span badge = I18n.localize(new Span("ALOQA"));
         badge.addClassName("contact-badge");
 
-        H2 title = new H2("Biz bilan bog'laning");
+        H2 title = I18n.localize(new H2("Biz bilan bog'laning"));
         title.addClassName("contact-title");
 
-        Paragraph subtitle = new Paragraph("Savol, taklif yoki hamkorlik takliflari bo'lsa — yozing. 1–2 ish kuni ichida javob beramiz.");
+        Paragraph subtitle = I18n.localize(new Paragraph("Savol, taklif yoki hamkorlik takliflari bo'lsa — yozing. 1–2 ish kuni ichida javob beramiz."));
         subtitle.addClassName("contact-subtitle");
 
-        Div infoList = new Div();
+        Div infoList = I18n.localize(new Div());
         infoList.addClassName("contact-info-list");
 
         infoList.add(
-            createContactInfoItem("✉️", "blue", "Email", "info@tozacoin.uz"),
-            createContactInfoItem("📱", "green", "Telegram", "@tozacoin_uz"),
-            createContactInfoItem("📍", "red", "Manzil", "Toshkent sh., Yunusobod tumani, Amir Temur ko'chasi 107B"),
-            createContactInfoItem("⏰", "yellow", "Ish vaqti", "Dushanba–Juma: 09:00–18:00")
+                createContactInfoItem("email", "Email", "ziyodullayevj7@gmail.com",
+                        "mailto:ziyodullayevj7@gmail.com"),
+                createContactInfoItem("telegram", "Telegram", "@jahon_o7", "https://t.me/jahon_o7"),
+                createContactInfoItem("location", "Manzil", "Toshkent shahar, Mirzo Ulugbek, Chust 17",
+                        "https://www.google.com/maps/search/?api=1&query=Toshkent%20shahar%2C%20Mirzo%20Ulugbek%2C%20Chust%2017"),
+                createContactInfoItem("instagram", "Instagram", "@ziyodullaev.j",
+                        "https://www.instagram.com/ziyodullaev.j/")
         );
 
         leftCol.add(badge, title, subtitle, infoList);
 
         // Right Column (Form Card)
-        Div formCard = new Div();
+        Div formCard = I18n.localize(new Div());
         formCard.addClassName("contact-form-card");
 
-        H3 formTitle = new H3("Xabar yuborish");
+        H3 formTitle = I18n.localize(new H3("Xabar yuborish"));
         formTitle.addClassName("contact-form-title");
 
-        txtName.setPlaceholder("Jasur Nazarov");
-        txtEmail.setPlaceholder("jasur@example.com");
+        I18n.placeholder(txtName, "Jasur Nazarov");
+        I18n.placeholder(txtEmail, "jasur@example.com");
 
-        Div row1 = new Div();
+        Div row1 = I18n.localize(new Div());
         row1.addClassName("contact-form-row");
         row1.add(txtName, txtEmail);
 
-        selectSubject.setLabel("Mavzu");
-        selectSubject.setPlaceholder("Tanlang...");
+        I18n.label(selectSubject, "Mavzu");
+        I18n.placeholder(selectSubject, "Tanlang...");
+        selectSubject.setItemLabelGenerator(I18n::t);
         selectSubject.setItems("Umumiy savol", "Taklif", "Hamkorlik", "Muammo haqida xabar");
 
-        txtMessage.setPlaceholder("Savolingiz yoki taklifingizni yozing...");
+        I18n.placeholder(txtMessage, "Savolingiz yoki taklifingizni yozing...");
         txtMessage.setHeight("130px");
 
         btnSubmit.addClassName("btn-contact-submit");
@@ -123,7 +132,7 @@ public class ContactSection extends Div {
         }
 
         // All fields valid -> show success notification & clear form
-        Notification successNotif = Notification.show("Xabaringiz muvaffaqiyatli yuborildi!", 4000, Notification.Position.BOTTOM_END);
+        Notification successNotif = I18n.notify("Xabaringiz muvaffaqiyatli yuborildi!", 4000, Notification.Position.BOTTOM_END);
         successNotif.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
 
         // Reset form inputs
@@ -134,27 +143,34 @@ public class ContactSection extends Div {
     }
 
     private void showErrorNotification(String text) {
-        Notification notif = Notification.show(text, 3500, Notification.Position.BOTTOM_END);
+        Notification notif = I18n.notify(text, 3500, Notification.Position.BOTTOM_END);
         notif.addThemeVariants(NotificationVariant.LUMO_ERROR);
     }
 
-    private Div createContactInfoItem(String iconEmoji, String badgeColor, String labelText, String valueText) {
-        Div item = new Div();
+    private Anchor createContactInfoItem(String iconName, String labelText, String valueText, String href) {
+        Anchor item = new Anchor(href, "");
         item.addClassName("contact-info-item");
+        // These are external destinations, never client-side application routes.
+        item.getElement().setAttribute("router-ignore", "");
+        if (href.startsWith("https://")) {
+            item.setTarget("_blank");
+            item.getElement().setAttribute("rel", "noopener noreferrer");
+        }
 
-        Span iconBadge = new Span(iconEmoji);
-        iconBadge.addClassName("contact-info-badge");
-        iconBadge.addClassName(badgeColor);
+        Image icon = new Image("icons/contact/" + iconName + ".svg", "");
+        icon.setWidth("22px");
+        icon.setHeight("22px");
+        icon.getElement().setAttribute("aria-hidden", "true");
+        Span iconBadge = new Span(icon);
+        iconBadge.addClassNames("contact-info-badge", "contact-icon-" + iconName);
 
         Div details = new Div();
         details.addClassName("contact-info-details");
-
-        Span label = new Span(labelText);
+        Span label = I18n.localize(new Span(labelText));
         label.addClassName("contact-info-label");
-
-        Span value = new Span(valueText);
+        Span value = new Span();
+        I18n.dataText(value, valueText);
         value.addClassName("contact-info-value");
-
         details.add(label, value);
         item.add(iconBadge, details);
         return item;

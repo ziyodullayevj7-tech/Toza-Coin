@@ -1,5 +1,6 @@
 package teamwork.view.layout.user;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
@@ -25,7 +26,7 @@ public class UserFooter extends Div {
                     return (name + " " + surname).trim();
                 })
                 .filter(s -> !s.isEmpty())
-                .orElse("Jasur Nazarov");
+                .orElse("Foydalanuvchi");
 
         String initials = userOpt
                 .map(u -> {
@@ -34,34 +35,34 @@ public class UserFooter extends Div {
                     return n + s;
                 })
                 .filter(s -> !s.isEmpty())
-                .orElse("JN");
+                .orElse("TC");
 
         // Left Block: Avatar & User Details
-        Div userProfileInfo = new Div();
+        Div userProfileInfo = I18n.localize(new Div());
         userProfileInfo.addClassName("user-profile-info");
 
-        Div avatarBadge = new Div(new Span(initials));
+        Div avatarBadge = I18n.localize(new Div(I18n.localize(new Span(initials))));
         avatarBadge.addClassName("user-avatar-badge");
 
-        Div userDetails = new Div();
+        Div userDetails = I18n.localize(new Div());
         userDetails.addClassName("user-details");
 
-        Span userNameSpan = new Span(fullName);
+        Span userNameSpan = I18n.userText(new Span(), userOpt.isPresent() ? fullName : null, "Foydalanuvchi");
         userNameSpan.addClassName("user-name-text");
         userNameSpan.setTitle(fullName);
 
-        Span coinSubSpan = new Span("🪙 4,820 tanga...");
+        Span coinSubSpan = I18n.localize(new Span("TozaCoin a’zosi"));
         coinSubSpan.addClassName("user-sub-text");
 
         userDetails.add(userNameSpan, coinSubSpan);
         userProfileInfo.add(avatarBadge, userDetails);
 
         // Right Block: Chiqish (Logout) Button
-        Div btnLogout = new Div();
+        Div btnLogout = I18n.localize(new Div());
         btnLogout.addClassName("btn-chiqish");
         Icon logoutIcon = VaadinIcon.SIGN_OUT.create();
         logoutIcon.getStyle().set("font-size", "14px");
-        Span logoutText = new Span("Chiqish");
+        Span logoutText = I18n.localize(new Span("Chiqish"));
         logoutText.addClassName("btn-chiqish-text");
         btnLogout.add(logoutIcon, logoutText);
 

@@ -1,5 +1,6 @@
 package teamwork.view.layout.landingPage;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
@@ -13,25 +14,25 @@ import com.vaadin.flow.component.html.Span;
 @CssImport("./themes/tozacoin/cta-banner.css")
 public class CallToActionBanner extends Div {
 
-    private final Button btnRegister = new Button("🚀 Bepul ro'yxatdan o'tish");
-    private final Button btnAppSoon = new Button("📱 Ilova yaqinda");
+    private final Button btnRegister = I18n.localize(new Button("🚀 Bepul ro'yxatdan o'tish"));
+    private final Button btnAppSoon = I18n.localize(new Button("📱 Ilova yaqinda"));
 
     public CallToActionBanner() {
         addClassName("cta-banner-wrapper");
 
-        Div container = new Div();
+        Div container = I18n.localize(new Div());
         container.addClassName("cta-banner-container");
 
-        Span icon = new Span("🌍");
+        Span icon = I18n.localize(new Span("🌍"));
         icon.addClassName("cta-banner-icon");
 
-        H2 title = new H2("Harakatga qo'shiling");
+        H2 title = I18n.localize(new H2("Harakatga qo'shiling"));
         title.addClassName("cta-banner-title");
 
-        Paragraph subtitle = new Paragraph("O'zbekistonni tozaroq qilishga yordam bering. Bugun ro'yxatdan o'ting — bepul!");
+        Paragraph subtitle = I18n.localize(new Paragraph("O'zbekistonni tozaroq qilishga yordam bering. Bugun ro'yxatdan o'ting — bepul!"));
         subtitle.addClassName("cta-banner-subtitle");
 
-        Div buttonsRow = new Div();
+        Div buttonsRow = I18n.localize(new Div());
         buttonsRow.addClassName("cta-banner-buttons");
 
         btnRegister.addClassName("btn-cta-primary");

@@ -1,5 +1,6 @@
 package teamwork.view.admin;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
@@ -34,10 +35,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Route(value = "admin/users", layout = AdminLayout.class)
-@PageTitle("Foydalanuvchilar | TozaCoin")
 @RolesAllowed("ADMIN")
 @CssImport("./themes/tozacoin/user-layout.css")
-public class AdminUsersView extends VerticalLayout {
+public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     private static final Logger log = LoggerFactory.getLogger(AdminUsersView.class);
     private static final int PAGE_SIZE = 10;
@@ -46,14 +46,14 @@ public class AdminUsersView extends VerticalLayout {
     private final AdminService adminService;
     private final Grid<LeaderBoardDto> usersGrid = new Grid<>();
     private final List<LeaderBoardDto> pageUsers = new ArrayList<>();
-    private final TextField searchField = new TextField();
-    private final Div statusFilters = new Div();
-    private final Div errorMessage = new Div();
-    private final Span totalUsers = new Span("0");
-    private final Span emptyMessage = new Span("Foydalanuvchilar topilmadi.");
-    private final Span pageSummary = new Span();
-    private final Button previousButton = new Button("← Oldingi");
-    private final Button nextButton = new Button("Keyingi →");
+    private final TextField searchField = I18n.localize(new TextField());
+    private final Div statusFilters = I18n.localize(new Div());
+    private final Div errorMessage = I18n.localize(new Div());
+    private final Span totalUsers = I18n.localize(new Span("0"));
+    private final Span emptyMessage = I18n.localize(new Span("Foydalanuvchilar topilmadi."));
+    private final Span pageSummary = I18n.localize(new Span());
+    private final Button previousButton = I18n.localize(new Button("← Oldingi"));
+    private final Button nextButton = I18n.localize(new Button("Keyingi →"));
 
     private int currentPage;
     private int pageCount;
@@ -74,35 +74,35 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private Div buildPageHeader() {
-        Div header = new Div();
+        Div header = I18n.localize(new Div());
         header.addClassName("admin-users-header");
 
-        Div titleBlock = new Div();
-        H2 title = new H2("Foydalanuvchilar");
+        Div titleBlock = I18n.localize(new Div());
+        H2 title = I18n.localize(new H2("Foydalanuvchilar"));
         title.addClassName("admin-users-title");
-        Paragraph subtitle = new Paragraph("Barcha ro'yxatdan o'tgan foydalanuvchilar");
+        Paragraph subtitle = I18n.localize(new Paragraph("Barcha ro'yxatdan o'tgan foydalanuvchilar"));
         subtitle.addClassName("admin-users-subtitle");
         titleBlock.add(title, subtitle);
 
-        Div countBadge = new Div(new Span("👥"), totalUsers, new Span("foydalanuvchi"));
+        Div countBadge = I18n.localize(new Div(I18n.localize(new Span("👥")), totalUsers, I18n.localize(new Span("foydalanuvchi"))));
         countBadge.addClassName("admin-users-count");
         header.add(titleBlock, countBadge);
         return header;
     }
 
     private Div buildToolbar() {
-        Div toolbar = new Div();
+        Div toolbar = I18n.localize(new Div());
         toolbar.addClassName("admin-users-toolbar");
 
-        searchField.setPlaceholder("Ism yoki shahar bo'yicha qidirish (joriy sahifa)");
+        I18n.placeholder(searchField, "Ism yoki shahar bo'yicha qidirish (joriy sahifa)");
         searchField.setClearButtonVisible(true);
-        searchField.setPrefixComponent(new Span("🔎"));
+        searchField.setPrefixComponent(I18n.localize(new Span("🔎")));
         searchField.addClassName("admin-users-search");
 
         statusFilters.addClassName("admin-users-filters");
         updateStatusFilters();
 
-        Button refreshButton = new Button("Yangilash", event -> loadUsers());
+        Button refreshButton = I18n.localize(new Button("Yangilash", event -> loadUsers()));
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("admin-users-refresh");
         toolbar.add(searchField, statusFilters, refreshButton);
@@ -110,7 +110,7 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private Div buildUsersPanel() {
-        Div panel = new Div();
+        Div panel = I18n.localize(new Div());
         panel.addClassName("admin-users-panel");
 
         errorMessage.addClassName("admin-users-error");
@@ -153,54 +153,54 @@ public class AdminUsersView extends VerticalLayout {
         usersGrid.setPageSize(PAGE_SIZE);
         usersGrid.addColumn(user -> currentPage * PAGE_SIZE
                         + pageUsers.indexOf(user) + 1)
-                .setHeader("#")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("#")))
                 .setWidth("56px")
                 .setFlexGrow(0);
         usersGrid.addComponentColumn(this::buildUserCell)
-                .setHeader("Foydalanuvchi")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchi")))
                 .setFlexGrow(1)
                 .setWidth("260px");
         usersGrid.addColumn(user -> "#" + (currentPage * PAGE_SIZE
                         + pageUsers.indexOf(user) + 1))
-                .setHeader("Reyting")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Reyting")))
                 .setWidth("90px")
                 .setFlexGrow(0);
         usersGrid.addColumn(user -> formatNumber(user.getCoinBalance()))
-                .setHeader("Tanga")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Tanga")))
                 .setWidth("100px")
                 .setFlexGrow(0);
         usersGrid.addColumn(user -> "🔥 " + formatNumber(user.getStreakDays()))
-                .setHeader("Seriya")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Seriya")))
                 .setWidth("95px")
                 .setFlexGrow(0);
         usersGrid.addColumn(user -> formatNumber(user.getReportCount()))
-                .setHeader("Xabar")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Xabar")))
                 .setWidth("80px")
                 .setFlexGrow(0);
         usersGrid.addComponentColumn(user -> buildStatusBadge(user.getStatus()))
-                .setHeader("Holat")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Holat")))
                 .setWidth("110px")
                 .setFlexGrow(0);
         usersGrid.addComponentColumn(this::buildActions)
-                .setHeader("Harakat")
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Harakat")))
                 .setWidth("160px")
                 .setFlexGrow(0);
     }
 
     private Div buildUserCell(LeaderBoardDto user) {
-        Div cell = new Div();
+        Div cell = I18n.localize(new Div());
         cell.addClassName("admin-user-cell");
 
-        Span avatar = new Span(initials(user.getFullName()));
+        Span avatar = I18n.localize(new Span(initials(user.getFullName())));
         avatar.addClassName("admin-user-avatar");
         avatar.addClassName("avatar-" + Math.floorMod(
                 Objects.hashCode(user.getProfileId()), 6));
 
-        Div identity = new Div();
+        Div identity = I18n.localize(new Div());
         identity.addClassName("admin-user-identity");
-        Span name = new Span(nonBlank(user.getFullName(), "Noma'lum foydalanuvchi"));
+        Span name = I18n.userText(new Span(), user.getFullName(), "Noma'lum foydalanuvchi");
         name.addClassName("admin-user-name");
-        Span location = new Span(nonBlank(user.getDistrict(), "Manzil ko'rsatilmagan"));
+        Span location = I18n.userText(new Span(), user.getDistrict(), "Manzil ko'rsatilmagan");
         location.addClassName("admin-user-location");
         identity.add(name, location);
         cell.add(avatar, identity);
@@ -212,11 +212,11 @@ public class AdminUsersView extends VerticalLayout {
         actions.addClassName("admin-user-actions");
         actions.setSpacing(false);
 
-        Button viewButton = new Button("Ko'rish", event -> openUserDetails(user));
+        Button viewButton = I18n.localize(new Button("Ko'rish", event -> openUserDetails(user)));
         viewButton.addClassName("admin-user-view-button");
         viewButton.addThemeVariants(ButtonVariant.LUMO_SMALL);
 
-        Button blockButton = new Button("Blok", event -> confirmBlock(user));
+        Button blockButton = I18n.localize(new Button("Blok", event -> confirmBlock(user)));
         blockButton.addClassName("admin-user-block-button");
         blockButton.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_ERROR);
         blockButton.setEnabled(user.getStatus() != ProfileStatus.BLOCKED);
@@ -226,7 +226,7 @@ public class AdminUsersView extends VerticalLayout {
 
     private Span buildStatusBadge(ProfileStatus status) {
         String label = statusLabel(status);
-        Span badge = new Span(label);
+        Span badge = I18n.localize(new Span(label));
         badge.addClassName("admin-user-status");
         badge.addClassName(statusClass(status));
         return badge;
@@ -243,7 +243,7 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private Button createStatusFilter(String label, ProfileStatus status) {
-        Button filter = new Button(label);
+        Button filter = I18n.localize(new Button(label));
         filter.addClassName("admin-users-filter");
         if (selectedStatus == status) {
             filter.addClassName("active");
@@ -268,9 +268,9 @@ public class AdminUsersView extends VerticalLayout {
             pageUsers.addAll(usersPage.getContent());
             totalCount = usersPage.getTotalElements();
             pageCount = usersPage.getTotalPages();
-            totalUsers.setText(formatNumber(totalCount));
+            I18n.text(totalUsers, formatNumber(totalCount));
             errorMessage.setVisible(false);
-            errorMessage.setText("");
+            I18n.text(errorMessage, "");
             updateGridItems();
             updatePagination();
         } catch (RuntimeException exception) {
@@ -278,9 +278,9 @@ public class AdminUsersView extends VerticalLayout {
             pageUsers.clear();
             updateGridItems();
             updatePagination();
-            errorMessage.setText("Foydalanuvchilarni yuklab bo'lmadi. Qayta urinib ko'ring.");
+            I18n.text(errorMessage, "Foydalanuvchilarni yuklab bo'lmadi. Qayta urinib ko'ring.");
             errorMessage.setVisible(true);
-            Notification.show("Foydalanuvchilar ro'yxatini yuklashda xatolik yuz berdi.",
+            I18n.notify("Foydalanuvchilar ro'yxatini yuklashda xatolik yuz berdi.",
                     4500, Notification.Position.TOP_END);
         }
     }
@@ -301,7 +301,7 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private void updatePagination() {
-        pageSummary.setText(String.format(Locale.ROOT, "Sahifa %d / %d · %s ta foydalanuvchi",
+        I18n.text(pageSummary, I18n.format(Locale.ROOT, "Sahifa %d / %d · %s ta foydalanuvchi",
                 pageCount == 0 ? 0 : currentPage + 1, pageCount, formatNumber(totalCount)));
         previousButton.setEnabled(currentPage > 0);
         nextButton.setEnabled(currentPage + 1 < pageCount);
@@ -317,9 +317,9 @@ public class AdminUsersView extends VerticalLayout {
 
         HorizontalLayout drawerHeader = new HorizontalLayout();
         drawerHeader.addClassName("admin-user-drawer-header");
-        Span title = new Span("Foydalanuvchi profili");
+        Span title = I18n.localize(new Span("Foydalanuvchi profili"));
         title.addClassName("admin-user-drawer-title");
-        Button closeButton = new Button("×", event -> drawer.close());
+        Button closeButton = I18n.localize(new Button("×", event -> drawer.close()));
         closeButton.addClassName("admin-user-drawer-close");
         closeButton.setAriaLabel("Profil oynasini yopish");
         drawerHeader.add(title, closeButton);
@@ -329,13 +329,13 @@ public class AdminUsersView extends VerticalLayout {
         content.setPadding(false);
         content.setSpacing(false);
 
-        Span avatar = new Span(initials(user.getFullName()));
+        Span avatar = I18n.localize(new Span(initials(user.getFullName())));
         avatar.addClassName("admin-user-drawer-avatar");
         avatar.addClassName("avatar-" + Math.floorMod(
                 Objects.hashCode(user.getProfileId()), 6));
-        H2 name = new H2(nonBlank(user.getFullName(), "Noma'lum foydalanuvchi"));
+        H2 name = I18n.userText(new H2(), user.getFullName(), "Noma'lum foydalanuvchi");
         name.addClassName("admin-user-drawer-name");
-        Span location = new Span(nonBlank(user.getDistrict(), "Manzil ko'rsatilmagan"));
+        Span location = I18n.userText(new Span(), user.getDistrict(), "Manzil ko'rsatilmagan");
         location.addClassName("admin-user-drawer-location");
 
         VerticalLayout identity = new VerticalLayout(avatar, name, location,
@@ -345,7 +345,7 @@ public class AdminUsersView extends VerticalLayout {
         identity.setSpacing(false);
         identity.setAlignItems(Alignment.CENTER);
 
-        Div stats = new Div();
+        Div stats = I18n.localize(new Div());
         stats.addClassName("admin-user-stats");
         stats.add(
                 statCard("Reyting", "#" + (currentPage * PAGE_SIZE
@@ -357,9 +357,9 @@ public class AdminUsersView extends VerticalLayout {
                 statCard("Qo'shilgan", formatDate(user), "joined")
         );
 
-        Button blockButton = new Button(user.getStatus() == ProfileStatus.BLOCKED
+        Button blockButton = I18n.localize(new Button(user.getStatus() == ProfileStatus.BLOCKED
                 ? "Foydalanuvchi bloklangan" : "⛔ Bloklash",
-                event -> confirmBlock(user));
+                event -> confirmBlock(user)));
         blockButton.addClassName("admin-user-drawer-block");
         blockButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         blockButton.setEnabled(user.getStatus() != ProfileStatus.BLOCKED);
@@ -369,12 +369,12 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private Div statCard(String label, String value, String styleName) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassName("admin-user-stat-card");
         card.addClassName(styleName);
-        Span title = new Span(label);
+        Span title = I18n.localize(new Span(label));
         title.addClassName("admin-user-stat-label");
-        Span stat = new Span(value);
+        Span stat = I18n.localize(new Span(value));
         stat.addClassName("admin-user-stat-value");
         card.add(title, stat);
         return card;
@@ -385,28 +385,28 @@ public class AdminUsersView extends VerticalLayout {
             return;
         }
         ConfirmDialog confirmation = new ConfirmDialog();
-        confirmation.setHeader("Foydalanuvchini bloklash");
-        confirmation.setText(nonBlank(user.getFullName(), "Foydalanuvchi")
+        confirmation.setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchini bloklash")));
+        I18n.text(confirmation, nonBlank(user.getFullName(), "Foydalanuvchi")
                 + " bloklansinmi? U tizimdan foydalana olmaydi.");
         confirmation.setCancelable(true);
-        confirmation.setCancelText("Bekor qilish");
-        confirmation.setConfirmText("Bloklash");
+        I18n.property(confirmation, "cancelText", "Bekor qilish");
+        I18n.property(confirmation, "confirmText", "Bloklash");
         confirmation.setConfirmButtonTheme("error primary");
         confirmation.addConfirmListener(event -> {
             try {
                 if (!Boolean.TRUE.equals(adminService.blockUser(user.getProfileId()))) {
-                    Notification.show("Foydalanuvchi bloklanmadi. Profil topilmadi.",
+                    I18n.notify("Foydalanuvchi bloklanmadi. Profil topilmadi.",
                             4000, Notification.Position.TOP_END);
                     return;
                 }
                 user.setStatus(ProfileStatus.BLOCKED);
-                Notification.show("Foydalanuvchi bloklandi.",
+                I18n.notify("Foydalanuvchi bloklandi.",
                         3000, Notification.Position.TOP_END);
                 loadUsers();
                 openUserDetails(user);
             } catch (RuntimeException exception) {
                 log.error("Could not block user {}", user.getProfileId(), exception);
-                Notification.show("Foydalanuvchini bloklashda xatolik yuz berdi.",
+                I18n.notify("Foydalanuvchini bloklashda xatolik yuz berdi.",
                         4500, Notification.Position.TOP_END);
             }
         });
@@ -440,7 +440,7 @@ public class AdminUsersView extends VerticalLayout {
     }
 
     private static String formatNumber(Number value) {
-        return value == null ? "0" : String.format(Locale.US, "%,d", value.longValue());
+        return value == null ? "0" : I18n.format(Locale.US, "%,d", value.longValue());
     }
 
     private static boolean contains(String value, String query) {
@@ -463,5 +463,10 @@ public class AdminUsersView extends VerticalLayout {
             }
         }
         return result.toString().toUpperCase(Locale.ROOT);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Foydalanuvchilar | TozaCoin");
     }
 }

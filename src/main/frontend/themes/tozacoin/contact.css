@@ -60,7 +60,19 @@
   display: flex;
   align-items: center;
   gap: 1.15rem;
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 6px;
+  margin: -6px;
+  transition: background-color 160ms ease;
 }
+
+.contact-info-item:hover { background-color: rgba(113, 157, 49, 0.08); }
+.contact-info-item:hover .contact-info-value { color: #456820; text-decoration: underline; text-underline-offset: 3px; }
+.contact-info-item:focus-visible { outline: 2px solid #719d31; outline-offset: 4px; }
+.contact-info-badge img { display: block; }
+.contact-info-details { min-width: 0; }
+.contact-info-value { overflow-wrap: anywhere; }
 
 .contact-info-badge {
   width: 44px;

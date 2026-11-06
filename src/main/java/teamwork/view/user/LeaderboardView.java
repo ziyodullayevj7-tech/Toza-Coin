@@ -1,5 +1,6 @@
 package teamwork.view.user;
 
+import teamwork.i18n.I18n;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -27,21 +28,20 @@ import java.util.Locale;
 import java.util.Objects;
 
 @Route(value = "user/leaderboard", layout = UserLayout.class)
-@PageTitle("Reyting | TozaCoin")
 @RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
-public class LeaderboardView extends VerticalLayout {
+public class LeaderboardView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     private static final int PAGE_SIZE = 10;
     private final LeaderBoardService leaderBoardService;
     private final String currentProfileId;
-    private final Div podium = new Div();
-    private final Div entries = new Div();
-    private final Div results = new Div();
-    private final Span resultCount = new Span();
-    private final Span pageLabel = new Span();
-    private final Button previousButton = new Button("← Oldingi");
-    private final Button nextButton = new Button("Keyingi →");
+    private final Div podium = I18n.localize(new Div());
+    private final Div entries = I18n.localize(new Div());
+    private final Div results = I18n.localize(new Div());
+    private final Span resultCount = I18n.localize(new Span());
+    private final Span pageLabel = I18n.localize(new Span());
+    private final Button previousButton = I18n.localize(new Button("← Oldingi"));
+    private final Button nextButton = I18n.localize(new Button("Keyingi →"));
 
     private Page<LeaderBoardDto> currentPage;
     private int pageNumber;
@@ -61,16 +61,16 @@ public class LeaderboardView extends VerticalLayout {
     }
 
     private Div buildHeader() {
-        Div header = new Div();
+        Div header = I18n.localize(new Div());
         header.addClassName("user-leaderboard-header");
 
-        Span icon = new Span("🏆");
+        Span icon = I18n.localize(new Span("🏆"));
         icon.addClassName("user-leaderboard-icon");
 
-        H1 title = new H1("Eng faol foydalanuvchilar");
+        H1 title = I18n.localize(new H1("Eng faol foydalanuvchilar"));
         title.addClassName("user-leaderboard-title");
 
-        Paragraph subtitle = new Paragraph("TozaCoin hamjamiyatida eng ko'p tanga jamg'arganlar");
+        Paragraph subtitle = I18n.localize(new Paragraph("TozaCoin hamjamiyatida eng ko'p tanga jamg'arganlar"));
         subtitle.addClassName("user-leaderboard-subtitle");
 
         header.add(icon, title, subtitle);
@@ -78,30 +78,30 @@ public class LeaderboardView extends VerticalLayout {
     }
 
     private Div buildBoard() {
-        Div board = new Div();
+        Div board = I18n.localize(new Div());
         board.addClassName("user-leaderboard-board");
 
-        Div boardHeader = new Div();
+        Div boardHeader = I18n.localize(new Div());
         boardHeader.addClassName("user-leaderboard-board-header");
 
-        Div heading = new Div();
+        Div heading = I18n.localize(new Div());
         heading.addClassName("user-leaderboard-heading");
-        H2 sectionTitle = new H2("Foydalanuvchilar reytingi");
+        H2 sectionTitle = I18n.localize(new H2("Foydalanuvchilar reytingi"));
         sectionTitle.addClassName("user-leaderboard-section-title");
-        Paragraph scoreDescription = new Paragraph("Umumiy ishlab topilgan tangalar bo'yicha");
+        Paragraph scoreDescription = I18n.localize(new Paragraph("Umumiy ishlab topilgan tangalar bo'yicha"));
         scoreDescription.addClassName("user-leaderboard-score-description");
         heading.add(sectionTitle, scoreDescription);
 
-        Button refreshButton = new Button("⟳ Yangilash", event -> loadPage());
+        Button refreshButton = I18n.localize(new Button("⟳ Yangilash", event -> loadPage()));
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("user-leaderboard-refresh");
         boardHeader.add(heading, refreshButton);
 
         podium.addClassName("user-leaderboard-podium");
 
-        Div listHeader = new Div();
+        Div listHeader = I18n.localize(new Div());
         listHeader.addClassName("user-leaderboard-list-header");
-        Span listTitle = new Span("Barcha ishtirokchilar");
+        Span listTitle = I18n.localize(new Span("Barcha ishtirokchilar"));
         listTitle.addClassName("user-leaderboard-list-title");
         resultCount.addClassName("user-leaderboard-count");
         listHeader.add(listTitle, resultCount);
@@ -141,14 +141,14 @@ public class LeaderboardView extends VerticalLayout {
             renderPage();
         } catch (RuntimeException exception) {
             results.removeAll();
-            Paragraph message = new Paragraph("Reytingni yuklab bo'lmadi. Qayta urinib ko'ring.");
+            Paragraph message = I18n.localize(new Paragraph("Reytingni yuklab bo'lmadi. Qayta urinib ko'ring."));
             message.addClassName("user-leaderboard-error");
-            Button retry = new Button("Qayta urinish", event -> loadPage());
+            Button retry = I18n.localize(new Button("Qayta urinish", event -> loadPage()));
             retry.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
             results.add(message, retry);
             previousButton.setEnabled(false);
             nextButton.setEnabled(false);
-            pageLabel.setText("");
+            I18n.text(pageLabel, "");
         }
     }
 
@@ -171,11 +171,11 @@ public class LeaderboardView extends VerticalLayout {
         entries.removeAll();
         List<LeaderBoardDto> listedUsers = pageNumber == 0 ? users.stream().skip(3).toList() : users;
         if (users.isEmpty()) {
-            Paragraph empty = new Paragraph("Hozircha reytingda foydalanuvchilar yo'q.");
+            Paragraph empty = I18n.localize(new Paragraph("Hozircha reytingda foydalanuvchilar yo'q."));
             empty.addClassName("user-leaderboard-empty");
             entries.add(empty);
         } else if (listedUsers.isEmpty()) {
-            Paragraph topOnly = new Paragraph("Hozircha barcha ishtirokchilar kuchli uchlikda!");
+            Paragraph topOnly = I18n.localize(new Paragraph("Hozircha barcha ishtirokchilar kuchli uchlikda!"));
             topOnly.addClassName("user-leaderboard-empty");
             entries.add(topOnly);
         } else {
@@ -185,70 +185,70 @@ public class LeaderboardView extends VerticalLayout {
             }
         }
 
-        resultCount.setText(currentPage.getTotalElements() + " ishtirokchi");
-        pageLabel.setText((pageNumber + 1) + " / " + Math.max(currentPage.getTotalPages(), 1));
+        I18n.text(resultCount, currentPage.getTotalElements() + " ishtirokchi");
+        I18n.text(pageLabel, (pageNumber + 1) + " / " + Math.max(currentPage.getTotalPages(), 1));
         previousButton.setEnabled(currentPage.hasPrevious());
         nextButton.setEnabled(currentPage.hasNext());
         results.removeAll();
     }
 
     private Div buildPodiumCard(LeaderBoardDto user, int rank) {
-        Div card = new Div();
+        Div card = I18n.localize(new Div());
         card.addClassNames("user-leaderboard-podium-card", "rank-" + rank);
 
-        Span medal = new Span(rank == 1 ? "🥇" : rank == 2 ? "🥈" : "🥉");
+        Span medal = I18n.localize(new Span(rank == 1 ? "🥇" : rank == 2 ? "🥈" : "🥉"));
         medal.addClassName("user-leaderboard-medal");
 
-        Span avatar = new Span(initials(user.getFullName()));
+        Span avatar = I18n.localize(new Span(initials(user.getFullName())));
         avatar.addClassName("user-leaderboard-podium-avatar");
 
-        Span name = new Span(displayName(user));
+        Span name = I18n.userText(new Span(), user.getFullName(), "Foydalanuvchi");
         name.addClassName("user-leaderboard-podium-name");
 
-        Span place = new Span(rank + "-o'rin");
+        Span place = I18n.localize(new Span(rank + "-o'rin"));
         place.addClassName("user-leaderboard-podium-place");
 
-        Span score = new Span("🪙 " + formatCoins(user.getTotalEarnedCoins()));
+        Span score = I18n.localize(new Span("🪙 " + formatCoins(user.getTotalEarnedCoins())));
         score.addClassName("user-leaderboard-podium-score");
         card.add(medal, avatar, name, place, score);
         return card;
     }
 
     private Div buildUserRow(LeaderBoardDto user, int rank) {
-        Div row = new Div();
+        Div row = I18n.localize(new Div());
         row.addClassName("user-leaderboard-row");
         boolean isCurrentUser = currentProfileId != null && Objects.equals(currentProfileId, user.getProfileId());
         if (isCurrentUser) {
             row.addClassName("is-current-user");
         }
 
-        Span rankNumber = new Span(String.valueOf(rank));
+        Span rankNumber = I18n.localize(new Span(String.valueOf(rank)));
         rankNumber.addClassName("user-leaderboard-rank");
 
-        Span avatar = new Span(initials(user.getFullName()));
+        Span avatar = I18n.localize(new Span(initials(user.getFullName())));
         avatar.addClassName("user-leaderboard-avatar");
 
-        Div identity = new Div();
+        Div identity = I18n.localize(new Div());
         identity.addClassName("user-leaderboard-identity");
-        Span name = new Span(displayName(user));
+        Span name = I18n.userText(new Span(), user.getFullName(), "Foydalanuvchi");
         name.addClassName("user-leaderboard-name");
         String district = user.getDistrict() == null || user.getDistrict().isBlank()
                 ? "Foydalanuvchi"
                 : user.getDistrict();
-        Span location = new Span(district);
+        Span location = I18n.userText(new Span(), user.getDistrict(), "Foydalanuvchi");
         location.addClassName("user-leaderboard-location");
         identity.add(name, location);
 
-        Div person = new Div();
+        Div person = I18n.localize(new Div());
         person.addClassName("user-leaderboard-person");
         person.add(rankNumber, avatar, identity);
         if (isCurrentUser) {
-            Span you = new Span("Siz");
+            Span you = I18n.localize(new Span("Siz"));
             you.addClassName("user-leaderboard-you");
             person.add(you);
         }
 
-        Span score = new Span("🪙 " + formatCoins(user.getTotalEarnedCoins()));
+        Span score = I18n.localize(new Span("🪙 " + formatCoins(user.getTotalEarnedCoins())));
         score.addClassName("user-leaderboard-row-score");
         row.add(person, score);
         return row;
@@ -277,5 +277,10 @@ public class LeaderboardView extends VerticalLayout {
 
     private static String displayName(String fullName) {
         return fullName == null || fullName.isBlank() ? "Foydalanuvchi" : fullName.trim();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return I18n.t("Reyting | TozaCoin");
     }
 }

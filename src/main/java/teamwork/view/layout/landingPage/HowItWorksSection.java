@@ -1,82 +1,34 @@
 package teamwork.view.layout.landingPage;
 
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.html.Span;
+import teamwork.i18n.I18n;
+import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route(value = "how-it-works", layout = MainLayout.class)
 @AnonymousAllowed
-@CssImport("./themes/tozacoin/how-it-works.css")
 public class HowItWorksSection extends Div {
-
     public HowItWorksSection() {
-        addClassName("how-it-works-wrapper");
-
-        Div container = new Div();
-        container.addClassName("how-it-works-container");
-
-        // Header Block
-        Div headerBlock = new Div();
-        headerBlock.addClassName("how-it-works-header");
-
-        Span badge = new Span("JARAYON");
-        badge.addClassName("how-it-works-badge");
-
-        H2 title = new H2("Qanday ishlaydi?");
-        title.addClassName("how-it-works-title");
-
-        Paragraph subtitle = new Paragraph("4 ta oddiy qadamda toza muhitga hissa qo'shing va tangalar ishlang.");
-        subtitle.addClassName("how-it-works-subtitle");
-
-        headerBlock.add(badge, title, subtitle);
-
-        // 4 Step Cards Grid
-        Div grid = new Div();
-        grid.addClassName("how-it-works-grid");
-
-        grid.add(
-            createStepCard("📍", "blue", "01", "blue", "Ifloslikni toping", "Ko'cha, park yoki jamoat joyida ifloslangan hudud yoki chiqindilarni ko'rsangiz, to'xtang."),
-            createStepCard("📷", "grey", "02", "green", "Rasm oling", "TozaCoin kamerasidan foydalanib rasmga oling. Geolocation avtomatik saqlanadi."),
-            createStepCard("⚡", "green", "03", "orange", "Harakatni tanlang", "O'zingiz tozalang yoki jamoaviy tozalash kampaniyasiga a'zo bo'ling."),
-            createStepCard("🪙", "yellow", "04", "amber", "Tanga oling", "Xabar tasdiqlangach, hamyoningizga TozaCoin tangalari kelib tushadi.")
-        );
-
-        container.add(headerBlock, grid);
-        add(container);
+        setId("how-it-works");
+        addClassNames("eco-section", "eco-how");
+        Span label = I18n.localize(new Span("QANDAY ISHLAYDI"));
+        label.addClassName("eco-eyebrow");
+        Div grid = I18n.localize(new Div(
+                step("01", VaadinIcon.CAMERA, "Ko'ring va xabar qiling", "Chiqindini suratga oling. Joylashuvni belgilang va qisqa izoh yozing."),
+                step("02", VaadinIcon.MAP_MARKER, "Birgalikda tozalaymiz", "O'zingiz tozalang yoki xabaringizni boshqalar tozalashi uchun yuboring."),
+                step("03", VaadinIcon.CHECK_CIRCLE, "Natijani ko'ring", "Tozalashdan keyingi suratni yuboring. Tekshiruvdan so'ng tangalar hisobingizga tushadi.")));
+        grid.addClassName("eco-steps");
+        add(label, I18n.localize(new H2("Yaxshi o'zgarish uchun oddiy qadamlar.")), grid);
     }
 
-    private Div createStepCard(String iconEmoji, String badgeColorClass, String stepNumStr, String numColorClass, String titleText, String descText) {
-        Div card = new Div();
-        card.addClassName("step-card");
-
-        Div topRow = new Div();
-        topRow.addClassName("step-card-top");
-
-        Span iconBadge = new Span(iconEmoji);
-        iconBadge.addClassName("step-icon-badge");
-        iconBadge.addClassName(badgeColorClass);
-
-        Span watermark = new Span(stepNumStr);
-        watermark.addClassName("step-watermark");
-
-        topRow.add(iconBadge, watermark);
-
-        Span numLabel = new Span("QADAM " + stepNumStr);
-        numLabel.addClassName("step-number");
-        numLabel.addClassName(numColorClass);
-
-        H3 cardTitle = new H3(titleText);
-        cardTitle.addClassName("step-card-title");
-
-        Paragraph cardDesc = new Paragraph(descText);
-        cardDesc.addClassName("step-card-desc");
-
-        card.add(topRow, numLabel, cardTitle, cardDesc);
+    private Div step(String number, VaadinIcon icon, String title, String text) {
+        Span index = I18n.localize(new Span(number));
+        index.addClassName("eco-step-number");
+        Div symbol = I18n.localize(new Div(icon.create()));
+        symbol.addClassName("eco-step-icon");
+        Div card = I18n.localize(new Div(index, symbol, I18n.localize(new H3(title)), I18n.localize(new Paragraph(text))));
+        card.addClassName("eco-step");
         return card;
     }
 }
