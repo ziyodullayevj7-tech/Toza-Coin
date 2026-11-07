@@ -97,11 +97,20 @@ public class AiCleanupAnaliseService {
                 4. detectedAnchors: List of common static visual anchors found in both frames.
                 5. reasoning: Concise summary explaining the verdict.
 
+                Classify the waste visible in the original (before cleanup, if applicable) image.
+                wasteType must be exactly PLASTIC, ILLEGAL_DUMP, WATER, AIR, ELECTRONIC, or OTHER.
+                Use OTHER unless the image clearly supports one of the specific types.
+                severityLevel must be LOW (small localized waste), MEDIUM (moderate accumulation),
+                HIGH (extensive waste or clear environmental hazard), or UNDER_REVIEW if uncertain.
+                Do not infer pollution or severity that cannot be seen in the image.
+
                 Return JSON matching this schema:
                 {
                   "isSameLocation": true|false,
                   "wasteCleared": true|false,
                   "confidenceScore": 0-100,
+                  "wasteType": "OTHER",
+                  "severityLevel": "UNDER_REVIEW",
                   "detectedAnchors": ["anchor1", "anchor2"],
                   "reasoning": "..."
                 }
@@ -157,10 +166,19 @@ public class AiCleanupAnaliseService {
                 visible waste or an environmental cleanliness problem that should be reported.
                 Do not infer a cleanup; this is a report-only review.
 
+                Classify the waste visible in the original (before cleanup, if applicable) image.
+                wasteType must be exactly PLASTIC, ILLEGAL_DUMP, WATER, AIR, ELECTRONIC, or OTHER.
+                Use OTHER unless the image clearly supports one of the specific types.
+                severityLevel must be LOW (small localized waste), MEDIUM (moderate accumulation),
+                HIGH (extensive waste or clear environmental hazard), or UNDER_REVIEW if uncertain.
+                Do not infer pollution or severity that cannot be seen in the image.
+
                 Return JSON matching this schema:
                 {
                   "wastePresent": true|false,
                   "confidenceScore": 0-100,
+                  "wasteType": "OTHER",
+                  "severityLevel": "UNDER_REVIEW",
                   "reasoning": "concise explanation"
                 }
                 """;

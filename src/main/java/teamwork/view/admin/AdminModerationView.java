@@ -1,6 +1,7 @@
 package teamwork.view.admin;
 
 import teamwork.i18n.I18n;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
@@ -71,6 +72,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         this.wasteReportService = wasteReportService;
         this.adminService = adminService;
 
+        addClassName("admin-content-page");
         setWidthFull();
         setPadding(false);
         setSpacing(false);
@@ -94,7 +96,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
         Div countCard = I18n.localize(new Div());
         countCard.addClassName("moderation-queue-badge");
-        countCard.add(I18n.localize(new Span("⏳")), queueCount, I18n.localize(new Span("ta navbatda")));
+        countCard.add(VaadinIcon.CLOCK.create(), queueCount, I18n.localize(new Span("ta navbatda")));
         header.add(titleBlock, countCard);
         return header;
     }
@@ -121,7 +123,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
     private Div buildReportsPanel() {
         Div panel = I18n.localize(new Div());
-        panel.addClassName("moderation-grid-panel");
+        panel.addClassNames("moderation-grid-panel", "admin-data-panel");
 
         errorMessage.addClassName("moderation-error");
         errorMessage.setVisible(false);
@@ -160,10 +162,9 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
     }
 
     private void configureGrid() {
-        reportsGrid.addClassName("moderation-grid");
+        reportsGrid.addClassNames("moderation-grid", "admin-data-grid");
         reportsGrid.setWidthFull();
-        reportsGrid.setHeight("min(620px, 65vh)");
-        reportsGrid.setAllRowsVisible(false);
+        reportsGrid.setAllRowsVisible(true);
         reportsGrid.removeAllColumns();
 
         reportsGrid.addComponentColumn(this::buildPhotoPreview)
@@ -352,7 +353,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
     private void openReportDetails(ConfirmWasteDto report) {
         Dialog dialog = new Dialog();
-        dialog.addClassName("moderation-detail-dialog");
+        dialog.addClassNames("moderation-detail-dialog", "admin-theme-dialog");
         I18n.headerTitle(dialog, "Xabar tafsilotlari");
         dialog.setWidth("min(940px, 96vw)");
 
@@ -485,6 +486,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         }
 
         ConfirmDialog confirmation = new ConfirmDialog();
+        confirmation.addClassName("admin-theme-dialog");
         confirmation.setHeader(title);
         I18n.text(confirmation, message);
         confirmation.setCancelable(true);

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import teamwork.config.CustomUserDetails;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import teamwork.util.SecurityUtils;
 
 import java.util.Locale;
@@ -38,13 +39,15 @@ public class AdminFooter extends Div {
         email.addClassName("admin-footer-email");
         details.add(name, email);
 
-        Button logout = I18n.localize(new Button("⏻"));
+        Button logout = I18n.localize(new Button("Chiqish", VaadinIcon.SIGN_OUT.create()));
         logout.addClassName("admin-footer-logout");
         I18n.attribute(logout, "title", "Chiqish");
         I18n.attribute(logout, "aria-label", "Chiqish");
         logout.addClickListener(event -> UI.getCurrent().getPage().setLocation("/logout"));
 
-        add(avatar, details, logout);
+        Div identity = new Div(avatar, details);
+        identity.addClassName("admin-footer-identity");
+        add(identity, logout);
     }
 
     private static String initials(CustomUserDetails user) {

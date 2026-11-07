@@ -1,12 +1,14 @@
 package teamwork.view.admin;
 
 import teamwork.i18n.I18n;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
@@ -63,6 +65,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
     @Autowired
     public AdminUsersView(AdminService adminService) {
         this.adminService = adminService;
+        addClassName("admin-content-page");
         setWidthFull();
         setPadding(false);
         setSpacing(false);
@@ -84,7 +87,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         subtitle.addClassName("admin-users-subtitle");
         titleBlock.add(title, subtitle);
 
-        Div countBadge = I18n.localize(new Div(I18n.localize(new Span("👥")), totalUsers, I18n.localize(new Span("foydalanuvchi"))));
+        Div countBadge = I18n.localize(new Div(VaadinIcon.USERS.create(), totalUsers, I18n.localize(new Span("foydalanuvchi"))));
         countBadge.addClassName("admin-users-count");
         header.add(titleBlock, countBadge);
         return header;
@@ -96,7 +99,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
 
         I18n.placeholder(searchField, "Ism yoki shahar bo'yicha qidirish (joriy sahifa)");
         searchField.setClearButtonVisible(true);
-        searchField.setPrefixComponent(I18n.localize(new Span("🔎")));
+        searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
         searchField.addClassName("admin-users-search");
 
         statusFilters.addClassName("admin-users-filters");
@@ -111,7 +114,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
 
     private Div buildUsersPanel() {
         Div panel = I18n.localize(new Div());
-        panel.addClassName("admin-users-panel");
+        panel.addClassNames("admin-users-panel", "admin-data-panel");
 
         errorMessage.addClassName("admin-users-error");
         errorMessage.setVisible(false);
@@ -147,33 +150,29 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
     }
 
     private void configureGrid() {
-        usersGrid.addClassName("admin-users-grid");
+        usersGrid.addClassNames("admin-users-grid", "admin-data-grid");
         usersGrid.setWidthFull();
-        usersGrid.setAllRowsVisible(false);
+        usersGrid.setAllRowsVisible(true);
         usersGrid.setPageSize(PAGE_SIZE);
-        usersGrid.addColumn(user -> currentPage * PAGE_SIZE
-                        + pageUsers.indexOf(user) + 1)
-                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("#")))
-                .setWidth("56px")
-                .setFlexGrow(0);
+        usersGrid.addColumn(user -> currentPage * PAGE_SIZE + pageUsers.indexOf(user) + 1)
+                .setTextAlign(ColumnTextAlign.CENTER)
+                .setHeader(I18n.localize(new Span("Reyting")))
+                .setWidth("85px").setFlexGrow(0);
         usersGrid.addComponentColumn(this::buildUserCell)
-                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchi")))
-                .setFlexGrow(1)
-                .setWidth("260px");
-        usersGrid.addColumn(user -> "#" + (currentPage * PAGE_SIZE
-                        + pageUsers.indexOf(user) + 1))
-                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Reyting")))
-                .setWidth("90px")
-                .setFlexGrow(0);
+                .setHeader(I18n.localize(new Span("Foydalanuvchi")))
+                .setWidth("260px").setFlexGrow(1);
         usersGrid.addColumn(user -> formatNumber(user.getCoinBalance()))
+                .setTextAlign(ColumnTextAlign.END)
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Tanga")))
                 .setWidth("100px")
                 .setFlexGrow(0);
-        usersGrid.addColumn(user -> "🔥 " + formatNumber(user.getStreakDays()))
-                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Seriya")))
-                .setWidth("95px")
+        usersGrid.addColumn(user -> formatNumber(user.getStreakDays()))
+                .setTextAlign(ColumnTextAlign.END)
+                .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Streak (days)")))
+                .setWidth("120px")
                 .setFlexGrow(0);
         usersGrid.addColumn(user -> formatNumber(user.getReportCount()))
+                .setTextAlign(ColumnTextAlign.END)
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Xabar")))
                 .setWidth("80px")
                 .setFlexGrow(0);
@@ -200,6 +199,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         identity.addClassName("admin-user-identity");
         Span name = I18n.userText(new Span(), user.getFullName(), "Noma'lum foydalanuvchi");
         name.addClassName("admin-user-name");
+        name.setTitle(user.getFullName() == null ? "" : user.getFullName());
         Span location = I18n.userText(new Span(), user.getDistrict(), "Manzil ko'rsatilmagan");
         location.addClassName("admin-user-location");
         identity.add(name, location);
@@ -309,7 +309,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
 
     private void openUserDetails(LeaderBoardDto user) {
         Dialog drawer = new Dialog();
-        drawer.addClassName("admin-user-profile-dialog");
+        drawer.addClassNames("admin-user-profile-dialog", "admin-theme-dialog");
         drawer.setCloseOnEsc(true);
         drawer.setCloseOnOutsideClick(true);
         drawer.setWidth("min(480px, 100vw)");
@@ -385,6 +385,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
             return;
         }
         ConfirmDialog confirmation = new ConfirmDialog();
+        confirmation.addClassName("admin-theme-dialog");
         confirmation.setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchini bloklash")));
         I18n.text(confirmation, nonBlank(user.getFullName(), "Foydalanuvchi")
                 + " bloklansinmi? U tizimdan foydalana olmaydi.");

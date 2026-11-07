@@ -2,6 +2,7 @@ package teamwork.view.layout.user;
 
 import teamwork.i18n.I18n;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -57,14 +58,12 @@ public class UserFooter extends Div {
         userDetails.add(userNameSpan, coinSubSpan);
         userProfileInfo.add(avatarBadge, userDetails);
 
-        // Right Block: Chiqish (Logout) Button
-        Div btnLogout = I18n.localize(new Div());
-        btnLogout.addClassName("btn-chiqish");
+        // Keep the account details and action on separate rows to avoid truncating the action.
         Icon logoutIcon = VaadinIcon.SIGN_OUT.create();
-        logoutIcon.getStyle().set("font-size", "14px");
-        Span logoutText = I18n.localize(new Span("Chiqish"));
-        logoutText.addClassName("btn-chiqish-text");
-        btnLogout.add(logoutIcon, logoutText);
+        logoutIcon.getElement().setAttribute("aria-hidden", "true");
+        Button btnLogout = I18n.localize(new Button("Chiqish", logoutIcon));
+        btnLogout.addClassNames("btn-chiqish", "user-shell-action");
+        I18n.attribute(btnLogout, "aria-label", "Chiqish");
 
         btnLogout.addClickListener(e -> UI.getCurrent().getPage().setLocation("/logout"));
 

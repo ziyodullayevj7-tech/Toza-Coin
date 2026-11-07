@@ -36,6 +36,13 @@ public class AiReviewPersistenceService {
             return;
         }
 
+        if (report.getReportAction() == ReportActionEnum.CLEAN_MYSELF) {
+            result.validateCleanup();
+        } else {
+            result.validateReport();
+        }
+        report.setCategory(result.getWasteType());
+        report.setSeverity(result.getSeverityLevel());
         report.setAiReviewStatus(AiReviewStatus.COMPLETED);
         report.setConfidenceScore(result.getConfidenceScore());
         report.setAiReasoning(result.getReasoning());

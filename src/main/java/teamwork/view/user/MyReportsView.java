@@ -573,7 +573,10 @@ public class MyReportsView extends VerticalLayout implements com.vaadin.flow.rou
                 .set("padding", "3px 10px")
                 .set("border-radius", "12px");
 
-        if (severity == SeverityLevelEnum.HIGH) {
+        if (severity == null || severity == SeverityLevelEnum.UNDER_REVIEW) {
+            I18n.text(badge, "Tekshiruv ostida");
+            badge.getStyle().set("background-color", "#eef2f0").set("color", "#52665a");
+        } else if (severity == SeverityLevelEnum.HIGH) {
             I18n.text(badge, "Yuqori");
             badge.getStyle().set("background-color", "#fef2f2").set("color", "#ef4444");
         } else if (severity == SeverityLevelEnum.MEDIUM) {

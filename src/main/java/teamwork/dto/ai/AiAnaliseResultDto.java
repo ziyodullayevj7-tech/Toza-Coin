@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import teamwork.enums.WasteTypeEnum;
+import teamwork.enums.SeverityLevelEnum;
 
 @Getter
 @Setter
@@ -29,7 +31,17 @@ public class AiAnaliseResultDto {
     @JsonProperty("reasoning")
     private String reasoning;
 
+    private WasteTypeEnum wasteType;
+    private SeverityLevelEnum severityLevel;
+
+    private void validateClassification() {
+        if (wasteType == null || severityLevel == null) {
+            throw new IllegalArgumentException("AI returned an incomplete classification");
+        }
+    }
+
     public void validateCleanup() {
+        validateClassification();
         if (sameLocation == null || wasteCleared == null
                 || confidenceScore == null
                 || confidenceScore < 0 || confidenceScore > 100) {
@@ -38,6 +50,7 @@ public class AiAnaliseResultDto {
     }
 
     public void validateReport() {
+        validateClassification();
         if (wastePresent == null || confidenceScore == null
                 || confidenceScore < 0 || confidenceScore > 100) {
             throw new IllegalArgumentException("AI returned an incomplete or invalid report analysis");

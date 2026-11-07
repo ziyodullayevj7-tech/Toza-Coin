@@ -4114,3 +4114,51 @@ vaadin-dialog-overlay.admin-user-profile-dialog::part(content) {
     padding: 20px 16px;
   }
 }
+/* Report receipt follows the forest palette with a restrained gold reward accent. */
+.eco-report-page .report-received-card {
+  box-sizing:border-box;
+  width:calc(100% - 32px);
+  max-width:680px!important;
+  padding:40px!important;
+  gap:14px!important;
+  text-align:center;
+  align-items:center;
+  color:#233d2d;
+}
+.report-received-emblem {
+  display:grid; place-items:center; width:64px; height:64px;
+  border-radius:22px; background:#e2efda; color:#387449;
+  border:1px solid #bfd3b3; font-size:30px; font-weight:600; margin-bottom:6px;
+}
+.report-received-eyebrow { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#56704d; }
+.eco-report-page .report-received-card h2 { margin:0; font-size:clamp(24px,4vw,30px); line-height:1.25; letter-spacing:-.025em; color:#233d2d; }
+.report-received-description { margin:0; max-width:480px; color:#526452; line-height:1.65; font-size:14px; }
+.report-pending-reward {
+  box-sizing:border-box; display:flex; align-items:center; justify-content:center; gap:20px;
+  width:100%; margin-top:14px; padding:26px; border-radius:18px;
+  background:linear-gradient(120deg,#faf5e6,#f2edd8); border:1px solid #dfd4ad;
+}
+.report-coin-mark {
+  display:grid; place-items:center; flex-shrink:0; width:58px; height:58px;
+  border-radius:50%; border:3px solid #c5a24e; outline:1px solid #e4cf8e; outline-offset:4px;
+  background:linear-gradient(135deg,#f7e8a9,#e1bd59); color:#79591d; font-size:27px; font-weight:800;
+}
+.report-reward-info { text-align:left; display:flex; flex-direction:column; gap:4px; color:#71603d; font-size:12px; }
+.eco-report-page .report-reward-info h3 { margin:0; font-size:32px; line-height:1.2; letter-spacing:-.03em; color:#75551d; font-weight:800; }
+.report-review-status { display:inline-flex; align-items:center; gap:8px; padding:7px 12px; background:#e8efdf; border:1px solid #cddbbf; border-radius:30px; font-size:12px; font-weight:600; color:#48603b; }
+.report-review-status::before { content:''; width:7px; height:7px; border-radius:50%; background:#a38a38; }
+.report-review-explanation { margin:0; max-width:440px; color:#526452; font-size:13px; line-height:1.6; }
+.report-received-actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; margin-top:12px; padding-top:24px; border-top:1px solid rgba(57,86,52,.15); }
+.eco-report-page .report-received-actions vaadin-button { width:100%; min-width:0; height:48px; margin:0; border-radius:12px; padding:0 16px; font-size:14px; font-weight:600; cursor:pointer; transition:background .15s; }
+.eco-report-page vaadin-button.report-received-primary { background:#426c38; border:1px solid #426c38; color:#fff; }
+.eco-report-page vaadin-button.report-received-primary:hover { background:#355a2d; }
+.eco-report-page vaadin-button.report-received-secondary { background:rgba(255,255,255,.45); border:1px solid #bdcdb4; color:#35552f; }
+.eco-report-page vaadin-button.report-received-secondary:hover { background:#e7efdf; }
+.eco-report-page .report-received-actions vaadin-button:focus-visible { outline:3px solid #96b682; outline-offset:3px; }
+@media(max-width:520px) {
+  .eco-report-page .report-received-card { width:calc(100% - 24px); padding:28px 20px!important; }
+  .report-received-actions { grid-template-columns:1fr; }
+  .report-pending-reward { padding:22px 16px; gap:18px; }
+  .eco-report-page .report-reward-info h3 { font-size:28px; }
+  .jungle-report-progress { padding-inline:12px!important; box-sizing:border-box; }
+}

@@ -1,0 +1,319 @@
+/* Admin uses the same forest scene, flat glass and interaction rhythm as the user workspace. */
+.admin-layout-container.admin-jungle-layout {
+  --admin-ink:#294633;
+  --admin-muted:#526a4c;
+  --admin-line:rgba(57,86,52,.15);
+  --admin-surface:linear-gradient(135deg,rgba(255,255,255,.78),rgba(228,244,217,.65));
+  --admin-glass:linear-gradient(135deg,rgba(255,255,255,.58),rgba(225,245,215,.22));
+  --lumo-primary-color:#426c38;
+  --lumo-primary-text-color:#35552f;
+  --lumo-primary-color-10pct:rgba(66,108,56,.1);
+  --vaadin-focus-ring-color:#7e9d6c;
+  --vaadin-input-field-border-radius:12px;
+  --vaadin-input-field-background:rgba(255,255,255,.65);
+  --vaadin-app-layout-transition-duration:420ms;
+  position:relative;
+  z-index:1;
+  background:transparent;
+  color:var(--admin-ink);
+  transition:padding 420ms cubic-bezier(.22,1,.36,1);
+}
+.admin-jungle-layout.admin-layout-container::part(content) { background:transparent; }
+.admin-jungle-layout.admin-layout-container::part(navbar) {
+  background:linear-gradient(120deg,rgba(255,255,255,.24),rgba(225,245,219,.14));
+  border-bottom:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  transition:inset-inline-start 420ms cubic-bezier(.22,1,.36,1);
+}
+.admin-jungle-layout.admin-layout-container::part(drawer) {
+  background:linear-gradient(145deg,rgba(255,255,255,.28),rgba(214,239,204,.18));
+  border-right:1px solid rgba(255,255,255,.12);
+  border-radius:0 10px 10px 0;
+  backdrop-filter:blur(18px);
+  box-shadow:none;
+  transition:transform 420ms cubic-bezier(.22,1,.36,1),visibility 420ms;
+}
+.admin-jungle-layout.admin-layout-container::part(backdrop) { background:rgba(25,48,30,.18); backdrop-filter:blur(3px); }
+.admin-jungle-layout .admin-sidebar { background:transparent; color:var(--admin-ink); }
+.admin-jungle-layout .admin-brand { border-color:var(--admin-line); }
+.admin-jungle-layout .admin-brand-logo { background:#c4e799; color:#203a25; border-radius:13px; box-shadow:none; }
+.admin-jungle-layout .admin-brand-name { color:#243e2b; font-size:19px; }
+.admin-jungle-layout .admin-brand-role { color:#567f39; font-size:11px; font-weight:600; }
+.admin-jungle-layout .admin-navigation { padding:24px 14px; gap:8px; }
+.admin-jungle-layout .admin-nav-item {
+  min-height:52px; padding:14px 16px; gap:12px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.12); background:rgba(248,255,240,.46);
+  color:#45624c; text-decoration:none;
+  transition:background 180ms ease,transform 180ms ease;
+}
+.admin-jungle-layout .admin-nav-item:hover { background:rgba(248,255,240,.75); color:#294633; transform:translateX(3px); text-decoration:none; }
+.admin-jungle-layout .admin-nav-item:active { background:#d4e7c6; transform:none; }
+.admin-jungle-layout .admin-nav-item.active { background:linear-gradient(135deg,rgba(240,255,222,.78),rgba(187,224,164,.48)); color:#203a25; border-color:rgba(255,255,255,.2); box-shadow:none; }
+.admin-jungle-layout .admin-nav-icon { width:21px; height:21px; color:inherit; }
+.admin-jungle-layout .admin-nav-label { font-size:14px; font-weight:550; }
+.admin-jungle-layout .admin-nav-item.active .admin-nav-label { font-weight:650; }
+.admin-jungle-layout .admin-header { background:transparent; padding:0 28px; gap:16px; }
+.admin-jungle-layout .admin-header-left { min-width:0; }
+.admin-jungle-layout .admin-header-page-info { min-width:0; }
+.admin-jungle-layout .admin-header-title { color:#294633; font-size:17px; font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.admin-jungle-layout .admin-header-subtitle { color:#526a4c; font-size:11px; }
+.admin-jungle-layout .admin-header-actions { gap:12px; flex-shrink:0; }
+.admin-jungle-layout .admin-live-badge { border:1px solid #b9cfaa; background:rgba(227,240,215,.65); color:#49693c; font-size:11px; font-weight:600; border-radius:20px; padding:6px 10px; }
+.admin-jungle-layout :is(.admin-header-avatar,.admin-footer-avatar) { background:rgba(255,255,255,.7); color:#345942; border:1px solid rgba(87,119,68,.2); border-radius:13px; width:40px; height:40px; }
+.admin-jungle-layout .admin-drawer-toggle {
+  width:42px; height:42px; min-width:42px; color:#345942;
+  border:1px solid rgba(255,255,255,.3); border-radius:13px; background:var(--admin-glass);
+}
+.admin-jungle-layout .admin-drawer-toggle::part(icon) { display:none; }
+.admin-menu-glyph { display:block; width:18px; height:18px; position:relative; }
+.admin-menu-glyph > span { position:absolute; left:0; width:18px; height:1.6px; border-radius:2px; background:#345942; transition:transform 420ms cubic-bezier(.22,1,.36,1),width 420ms; }
+.admin-menu-glyph > span:nth-child(1) { top:3px; }
+.admin-menu-glyph > span:nth-child(2) { top:8px; }
+.admin-menu-glyph > span:nth-child(3) { top:13px; }
+.admin-jungle-layout[drawer-opened] .admin-menu-glyph > span:nth-child(1) { width:10px; transform:translate(-1px,2px) rotate(-40deg); }
+.admin-jungle-layout[drawer-opened] .admin-menu-glyph > span:nth-child(3) { width:10px; transform:translate(-1px,-2px) rotate(40deg); }
+.admin-jungle-layout .admin-language-control { display:flex; align-items:center; gap:7px; padding:0 10px; height:40px; border:1px solid rgba(255,255,255,.3); border-radius:12px; background:var(--admin-glass); }
+.admin-jungle-layout .admin-language-control > vaadin-icon { width:17px; height:17px; color:#54765b; }
+.admin-jungle-layout .admin-language-control vaadin-select { width:105px; --vaadin-input-field-height:36px; }
+.admin-jungle-layout .admin-language-control vaadin-select::part(input-field) { background:transparent; border:0; box-shadow:none; color:#345942; padding-inline:0; }
+.admin-jungle-layout .admin-sidebar-footer {
+  flex-direction:column; align-items:stretch; gap:14px; margin:0 8px 12px; padding:16px;
+  border:0; border-radius:18px; background:rgba(246,255,236,.62);
+}
+.admin-jungle-layout .admin-footer-identity { display:flex; align-items:center; gap:10px; min-width:0; }
+.admin-jungle-layout .admin-footer-name { color:#345942; font-weight:600; }
+.admin-jungle-layout .admin-footer-email { color:#526a4c; font-size:11px; }
+.admin-jungle-layout toza-jungle-background { display:block; padding:0 16px 12px; }
+.admin-jungle-layout .jungle-motion-toggle { background:var(--admin-glass); border:1px solid rgba(255,255,255,.3); border-radius:12px; box-shadow:none; }
+
+/* Page headers, task cards and data panels share the user dashboard's spacing. */
+.admin-jungle-layout .admin-content-page {
+  box-sizing:border-box; width:100%; max-width:1440px; margin:0 auto; padding:32px;
+  display:flex; flex-direction:column; align-items:stretch; gap:24px; background:transparent;
+}
+.admin-jungle-layout :is(.admin-page-heading,.moderation-page-header,.admin-users-header) {
+  box-sizing:border-box; margin:0; padding:28px 30px; border-radius:18px;
+  background:linear-gradient(130deg,rgba(255,255,255,.64),rgba(221,244,207,.32));
+  border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(7px);
+}
+.admin-page-heading > span { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#567f39; }
+.admin-jungle-layout :is(.admin-page-heading h1,.moderation-page-title,.admin-users-title) { margin:8px 0; font-size:clamp(25px,3vw,32px); line-height:1.2; letter-spacing:-.7px; color:#243e2b; font-weight:650; }
+.admin-jungle-layout :is(.admin-page-heading p,.moderation-page-subtitle,.admin-users-subtitle) { color:#48634e; margin:0; font-size:14px; line-height:1.7; }
+.admin-overview { display:flex; flex-direction:column; gap:24px; }
+.admin-metric-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
+.admin-jungle-layout :is(.admin-glass-panel,.admin-metric-card,.admin-action-card,.moderation-grid-panel,.admin-users-panel) {
+  box-sizing:border-box; background:var(--admin-surface); border:1px solid rgba(239,249,223,.25);
+  border-radius:18px; box-shadow:none; backdrop-filter:blur(7px); color:var(--admin-ink);
+}
+.admin-glass-panel { padding:28px; display:flex; flex-direction:column; align-items:stretch; gap:16px; }
+.admin-glass-panel > h2 { margin:0; font-size:18px; letter-spacing:-.3px; color:#2f4a28; font-weight:650; }
+.admin-glass-panel > p { margin:0; color:#526a4c; font-size:13px; line-height:1.7; }
+.admin-metric-card { position:relative; padding:24px; display:flex; flex-direction:column; gap:12px; min-width:0; }
+.admin-metric-card > span:not(.admin-metric-number) { color:#526a4c; font-size:12px; }
+.admin-metric-number { color:#294633; font-size:32px; line-height:1.1; letter-spacing:-.8px; font-weight:750; }
+.admin-metric-icon,.admin-action-icon { display:grid; place-items:center; width:44px; height:44px; border-radius:15px; border:1px solid #c8d9bb; background:#e6efdf; color:#486f3b; }
+.admin-metric-icon vaadin-icon,.admin-action-icon vaadin-icon { width:21px; height:21px; }
+.admin-action-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.admin-jungle-layout .admin-action-card { position:relative; display:flex; flex-direction:column; gap:14px; padding:28px; color:#294633; text-decoration:none; transition:background 180ms ease,border-color 180ms ease,transform 180ms ease; }
+.admin-jungle-layout .admin-action-card:hover { background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(221,239,205,.8)); border-color:#a7bd95; transform:translateY(-2px); text-decoration:none; }
+.admin-action-card h2 { margin:6px 0 0; font-size:18px; font-weight:650; color:#294633; }
+.admin-action-card p { margin:0; color:#526a4c; font-size:13px; line-height:1.65; }
+.admin-action-arrow { position:absolute; right:24px; top:24px; color:#567f49; font-size:22px; }
+.admin-overview-refresh { align-self:flex-end; }
+.admin-status-distribution { display:grid; grid-template-columns:1fr 1fr; gap:20px 32px; }
+.admin-status-heading { display:flex; justify-content:space-between; gap:16px; color:#526a4c; font-size:13px; margin-bottom:10px; }
+.admin-status-heading > span:last-child { color:#294633; font-weight:700; }
+.admin-status-row vaadin-progress-bar { height:7px; --lumo-primary-color:#779a60; }
+.admin-status-row vaadin-progress-bar::part(value) { background:#779a60; }
+.admin-status-pending vaadin-progress-bar::part(value) { background:#b99b51; }
+.admin-status-rejected vaadin-progress-bar::part(value) { background:#b5776a; }
+.admin-status-progress vaadin-progress-bar::part(value) { background:#749383; }
+.admin-status-row vaadin-progress-bar::part(bar) { background:rgba(57,86,52,.1); }
+.admin-policy-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.admin-policy-value { font-size:36px; color:#75551d; font-weight:750; letter-spacing:-1px; }
+.admin-policy-card > vaadin-icon { color:#5b7c49; width:28px; height:28px; }
+.admin-statistics-toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.admin-statistics-toolbar > p { margin:0; color:#45624c; font-size:13px; padding:10px 14px; border:1px solid rgba(255,255,255,.2); border-radius:12px; background:var(--admin-surface); }
+.admin-statistics-leaders { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.admin-statistics-leader { display:flex; flex-direction:column; align-items:stretch; gap:18px; min-width:0; padding:24px; background:var(--admin-surface); border:1px solid rgba(239,249,223,.25); border-radius:18px; backdrop-filter:blur(7px); }
+.admin-statistics-leader:first-child { background:linear-gradient(135deg,rgba(240,255,222,.88),rgba(196,225,169,.75)); }
+.admin-statistics-leader > span:first-child { align-self:flex-start; color:#49693c; padding:5px 10px; border:1px solid #bed0b0; border-radius:20px; background:rgba(255,255,255,.4); font-size:12px; font-weight:700; }
+.admin-statistics-leader > span:nth-last-child(2) { font-size:32px; line-height:1; letter-spacing:-.8px; color:#294633; font-weight:750; }
+.admin-statistics-leader > span:last-child { margin-top:-8px; font-size:12px; color:#526a4c; }
+.admin-statistics-table-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding:22px 24px; border-bottom:1px solid #cad8bf; }
+.admin-statistics-table-heading h2 { margin:0; color:#294633; font-size:18px; font-weight:650; }
+.admin-statistics-table-heading > div { display:flex; align-items:center; gap:6px; font-size:12px; color:#526a4c; }
+.admin-statistics-table-heading > div > span:first-child { font-weight:700; color:#294633; }
+.admin-statistics-pagination { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:14px 18px; border:1px solid rgba(239,249,223,.25); border-radius:14px; background:var(--admin-surface); color:#526a4c; font-size:12px; }
+.admin-statistics-empty { padding:40px 24px; text-align:center; color:#526a4c; font-size:14px; }
+.admin-statistics-error { background:#f6eedf; border:1px solid #d9c89c; border-radius:16px; padding:20px 24px; color:#725b32; }
+.admin-statistics-error p { margin:0; font-size:14px; line-height:1.6; }
+.admin-load-error { background:#f6eedf; border:1px solid #d9c89c; border-radius:16px; padding:24px; color:#725b32; }
+
+/* One glass card per list. Grid rows and cells must not paint opaque layers over it. */
+.admin-jungle-layout :is(.moderation-toolbar,.admin-users-toolbar) { flex-wrap:wrap; margin:0; padding:16px; gap:12px; background:var(--admin-surface); border:1px solid rgba(255,255,255,.18); border-radius:16px; }
+.admin-jungle-layout :is(.moderation-status-filters,.admin-users-filters) { flex-wrap:wrap; gap:6px; }
+.admin-jungle-layout :is(.moderation-queue-badge,.admin-users-count) { background:rgba(230,241,220,.55); color:#49693c; border:1px solid rgba(104,134,83,.2); border-radius:12px; }
+.admin-jungle-layout :is(.moderation-queue-badge,.admin-users-count) vaadin-icon { width:18px; height:18px; }
+.admin-jungle-layout .admin-data-panel {
+  min-width:0; width:100%; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.64),rgba(228,244,217,.4));
+  border:1px solid rgba(255,255,255,.3); border-radius:20px; box-shadow:none;
+  backdrop-filter:blur(16px) saturate(110%);
+  -webkit-backdrop-filter:blur(16px) saturate(110%);
+}
+.admin-jungle-layout vaadin-grid.admin-data-grid {
+  --vaadin-grid-background:transparent;
+  --vaadin-grid-row-background-color:transparent;
+  --vaadin-grid-cell-background-color:transparent;
+  --vaadin-grid-cell-background:transparent;
+  --vaadin-grid-header-cell-background:transparent;
+  --vaadin-grid-row-hover-background-color:rgba(255,255,255,.28);
+  --vaadin-grid-row-selected-background-color:rgba(192,218,173,.24);
+  --vaadin-grid-row-odd-background-color:transparent;
+  --vaadin-grid-border-color:rgba(57,86,52,.12);
+  --vaadin-grid-cell-padding:14px 18px;
+  --vaadin-grid-border-width:0;
+  --vaadin-grid-border-radius:0;
+  --vaadin-grid-row-height:76px;
+  --vaadin-grid-row-border-width:0;
+  background:transparent; border:0; border-radius:0; color:#294633;
+  font-size:13px; font-variant-numeric:tabular-nums; box-shadow:none;
+}
+.admin-jungle-layout vaadin-grid.admin-data-grid::part(row) { background:transparent; }
+.admin-jungle-layout vaadin-grid.admin-data-grid::part(header-cell) {
+  background:rgba(255,255,255,.16); color:#48613f;
+  border:0; border-bottom:1px solid rgba(57,86,52,.14);
+  font-size:12px; font-weight:600; line-height:1.4; letter-spacing:.01em; text-transform:none;
+  padding:15px 18px;
+}
+.admin-jungle-layout vaadin-grid.admin-data-grid::part(body-cell) {
+  background-color:transparent; color:#294633; border:0;
+  border-bottom:1px solid rgba(57,86,52,.1); line-height:1.5;
+  padding:14px 18px;
+}
+.admin-jungle-layout vaadin-grid.admin-data-grid::part(last-row-cell) { border-bottom:0; }
+.admin-jungle-layout vaadin-grid.admin-data-grid::part(focused-cell) { box-shadow:inset 0 0 0 2px rgba(86,127,73,.6); }
+.admin-jungle-layout .admin-statistics-table-heading { border-bottom:1px solid rgba(57,86,52,.14); background:transparent; }
+.admin-jungle-layout .admin-user-cell { min-height:48px; gap:10px; }
+.admin-jungle-layout .moderation-reporter-cell { min-height:48px; gap:3px; }
+.admin-jungle-layout :is(.moderation-reporter-name,.admin-user-name) { color:#294633; font-size:14px; font-weight:600; line-height:1.5; }
+.admin-jungle-layout :is(.moderation-district,.admin-user-location) { color:#526a4c; font-size:12px; line-height:1.5; }
+.admin-jungle-layout .moderation-report-id { color:#63795b; font-size:11px; line-height:1.5; }
+.admin-jungle-layout .admin-user-avatar {
+  width:40px; height:40px; flex:0 0 40px; border-radius:13px;
+  background:linear-gradient(135deg,rgba(255,255,255,.62),rgba(212,232,196,.3));
+  border:1px solid rgba(255,255,255,.48); color:#45653b; font-size:13px; font-weight:650;
+}
+.admin-jungle-layout :is(.admin-user-status,.moderation-ai-badge,.moderation-report-status) {
+  display:inline-flex; align-items:center; box-sizing:border-box; min-height:28px; padding:4px 10px;
+  border:1px solid rgba(104,134,83,.18); border-radius:20px;
+  background:rgba(239,247,232,.48); color:#49693c;
+  font-size:11px; font-weight:600; line-height:1.4; white-space:nowrap;
+}
+.admin-jungle-layout :is(.admin-user-status.active,.moderation-ai-badge.high) { background:rgba(216,237,203,.46); border-color:rgba(91,133,65,.22); color:#456b35; }
+.admin-jungle-layout :is(.admin-user-status.blocked,.moderation-ai-badge.low) { background:rgba(246,225,216,.55); border-color:rgba(158,90,65,.2); color:#8c5140; }
+.admin-jungle-layout :is(.admin-user-status.pending,.moderation-report-status.pending) { background:rgba(248,237,206,.55); border-color:rgba(163,132,63,.22); color:#816331; }
+.admin-jungle-layout :is(.admin-user-status.unknown,.moderation-ai-badge.unavailable) { background:rgba(255,255,255,.32); border-color:rgba(86,110,78,.16); color:#607257; }
+.admin-jungle-layout .moderation-report-status.in-progress { background:rgba(218,234,221,.5); color:#466c54; border-color:rgba(79,124,96,.2); }
+.admin-jungle-layout .moderation-photo-pair { gap:8px; }
+.admin-jungle-layout .moderation-thumbnail { border:1px solid rgba(255,255,255,.45); border-radius:10px; box-shadow:none; background:rgba(255,255,255,.2); }
+.admin-jungle-layout .admin-data-grid vaadin-button {
+  min-height:36px; height:36px; padding:0 12px; border-radius:10px;
+  background:rgba(255,255,255,.28); border:1px solid rgba(86,115,70,.2); color:#345942; font-size:12px;
+}
+.admin-jungle-layout .admin-data-grid vaadin-button:not([disabled]):hover { background:rgba(255,255,255,.65); border-color:rgba(86,115,70,.35); }
+.admin-jungle-layout .admin-data-grid vaadin-button[theme~="error"] { background:rgba(248,230,224,.42); border-color:rgba(168,96,75,.24); color:#94533e; }
+.admin-jungle-layout .admin-data-grid vaadin-button[theme~="error"]:not([disabled]):hover { background:rgba(241,213,202,.65); border-color:rgba(168,96,75,.4); }
+.admin-jungle-layout :is(.moderation-pagination,.admin-users-pagination) { margin:0; padding:14px 18px; border-radius:14px; background:var(--admin-surface); gap:12px; flex-wrap:wrap; color:#526a4c; }
+.admin-jungle-layout :is(.moderation-empty-state,.admin-users-empty,.admin-statistics-empty) { background:transparent; color:#526a4c; padding:36px 24px; }
+
+/* Native controls: one neutral surface, deliberate primary actions, and distinct destructive actions. */
+.admin-jungle-layout vaadin-button {
+  min-height:40px; margin:0; padding:0 14px; border:1px solid rgba(104,134,83,.25); border-radius:12px;
+  background:var(--admin-glass); color:#345942; box-shadow:none;
+  font-size:13px; font-weight:600; cursor:pointer; transition:background 180ms ease,border-color 180ms ease;
+}
+.admin-jungle-layout vaadin-button::part(label) { white-space:nowrap; }
+.admin-jungle-layout vaadin-button:not([disabled]):hover { background:#e9f1e2; border-color:#9fb78c; color:#294633; }
+.admin-jungle-layout vaadin-button:not([disabled]):is(:active,[active]) { background:#d4e6c5; }
+.admin-jungle-layout vaadin-button:is([theme~="primary"],.active) { background:#426c38; border-color:#426c38; color:white; }
+.admin-jungle-layout vaadin-button:is([theme~="primary"],.active):hover { background:#355a2d; color:white; }
+.admin-jungle-layout vaadin-button[theme~="error"] { background:#f6e9e4; color:#964b3c; border-color:#dfb8ae; }
+.admin-jungle-layout vaadin-button[theme~="error"]:hover { background:#eed6cf; color:#7b382b; border-color:#c99485; }
+.admin-jungle-layout vaadin-button[disabled] { opacity:.55; cursor:default; }
+.admin-jungle-layout vaadin-button.admin-footer-logout { width:100%; height:40px; padding:0 14px; background:var(--admin-glass); border:1px solid rgba(255,255,255,.3); color:#345942; }
+.admin-jungle-layout vaadin-button.admin-footer-logout:hover { background:rgba(248,255,240,.82); border-color:rgba(87,119,68,.25); }
+.admin-jungle-layout vaadin-button vaadin-icon { width:18px; height:18px; }
+.admin-jungle-layout :is(vaadin-text-field,vaadin-select) { --vaadin-input-field-background:rgba(255,255,255,.68); --vaadin-input-field-border-radius:12px; }
+.admin-jungle-layout :is(vaadin-button,vaadin-drawer-toggle):is(:focus-visible,[focus-ring]),
+.admin-jungle-layout :is(.admin-nav-item,.admin-action-card):focus-visible { outline:2px solid #567f49; outline-offset:3px; }
+
+/* Dialogs live outside the layout's DOM and use their explicit admin scope. */
+.admin-theme-dialog { --lumo-primary-color:#426c38; --lumo-primary-text-color:#35552f; --vaadin-focus-ring-color:#7e9d6c; }
+.admin-theme-dialog::part(overlay) { background:#f1f7eb; color:#294633; border:1px solid #c7d5bd; border-radius:20px; box-shadow:0 16px 64px rgba(22,43,25,.2); }
+.admin-theme-dialog.admin-user-profile-dialog::part(overlay) { background:#f1f7eb; border-radius:20px 0 0 20px; }
+.admin-theme-dialog::part(backdrop) { background:rgba(25,48,30,.32); backdrop-filter:blur(4px); }
+.admin-theme-dialog::part(header),.admin-theme-dialog::part(footer) { background:#e8f0e0; border-color:#ccd9c2; }
+.admin-theme-dialog :is(.moderation-detail-value,.moderation-ai-review,.admin-user-stat-card) { background:#e8f0e0; border:1px solid #ceddc3; border-radius:14px; box-shadow:none; }
+.admin-theme-dialog :is(.moderation-detail-key,.moderation-detail-image-caption,.moderation-ai-score,.moderation-ai-reasoning,.admin-user-stat-label,.admin-user-drawer-location) { color:#526a4c; }
+.admin-theme-dialog :is(.moderation-detail-text,.moderation-ai-title,.admin-user-drawer-name,.admin-user-stat-value,.admin-user-drawer-title) { color:#294633; }
+.admin-theme-dialog .admin-user-drawer-header { background:#e8f0e0; border-color:#ccd9c2; }
+.admin-theme-dialog .admin-user-drawer-content { background:#f1f7eb; }
+.admin-theme-dialog .admin-user-drawer-avatar { background:#e0ebd6; color:#48693b; border:1px solid #c6d6b9; border-radius:18px; }
+.admin-theme-dialog vaadin-button { border-radius:12px; font-weight:600; min-height:40px; }
+
+@media(max-width:1100px) {
+  .admin-metric-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .admin-action-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:768px) {
+  .admin-statistics-leaders { grid-template-columns:1fr; gap:12px; }
+  .admin-statistics-leader { display:grid; grid-template-columns:40px minmax(0,1fr) auto; align-items:center; gap:12px; padding:18px; }
+  .admin-statistics-leader > span:first-child { align-self:center; padding:5px 7px; }
+  .admin-statistics-leader > span:nth-last-child(2) { font-size:26px; }
+  .admin-statistics-leader > span:last-child { grid-column:2 / -1; margin-top:0; }
+  .admin-jungle-layout .admin-content-page { padding:20px 16px; gap:18px; }
+  .admin-jungle-layout .admin-header { padding:0 14px; }
+  .admin-jungle-layout .admin-header-actions { gap:8px; }
+  .admin-jungle-layout .admin-live-badge { display:none; }
+  .admin-jungle-layout :is(.admin-page-heading,.moderation-page-header,.admin-users-header) { padding:24px; gap:16px; flex-wrap:wrap; }
+  .admin-jungle-layout :is(.moderation-search,.admin-users-search) { width:100%; min-width:0; flex-basis:100%; }
+  .admin-jungle-layout :is(.moderation-filter-button,.admin-users-filter) { padding-inline:10px; font-size:12px; }
+  .admin-jungle-layout .admin-header-subtitle { display:none; }
+  .admin-glass-panel,.admin-metric-card { padding:22px; }
+}
+@media(max-width:520px) {
+  .admin-statistics-toolbar { align-items:stretch; flex-wrap:wrap; }
+  .admin-statistics-pagination > span { width:100%; text-align:center; order:3; }
+  .admin-statistics-table-heading { padding:18px; }
+  .admin-jungle-layout .admin-content-page { padding:16px 12px; }
+  .admin-jungle-layout .admin-header-title { font-size:14px; max-width:140px; }
+  .admin-jungle-layout .admin-language-control { padding:0 6px; }
+  .admin-jungle-layout .admin-language-control > vaadin-icon { display:none; }
+  .admin-jungle-layout .admin-language-control vaadin-select { width:90px; }
+  .admin-jungle-layout .admin-header-avatar { display:none; }
+  .admin-jungle-layout .admin-header-left { gap:6px; }
+  .admin-jungle-layout :is(.admin-page-heading,.moderation-page-header,.admin-users-header) { padding:22px 18px; }
+  .admin-action-grid,.admin-policy-grid,.admin-status-distribution { grid-template-columns:1fr; }
+  .admin-metric-grid { gap:12px; }
+  .admin-metric-card { padding:18px; }
+  .admin-metric-number { font-size:28px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .admin-jungle-layout.admin-layout-container,
+  .admin-jungle-layout.admin-layout-container::part(drawer),
+  .admin-jungle-layout.admin-layout-container::part(navbar),
+  .admin-jungle-layout :is(.admin-menu-glyph > span,.admin-nav-item,.admin-action-card,vaadin-button) { transition:none; transform:none; }
+}
+@supports not (backdrop-filter:blur(1px)) {
+  .admin-jungle-layout.admin-layout-container::part(drawer),
+  .admin-jungle-layout.admin-layout-container::part(navbar) { background:#edf4e7; }
+  .admin-jungle-layout .admin-data-panel { background:#edf4e7; }
+}
+@media(prefers-reduced-transparency:reduce) {
+  .admin-layout-container.admin-jungle-layout { --admin-surface:#f1f7eb; --admin-glass:#edf4e7; }
+  .admin-jungle-layout.admin-layout-container::part(drawer),
+  .admin-jungle-layout.admin-layout-container::part(navbar) { background:#edf4e7; backdrop-filter:none; }
+  .admin-jungle-layout .admin-data-panel { background:#f1f7eb; backdrop-filter:none; -webkit-backdrop-filter:none; }
+}

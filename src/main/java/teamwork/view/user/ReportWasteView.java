@@ -9,9 +9,10 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,13 @@ import teamwork.service.AttachService;
 import teamwork.service.WasteReportService;
 import teamwork.view.layout.user.UserLayout;
 
-import java.util.List;
 import java.time.Duration;
 import java.time.Instant;
 
 @Route(value = "user/report", layout = UserLayout.class)
 @RolesAllowed({"USER", "ADMIN"})
 @CssImport("./themes/tozacoin/user-layout.css")
+@CssImport("./themes/tozacoin/report-flow.css")
 public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     @Autowired
@@ -50,13 +51,13 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     private final Div cardContainer = I18n.localize(new Div());
 
     // Step 1 UI components
-    private final Button btnCapture = I18n.localize(new Button("📷 Kamera orqali rasm olish",
+    private final Button btnCapture = I18n.localize(new Button("Kamera orqali rasm olish",
             event -> startOrCaptureCamera(false)));
     private final Button btnNextStep1 = I18n.localize(new Button("Davom etish →",
             event -> renderStepCard(2)));
     private final Div cameraBox = I18n.localize(new Div());
     private final Div afterPhotoBox = I18n.localize(new Div());
-    private final Button btnAfterPhotoCapture = I18n.localize(new Button("📷 Tozalangandan keyingi surat",
+    private final Button btnAfterPhotoCapture = I18n.localize(new Button("Tozalangandan keyingi surat",
             event -> startOrCaptureCamera(true)));
     private final Button btnAfterPhotoNext = I18n.localize(new Button("Davom etish →",
             event -> renderStepCard(7)));
@@ -69,13 +70,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     private TextField streetAddressInput;
     private Button btnNextStep2;
 
-    // Step 3 Selected State & Next Button
-    private Div selectedCategoryCard = null;
-    private Div selectedSeverityCard = null;
-    private final Button btnNextStep3 = I18n.localize(new Button("Davom etish →"));
-
     // Step 4 Selected State & Next Button
-    private Div selectedActionCard = null;
     private final Button btnNextStep4 = I18n.localize(new Button("Davom etish →",
             event -> advanceFromActionChoice()));
 
@@ -94,8 +89,10 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
         wasterReportDto.setLocation(locationDto);
         wasterReportDto.setReportStatus(ReportStatus.PENDING);
+        wasterReportDto.setWasteType(WasteTypeEnum.OTHER);
+        wasterReportDto.setSeverityLevel(SeverityLevelEnum.UNDER_REVIEW);
 
-        // Top Step Progress Indicator (Qadam 1/5 to 5/5)
+        // Progress adapts to the selected report action.
         add(buildStepProgressBar());
 
         // Main Card Container
@@ -124,6 +121,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         stepProgressBar.removeAll();
 
         Div container = I18n.localize(new Div());
+        container.addClassName("report-progress-inner");
         container.getStyle()
                 .set("max-width", "720px")
                 .set("margin", "0 auto")
@@ -138,7 +136,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                 .set("gap", "12px");
 
         // Back Arrow Button (←) to return to the previous step before submission.
-        int completionStep = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 8 : 6;
+        int completionStep = 8;
         if (currentStep > 1 && currentStep < completionStep) {
             Button btnBack = I18n.localize(new Button("←"));
             btnBack.addClassName("btn-step-back-circle");
@@ -154,7 +152,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                     .set("color", "334155")
                     .set("cursor", "pointer")
                     .set("box-shadow", "0 2px 6px rgba(0,0,0,0.04)");
-            btnBack.addClickListener(e -> renderStepCard(currentStep - 1));
+            I18n.attribute(btnBack, "aria-label", "Avvalgi");
+            btnBack.addClickListener(e -> renderStepCard(currentStep == 4 ? 2 : currentStep - 1));
             headerTitleRow.add(btnBack);
         }
 
@@ -163,12 +162,11 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         headerTitle.getStyle().set("margin", "0").set("font-size", "20px").set("font-weight", "700");
 
         boolean cleanFlow = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
-        int progressStep = cleanFlow
-                ? Math.min(currentStep, 7)
-                : currentStep == 6 ? 5 : currentStep;
-        int totalSteps = cleanFlow ? 7 : 5;
+        int totalSteps = cleanFlow ? 6 : 4;
+        int progressStep = currentStep == completionStep ? totalSteps
+                : currentStep >= 4 ? currentStep - 1 : currentStep;
         String subtitleText = currentStep == completionStep
-                ? "Murojaat yuborildi 🎉"
+                ? "Murojaat yuborildi"
                 : "Qadam " + progressStep + " / " + totalSteps;
         Span headerSubtitle = I18n.localize(new Span(subtitleText));
         headerSubtitle.getStyle().set("font-size", "13px").set("color", "#64748b").set("margin-left", "8px");
@@ -185,10 +183,13 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                 .set("gap", "12px");
 
         String[] stepNames = cleanFlow
-                ? new String[]{"Oldin rasm", "Joylashuv", "Tafsilotlar", "Harakat", "Tozalash", "Keyin rasm", "Tasdiqlash"}
-                : new String[]{"Rasm", "Joylashuv", "Tafsilotlar", "Harakat", "Tasdiqlash"};
+                ? new String[]{"Oldin rasm", "Joylashuv", "Harakat", "Tozalash", "Keyin rasm", "Tasdiqlash"}
+                : new String[]{"Rasm", "Joylashuv", "Harakat", "Tasdiqlash"};
         for (int i = 1; i <= totalSteps; i++) {
             Div stepCol = I18n.localize(new Div());
+            stepCol.addClassName("report-progress-step");
+            if (i == progressStep) stepCol.getElement().setAttribute("aria-current", "step");
+            stepCol.getElement().setAttribute("data-state", i < progressStep ? "complete" : i == progressStep ? "current" : "upcoming");
             stepCol.getStyle()
                     .set("flex", "1")
                     .set("display", "flex")
@@ -225,7 +226,6 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         switch (step) {
             case 1 -> cardContainer.add(buildStep1CameraCard());
             case 2 -> cardContainer.add(buildStep2LocationCard());
-            case 3 -> cardContainer.add(buildStep3DetailsCard());
             case 4 -> cardContainer.add(buildStep4ActionChoiceCard());
             case 5 -> cardContainer.add(wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF
                     ? buildCleaningTimerCard() : buildStep5ConfirmationCard());
@@ -244,17 +244,6 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     private Div createBaseCard() {
         Div card = I18n.localize(new Div());
         card.addClassName("report-step-card");
-        card.getStyle()
-                .set("max-width", "680px")
-                .set("margin", "24px auto")
-                .set("background-color", "#ffffff")
-                .set("border-radius", "20px")
-                .set("padding", "32px")
-                .set("border", "1px solid #e2e8f0")
-                .set("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.04)")
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("gap", "16px");
         return card;
     }
 
@@ -263,6 +252,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
      * ------------------------------------------------------------------------ */
     private Div buildStep1CameraCard() {
         Div card = createBaseCard();
+        card.addClassName("report-flow-card");
 
         H2 title = I18n.localize(new H2("Rasm oling"));
         Paragraph subtitle = I18n.localize(new Paragraph("Ifloslangan joyning rasmini telefon kamerasidan oling."));
@@ -275,11 +265,11 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
             imgPreview.getStyle().set("width", "100%").set("height", "100%").set("object-fit", "cover");
             cameraBox.removeAll();
             cameraBox.add(imgPreview);
-            I18n.text(btnCapture, "🔄 Qayta rasmga olish");
+            I18n.text(btnCapture, "Qayta rasmga olish");
         } else {
             Div placeholder = I18n.localize(new Div());
             placeholder.addClassName("camera-placeholder-content");
-            placeholder.add(I18n.localize(new Span("📷")), I18n.localize(new H3("Hali rasm olinmadi")), I18n.localize(new Paragraph("Pastdagi tugmani bosib kamera oching")));
+            placeholder.add(VaadinIcon.CAMERA.create(), I18n.localize(new H3("Hali rasm olinmadi")), I18n.localize(new Paragraph("Pastdagi tugmani bosib kamera oching")));
             cameraBox.removeAll();
             cameraBox.add(placeholder);
         }
@@ -294,7 +284,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         btnNextStep1.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         btnNextStep1.setEnabled(wasterReportDto.getBeforeImageUrl() != null);
 
-        card.add(title, subtitle, cameraBox, btnCapture, note, btnNextStep1);
+        btnCapture.setIcon(VaadinIcon.CAMERA.create());
+        card.add(stepEmblem(VaadinIcon.CAMERA), title, subtitle, cameraBox, btnCapture, note, btnNextStep1);
         return card;
     }
 
@@ -303,6 +294,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
      * ------------------------------------------------------------------------ */
     private Div buildStep2LocationCard() {
         Div card = createBaseCard();
+        card.addClassName("report-flow-card");
 
         H2 title = I18n.localize(new H2("Joylashuvni tasdiqlang"));
         Paragraph subtitle = I18n.localize(new Paragraph("GPS orqali aniqlangan joylashuv. To'g'rilab qo'ying."));
@@ -314,10 +306,13 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         mapDiv.setId("yandex-satellite-map");
         mapDiv.addClassName("yandex-map-div");
 
-        Div centerPin = I18n.localize(new Div(I18n.localize(new Span("📍"))));
+        Div centerPin = I18n.localize(new Div(VaadinIcon.MAP_MARKER.create()));
         centerPin.addClassName("yandex-center-pin");
 
         Button btnRecenterGps = I18n.localize(new Button("🎯"));
+        btnRecenterGps.setText("");
+        btnRecenterGps.setIcon(VaadinIcon.CROSSHAIRS.create());
+        I18n.attribute(btnRecenterGps, "aria-label", "Joylashuv");
         btnRecenterGps.addClassName("btn-recenter-gps");
         btnRecenterGps.addClickListener(e -> recenterMapToUserGps());
 
@@ -326,7 +321,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         Div locationPill = I18n.localize(new Div());
         locationPill.addClassName("location-result-pill");
 
-        Span pillIcon = I18n.localize(new Span("📍"));
+        var pillIcon = VaadinIcon.MAP_MARKER.create();
+        pillIcon.getElement().setAttribute("aria-hidden", "true");
         String dist = wasterReportDto.getLocation().getDistrict();
         String region = wasterReportDto.getLocation().getRegion();
         boolean hasLocation = dist != null && !dist.isBlank() && region != null && !region.isBlank();
@@ -334,7 +330,9 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         locationPill.add(pillIcon, locationPillText);
 
         // Precise Location Selector Button (Full Screen Map Modal)
-        Button btnOpenFullMap = I18n.localize(new Button("🗺️ Xaritadan aniqroq joyni tanlash"));
+        Button btnOpenFullMap = I18n.localize(new Button("Xaritadan aniqroq joyni tanlash"));
+        btnOpenFullMap.setIcon(VaadinIcon.MAP_MARKER.create());
+        btnOpenFullMap.addClassName("report-map-picker");
         btnOpenFullMap.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         btnOpenFullMap.getStyle()
                 .set("width", "100%")
@@ -348,7 +346,6 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         Div addressGroup = I18n.localize(new Div());
         addressGroup.addClassName("address-input-group");
 
-        Span addressLabel = I18n.localize(new Span("Aniq manzil (ixtiyoriy)"));
         this.streetAddressInput = I18n.localize(new TextField());
         I18n.placeholder(this.streetAddressInput, "Ko'cha, uy raqami...");
         this.streetAddressInput.addClassName("street-address-input");
@@ -357,7 +354,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         }
         this.streetAddressInput.addValueChangeListener(e -> wasterReportDto.getLocation().setStreetAddress(e.getValue()));
 
-        addressGroup.add(addressLabel, streetAddressInput);
+        I18n.label(streetAddressInput, "Aniq manzil (ixtiyoriy)");
+        addressGroup.add(streetAddressInput);
 
         this.btnNextStep2 = I18n.localize(new Button("Davom etish →"));
         this.btnNextStep2.addClassName("btn-step-next-green");
@@ -365,317 +363,78 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         this.btnNextStep2.setEnabled(hasLocation);
         this.btnNextStep2.addClickListener(e -> {
             wasterReportDto.getLocation().setStreetAddress(streetAddressInput.getValue());
-            renderStepCard(3);
+            renderStepCard(4);
         });
 
-        card.add(title, subtitle, mapContainer, locationPill, btnOpenFullMap, addressGroup, btnNextStep2);
+        locationPill.getElement().setAttribute("role", "status");
+        card.add(stepEmblem(VaadinIcon.MAP_MARKER), title, subtitle, mapContainer, locationPill, btnOpenFullMap, addressGroup, btnNextStep2);
         initYandexSatelliteMap();
         return card;
     }
 
     /* ------------------------------------------------------------------------
-     * Step 3: Details Card (Categories, Severity, Description)
-     * ------------------------------------------------------------------------ */
-    private Div buildStep3DetailsCard() {
-        Div card = createBaseCard();
-
-        H2 title = I18n.localize(new H2("Tafsilotlarni kiriting"));
-
-        // 1. Category Section (Toifa - 3 Column Grid)
-        Span catLabel = I18n.localize(new Span("Toifa"));
-        catLabel.getStyle().set("font-size", "14px").set("font-weight", "700").set("color", "#0f172a").set("margin-top", "8px");
-
-        Div categoryGrid = I18n.localize(new Div());
-        categoryGrid.getStyle()
-                .set("display", "grid")
-                .set("grid-template-columns", "repeat(3, 1fr)")
-                .set("gap", "12px")
-                .set("width", "100%");
-
-        List<CategoryItem> categories = List.of(
-                new CategoryItem("Plastik chiqindi", "🍾", WasteTypeEnum.PLASTIC),
-                new CategoryItem("Noqonuniy tashlash", "🚫", WasteTypeEnum.ILLEGAL_DUMP),
-                new CategoryItem("Suv ifloslanishi", "💧", WasteTypeEnum.WATER),
-                new CategoryItem("Havo ifloslanishi", "💨", WasteTypeEnum.AIR),
-                new CategoryItem("Elektron chiqindi", "💻", WasteTypeEnum.ELECTRONIC),
-                new CategoryItem("Boshqa", "🗑️", WasteTypeEnum.OTHER)
-        );
-
-        for (CategoryItem item : categories) {
-            Div catCard = I18n.localize(new Div());
-            styleSelectionCard(catCard);
-
-            if (wasterReportDto.getWasteType() == item.type) {
-                applyPurpleSelectedStyle(catCard);
-                this.selectedCategoryCard = catCard;
-            }
-
-            Span icon = I18n.localize(new Span(item.emoji));
-            icon.getStyle().set("font-size", "24px");
-
-            Span name = I18n.localize(new Span(item.name));
-            name.getStyle().set("font-size", "13px").set("font-weight", "600").set("color", "#0f172a");
-
-            catCard.add(icon, name);
-            catCard.addClickListener(e -> {
-                if (selectedCategoryCard != null) removeSelectedStyle(selectedCategoryCard);
-                applyPurpleSelectedStyle(catCard);
-                selectedCategoryCard = catCard;
-                wasterReportDto.setWasteType(item.type);
-                updateStep3NextButtonState();
-            });
-
-            categoryGrid.add(catCard);
-        }
-
-        // 2. Severity Section (Og'irlik darajasi - 3 Column Grid)
-        Span sevLabel = I18n.localize(new Span("Og'irlik darajasi"));
-        sevLabel.getStyle().set("font-size", "14px").set("font-weight", "700").set("color", "#0f172a").set("margin-top", "12px");
-
-        Div severityGrid = I18n.localize(new Div());
-        severityGrid.getStyle()
-                .set("display", "grid")
-                .set("grid-template-columns", "repeat(3, 1fr)")
-                .set("gap", "12px")
-                .set("width", "100%");
-
-        List<SeverityItem> severities = List.of(
-                new SeverityItem("Past", "Kichik miqdordagi chiqindi", "🟢", SeverityLevelEnum.LOW),
-                new SeverityItem("O'rta", "O'rta miqdordagi chiqindi", "🟡", SeverityLevelEnum.MEDIUM),
-                new SeverityItem("Yuqori", "Katta miqdordagi chiqindi", "🔴", SeverityLevelEnum.HIGH)
-        );
-
-        for (SeverityItem item : severities) {
-            Div sevCard = I18n.localize(new Div());
-            styleSelectionCard(sevCard);
-
-            if (wasterReportDto.getSeverityLevel() == item.level) {
-                applyOrangeSelectedStyle(sevCard);
-                this.selectedSeverityCard = sevCard;
-            }
-
-            Span dot = I18n.localize(new Span(item.dotEmoji));
-            dot.getStyle().set("font-size", "16px");
-
-            H4 name = I18n.localize(new H4(item.title));
-            name.getStyle().set("margin", "4px 0 2px 0").set("font-size", "14px").set("font-weight", "700");
-
-            Paragraph desc = I18n.localize(new Paragraph(item.desc));
-            desc.getStyle().set("margin", "0").set("font-size", "11px").set("color", "#64748b").set("text-align", "center");
-
-            sevCard.add(dot, name, desc);
-            sevCard.addClickListener(e -> {
-                if (selectedSeverityCard != null) removeSelectedStyle(selectedSeverityCard);
-                applyOrangeSelectedStyle(sevCard);
-                selectedSeverityCard = sevCard;
-                wasterReportDto.setSeverityLevel(item.level);
-                updateStep3NextButtonState();
-            });
-
-            severityGrid.add(sevCard);
-        }
-
-        // 3. Description Field (Tavsif)
-        Span descLabel = I18n.localize(new Span("Tavsif"));
-        descLabel.getStyle().set("font-size", "14px").set("font-weight", "700").set("color", "#0f172a").set("margin-top", "12px");
-
-        TextArea descriptionInput = I18n.localize(new TextArea());
-        I18n.placeholder(descriptionInput, "Holat haqida qisqacha yozing...");
-        descriptionInput.setWidthFull();
-        descriptionInput.getStyle().set("min-height", "90px");
-        if (wasterReportDto.getDescription() != null) {
-            descriptionInput.setValue(wasterReportDto.getDescription());
-        }
-        descriptionInput.addValueChangeListener(e -> wasterReportDto.setDescription(e.getValue()));
-
-        // Next Button
-        btnNextStep3.addClassName("btn-step-next-green");
-        btnNextStep3.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        updateStep3NextButtonState();
-        btnNextStep3.addClickListener(e -> {
-            wasterReportDto.setDescription(descriptionInput.getValue());
-            renderStepCard(4);
-        });
-
-        card.add(title, catLabel, categoryGrid, sevLabel, severityGrid, descLabel, descriptionInput, btnNextStep3);
-        return card;
-    }
-
-    private void styleSelectionCard(Div card) {
-        card.getStyle()
-                .set("border", "1px solid #e2e8f0")
-                .set("border-radius", "14px")
-                .set("padding", "16px 12px")
-                .set("background-color", "#f8fafc")
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("align-items", "center")
-                .set("justify-content", "center")
-                .set("gap", "6px")
-                .set("cursor", "pointer")
-                .set("transition", "all 0.2s ease");
-    }
-
-    private void applyPurpleSelectedStyle(Div card) {
-        card.getStyle()
-                .set("border", "2px solid #8b5cf6")
-                .set("background-color", "#f5f3ff")
-                .set("box-shadow", "0 0 0 3px rgba(139, 92, 246, 0.15)");
-    }
-
-    private void applyOrangeSelectedStyle(Div card) {
-        card.getStyle()
-                .set("border", "2px solid #f59e0b")
-                .set("background-color", "#fffbeb")
-                .set("box-shadow", "0 0 0 3px rgba(245, 158, 11, 0.15)");
-    }
-
-    private void removeSelectedStyle(Div card) {
-        styleSelectionCard(card);
-    }
-
-    private void updateStep3NextButtonState() {
-        boolean isValid = (wasterReportDto.getWasteType() != null && wasterReportDto.getSeverityLevel() != null);
-        btnNextStep3.setEnabled(isValid);
-    }
-
-    /* ------------------------------------------------------------------------
      * Step 4: Action Choice Card (Yo'lni tanlang)
      * ------------------------------------------------------------------------ */
+    private Div stepEmblem(VaadinIcon icon) {
+        Div emblem = new Div(icon.create());
+        emblem.addClassName("report-step-emblem");
+        emblem.getElement().setAttribute("aria-hidden", "true");
+        return emblem;
+    }
+
     private Div buildStep4ActionChoiceCard() {
         Div card = createBaseCard();
-
-        Div headerEmoji = I18n.localize(new Div(I18n.localize(new Span("🤔"))));
-        headerEmoji.getStyle().set("font-size", "42px").set("text-align", "center");
-
+        card.addClassNames("report-flow-card", "report-action-step");
         H2 title = I18n.localize(new H2("Yo'lni tanlang"));
-        title.getStyle().set("text-align", "center").set("margin", "0");
+        Paragraph subtitle = I18n.localize(new Paragraph(
+                "Tozalashni o'zingiz bajaring yoki muammo haqida xabar bering"));
 
-        Paragraph subtitle = I18n.localize(new Paragraph("Tozalashni o'zingiz bajaring yoki muammo haqida xabar bering"));
-        subtitle.getStyle().set("text-align", "center").set("color", "#64748b").set("margin", "0 0 16px 0");
+        RadioButtonGroup<ReportActionEnum> actions = new RadioButtonGroup<>();
+        actions.addClassName("report-action-options");
+        I18n.attribute(actions, "aria-label", "Yo'lni tanlang");
+        actions.setItems(ReportActionEnum.CLEAN_MYSELF, ReportActionEnum.SEND_TO_OTHERS);
+        actions.setRenderer(new ComponentRenderer<>(this::buildActionOptionCard));
+        actions.setValue(wasterReportDto.getReportAction());
+        actions.addValueChangeListener(event -> {
+            ReportActionEnum action = event.getValue();
+            wasterReportDto.setReportAction(action);
+            wasterReportDto.setRewardCoins(action == ReportActionEnum.CLEAN_MYSELF ? 50 : 15);
+            I18n.text(btnNextStep4, action == ReportActionEnum.SEND_TO_OTHERS
+                    ? "Xabarni yuborish \u2192" : "Davom etish \u2192");
+            btnNextStep4.setEnabled(action != null);
+            refreshStepProgressBar();
+        });
 
-        // Option 1: O'zim tozalayman (+50 coins)
-        Div option1Card = buildActionOptionCard(
-                "O'zim tozalayman",
-                "Joyni tozalang. AI tekshiruvdan o'tsa 50 tanga beriladi.",
-                "🧹",
-                "🪙 50",
-                "#fef3c7",
-                "#d97706",
-                ReportActionEnum.CLEAN_MYSELF,
-                50
-        );
-
-        // Option 2: Report a problem for another user to clean.
-        Div option2Card = buildActionOptionCard(
-                "Xabar berish",
-                "Faqat suratni yuboring. AI tasdiqlasa 15 tanga beriladi.",
-                "📬",
-                "🪙 15",
-                "#e0f2fe",
-                "#0284c7",
-                ReportActionEnum.SEND_TO_OTHERS,
-                15
-        );
-
-        // Yellow Notice Box
-        Div noticeBox = I18n.localize(new Div());
-        noticeBox.getStyle()
-                .set("background-color", "#fffbeb")
-                .set("border", "1px solid #fde68a")
-                .set("border-radius", "12px")
-                .set("padding", "16px")
-                .set("color", "#92400e")
-                .set("font-size", "13px");
-        noticeBox.add(I18n.localize(new Paragraph("ℹ️ Surat yuborilgach, AI tekshiruvi fonda bajariladi. Kutishingiz shart emas.")));
-
-        // Next Button
+        Div notice = new Div(VaadinIcon.INFO_CIRCLE.create(), I18n.localize(new Paragraph(
+                "Surat yuborilgach, AI tekshiruvi fonda bajariladi. Kutishingiz shart emas.")));
+        notice.addClassName("report-flow-notice");
+        btnNextStep4.setDisableOnClick(true);
         btnNextStep4.addClassName("btn-step-next-green");
         btnNextStep4.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         I18n.text(btnNextStep4, wasterReportDto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS
-                ? "Xabarni yuborish →" : "Davom etish →");
+                ? "Xabarni yuborish \u2192" : "Davom etish \u2192");
         btnNextStep4.setEnabled(wasterReportDto.getReportAction() != null);
-
-        card.add(headerEmoji, title, subtitle, option1Card, option2Card, noticeBox, btnNextStep4);
+        card.add(stepEmblem(VaadinIcon.RECYCLE), title, subtitle, actions, notice, btnNextStep4);
         return card;
     }
 
-    private Div buildActionOptionCard(String titleText, String descText, String emoji, String coinText, String badgeBg, String badgeColor, ReportActionEnum actionType, int rewardCoins) {
-        Div optionCard = I18n.localize(new Div());
-        optionCard.getStyle()
-                .set("border", "1px solid #e2e8f0")
-                .set("border-radius", "16px")
-                .set("padding", "20px")
-                .set("background-color", "#f8fafc")
-                .set("display", "flex")
-                .set("align-items", "center")
-                .set("gap", "16px")
-                .set("cursor", "pointer")
-                .set("transition", "all 0.2s ease");
-
-        if (wasterReportDto.getReportAction() == actionType) {
-            applyActionSelectedStyle(optionCard);
-            this.selectedActionCard = optionCard;
-        }
-
-        Span optIcon = I18n.localize(new Span(emoji));
-        optIcon.getStyle().set("font-size", "28px");
-
-        Div optTextGroup = I18n.localize(new Div());
-        optTextGroup.getStyle().set("display", "flex").set("flex-direction", "column").set("gap", "2px");
-
-        H3 optTitle = I18n.localize(new H3(titleText));
-        optTitle.getStyle().set("margin", "0").set("font-size", "16px").set("font-weight", "700");
-
-        Paragraph optDesc = I18n.localize(new Paragraph(descText));
-        optDesc.getStyle().set("margin", "0").set("font-size", "12px").set("color", "#64748b");
-
-        Span selectedTag = I18n.localize(new Span("✓ Tanlandi"));
-        selectedTag.getStyle().set("font-size", "12px").set("font-weight", "700").set("color", "#2563eb").set("margin-top", "4px");
-        if (wasterReportDto.getReportAction() == actionType) {
-            selectedTag.getStyle().set("display", "inline-block");
-        } else {
-            selectedTag.getStyle().set("display", "none");
-        }
-
-        optTextGroup.add(optTitle, optDesc, selectedTag);
-
-        Div optBadge = I18n.localize(new Div(I18n.localize(new Span(coinText))));
-        optBadge.getStyle()
-                .set("margin-left", "auto")
-                .set("background-color", badgeBg)
-                .set("color", badgeColor)
-                .set("font-weight", "700")
-                .set("padding", "8px 14px")
-                .set("border-radius", "20px");
-
-        optionCard.add(optIcon, optTextGroup, optBadge);
-        optionCard.addClickListener(e -> {
-            if (selectedActionCard != null) {
-                selectedActionCard.getStyle()
-                        .set("border", "1px solid #e2e8f0")
-                        .set("background-color", "#f8fafc")
-                        .set("box-shadow", "none");
-
-                selectedActionCard.getChildren()
-                        .filter(child -> child instanceof Div)
-                        .flatMap(child -> ((Div) child).getChildren())
-                        .filter(sub -> sub instanceof Span && "✓ Tanlandi".equals(((Span) sub).getText()))
-                        .forEach(tag -> tag.getElement().getStyle().set("display", "none"));
-            }
-
-            applyActionSelectedStyle(optionCard);
-            selectedTag.getStyle().set("display", "inline-block");
-            selectedActionCard = optionCard;
-
-            wasterReportDto.setReportAction(actionType);
-            wasterReportDto.setRewardCoins(rewardCoins);
-            I18n.text(btnNextStep4, actionType == ReportActionEnum.SEND_TO_OTHERS
-                    ? "Xabarni yuborish →" : "Davom etish →");
-            btnNextStep4.setEnabled(true);
-        });
-
-        return optionCard;
+    private Div buildActionOptionCard(ReportActionEnum action) {
+        boolean cleaning = action == ReportActionEnum.CLEAN_MYSELF;
+        Div option = new Div();
+        option.addClassName("report-action-option");
+        Div icon = stepEmblem(cleaning ? VaadinIcon.RECYCLE : VaadinIcon.MAP_MARKER);
+        Div copy = new Div();
+        copy.addClassName("report-action-copy");
+        Span title = I18n.localize(new Span(cleaning ? "O'zim tozalayman" : "Xabar berish"));
+        title.addClassName("report-action-title");
+        Paragraph description = I18n.localize(new Paragraph(cleaning
+                ? "Joyni tozalang. AI tekshiruvdan o'tsa 50 tanga beriladi."
+                : "Faqat suratni yuboring. AI tasdiqlasa 15 tanga beriladi."));
+        copy.add(title, description);
+        Span reward = I18n.localize(new Span((cleaning ? 50 : 15) + " tanga"));
+        reward.addClassName("report-action-reward");
+        option.add(icon, copy, reward);
+        return option;
     }
 
     private void advanceFromActionChoice() {
@@ -685,16 +444,15 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
             }
             renderStepCard(5);
         } else if (wasterReportDto.getReportAction() == ReportActionEnum.SEND_TO_OTHERS) {
-            onFinalSubmitConfirmed();
+            onFinalSubmitConfirmed(btnNextStep4);
         }
     }
 
     private Div buildCleaningTimerCard() {
         Div card = createBaseCard();
-        card.addClassName("cleaning-timer-card");
+        card.addClassNames("report-flow-card", "cleaning-timer-card");
 
-        Span icon = I18n.localize(new Span("🧹"));
-        icon.addClassName("cleaning-timer-icon");
+        Div icon = stepEmblem(VaadinIcon.CLOCK);
         H2 title = I18n.localize(new H2("Tozalash vaqti"));
         Paragraph subtitle = I18n.localize(new Paragraph(
                 "Ishni boshlang. Tayyor bo'lgach, keyingi tugmani bosib tozalangan joyni suratga oling."));
@@ -702,6 +460,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
         Span timer = I18n.localize(new Span("00:00"));
         timer.setId("cleaning-elapsed-timer");
+        timer.getElement().setAttribute("role", "timer");
+        I18n.attribute(timer, "aria-label", "Tozalash vaqti");
         timer.addClassName("cleaning-elapsed-timer");
         long startedAtMillis = cleaningStartedAt == null ? System.currentTimeMillis() : cleaningStartedAt.toEpochMilli();
         long completedDuration = cleaningDurationMillis == null ? -1 : cleaningDurationMillis;
@@ -749,6 +509,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
     private Div buildAfterPhotoCard() {
         Div card = createBaseCard();
+        card.addClassName("report-flow-card");
         H2 title = I18n.localize(new H2("Tozalashdan keyingi surat"));
         Paragraph subtitle = I18n.localize(new Paragraph(
                 "Xuddi shu joyni kameradan suratga oling. AI ikkala surat va sarflangan vaqtni tekshiradi."));
@@ -764,7 +525,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         } else {
             Div placeholder = I18n.localize(new Div());
             placeholder.addClassName("camera-placeholder-content");
-            placeholder.add(I18n.localize(new Span("📷")), I18n.localize(new H3("Tozalash tugagach suratga oling")),
+            placeholder.add(VaadinIcon.CAMERA.create(), I18n.localize(new H3("Tozalash tugagach suratga oling")),
                     I18n.localize(new Paragraph("Surat admin tasdig'i uchun hisobotga biriktiriladi.")));
             afterPhotoBox.add(placeholder);
         }
@@ -775,7 +536,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         btnAfterPhotoNext.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         btnAfterPhotoNext.setEnabled(wasterReportDto.getAfterImageUrl() != null);
 
-        card.add(title, subtitle, afterPhotoBox, btnAfterPhotoCapture, btnAfterPhotoNext);
+        btnAfterPhotoCapture.setIcon(VaadinIcon.CAMERA.create());
+        card.add(stepEmblem(VaadinIcon.CAMERA), title, subtitle, afterPhotoBox, btnAfterPhotoCapture, btnAfterPhotoNext);
         return card;
     }
 
@@ -789,18 +551,12 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                 : I18n.format("%d daqiqa %02d soniya", minutes, seconds);
     }
 
-    private void applyActionSelectedStyle(Div card) {
-        card.getStyle()
-                .set("border", "2px solid #3b82f6")
-                .set("background-color", "#eff6ff")
-                .set("box-shadow", "0 0 0 3px rgba(59, 130, 246, 0.15)");
-    }
-
     /* ------------------------------------------------------------------------
      * Step 5: Confirmation & Summary Recap Card (Tasdiqlash)
      * ------------------------------------------------------------------------ */
     private Div buildStep5ConfirmationCard() {
         Div card = createBaseCard();
+        card.addClassName("report-flow-card");
 
         boolean cleaning = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
         H2 title = I18n.localize(new H2(cleaning ? "Tozalash hisoboti" : "Xulosa"));
@@ -814,12 +570,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
         // Summary Recap Rows
         Div summaryList = I18n.localize(new Div());
-        summaryList.getStyle()
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("border", "1px solid #e2e8f0")
-                .set("border-radius", "14px")
-                .set("overflow", "hidden");
+        summaryList.addClassName("report-summary-list");
 
         summaryList.add(
                 createRecapRow("Toifa", formatCategoryName(wasterReportDto.getWasteType())),
@@ -832,37 +583,21 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
             summaryList.add(createRecapRow("Tozalash vaqti", formatDuration(wasterReportDto.getCleanPeriod())));
         }
 
-        // Expected Reward Card
-        Div rewardBox = I18n.localize(new Div());
-        rewardBox.getStyle()
-                .set("background-color", "#e0f2fe")
-                .set("border", "1px solid #bae6fd")
-                .set("border-radius", "14px")
-                .set("padding", "20px")
-                .set("display", "flex")
-                .set("justify-content", "space-between")
-                .set("align-items", "center");
-
-        Div rewardLabelGroup = I18n.localize(new Div(I18n.localize(new Span(cleaning
-                ? "AI tasdiqlasa beriladi"
-                : "AI tasdiqlasa beriladi"))));
-        rewardLabelGroup.getStyle().set("color", "#0369a1").set("font-weight", "600");
-
+        Div rewardBox = new Div();
+        rewardBox.addClassName("report-summary-reward");
+        Span rewardLabel = I18n.localize(new Span("AI tasdiqlasa beriladi"));
         int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 0;
-        Div rewardAmountGroup = I18n.localize(new Div(I18n.localize(new Span(cleaning
-                ? "🪙 " + coins + " tanga"
-                : "🪙 " + coins + " tanga"))));
-        rewardAmountGroup.getStyle().set("color", "#0284c7").set("font-weight", "800").set("font-size", "22px");
-
-        rewardBox.add(rewardLabelGroup, rewardAmountGroup);
+        Span rewardAmount = I18n.localize(new Span(coins + " tanga"));
+        rewardBox.add(rewardLabel, rewardAmount);
 
         // Final Submit Button
         Button btnSubmitFinal = I18n.localize(new Button("Yuborish ✓"));
         btnSubmitFinal.addClassName("btn-step-next-green");
         btnSubmitFinal.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnSubmitFinal.addClickListener(e -> onFinalSubmitConfirmed());
+        btnSubmitFinal.setDisableOnClick(true);
+        btnSubmitFinal.addClickListener(e -> onFinalSubmitConfirmed(btnSubmitFinal));
 
-        card.add(title, photoBanner, summaryList, rewardBox, btnSubmitFinal);
+        card.add(stepEmblem(VaadinIcon.CHECK_CIRCLE), title, photoBanner, summaryList, rewardBox, btnSubmitFinal);
         return card;
     }
 
@@ -884,117 +619,78 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
     private Div createRecapRow(String label, String value) {
         Div row = I18n.localize(new Div());
-        row.getStyle()
-                .set("display", "flex")
-                .set("justify-content", "space-between")
-                .set("padding", "14px 20px")
-                .set("background-color", "#f8fafc")
-                .set("border-bottom", "1px solid #e2e8f0");
-
+        row.addClassName("report-summary-row");
         Span lbl = I18n.localize(new Span(label));
-        lbl.getStyle().set("color", "#64748b").set("font-weight", "600");
-
         Span val = I18n.localize(new Span(value));
-        val.getStyle().set("color", "#0f172a").set("font-weight", "700");
-
         row.add(lbl, val);
         return row;
     }
 
-    private void onFinalSubmitConfirmed() {
-        boolean create = wasteReportService.create(wasterReportDto);
-        if (!create) {
+    private void onFinalSubmitConfirmed(Button submitButton) {
+        try {
+            if (!wasteReportService.create(wasterReportDto)) {
+                I18n.notify("Something went wrong", 4000, Notification.Position.MIDDLE);
+                submitButton.setEnabled(true);
+                return;
+            }
+            renderStepCard(8);
+        } catch (RuntimeException exception) {
+            org.slf4j.LoggerFactory.getLogger(ReportWasteView.class)
+                    .error("Could not submit waste report", exception);
             I18n.notify("Something went wrong", 4000, Notification.Position.MIDDLE);
-            return;
+            submitButton.setEnabled(true);
         }
-        renderStepCard(8);
     }
 
     private Div buildStep6SuccessCard() {
         Div card = createBaseCard();
-        card.getStyle().set("text-align", "center").set("align-items", "center");
-
+        card.addClassName("report-received-card");
         boolean cleaning = wasterReportDto.getReportAction() == ReportActionEnum.CLEAN_MYSELF;
-        Div celebrationBadge = I18n.localize(new Div(I18n.localize(new Span(cleaning ? "🧹 📋" : "🎉 🪙"))));
-        celebrationBadge.getStyle().set("font-size", "54px").set("margin-bottom", "8px");
 
+        Div emblem = new Div(new Span("✓"));
+        emblem.addClassName("report-received-emblem");
+        emblem.getElement().setAttribute("aria-hidden", "true");
+        Span eyebrow = I18n.localize(new Span("Murojaat yuborildi"));
+        eyebrow.addClassName("report-received-eyebrow");
         H2 title = I18n.localize(new H2(cleaning
-                ? "Tozalash hisoboti yuborildi!"
-                : "Xabaringiz qabul qilindi!"));
-        title.getStyle().set("margin", "0").set("color", "#15803d").set("font-size", "22px").set("font-weight", "800");
-
+                ? "Tozalash hisoboti yuborildi!" : "Xabaringiz qabul qilindi!"));
         Paragraph subtitle = I18n.localize(new Paragraph(cleaning
                 ? "Suratlar va tozalash vaqti saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas."
                 : "Surat va joylashuv saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas."));
-        subtitle.getStyle().set("color", "#64748b").set("margin", "4px 0 20px 0").set("font-size", "14px");
+        subtitle.addClassName("report-received-description");
 
-        // Gamified Reward Box
-        Div rewardCard = I18n.localize(new Div());
-        rewardCard.getStyle()
-                .set("width", "100%")
-                .set("background", "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)")
-                .set("border", "1px solid #f59e0b")
-                .set("border-radius", "16px")
-                .set("padding", "20px")
-                .set("display", "flex")
-                .set("flex-direction", "column")
-                .set("align-items", "center")
-                .set("gap", "8px")
-                .set("box-shadow", "0 4px 14px rgba(245, 158, 11, 0.15)");
-
-        Span rewardTitle = I18n.localize(new Span(cleaning
-                ? "AI tasdiqlasa beriladi"
-                : "AI tasdiqlasa beriladi"));
-        rewardTitle.getStyle().set("font-size", "13px").set("font-weight", "700").set("color", "#b45309");
-
+        Div rewardCard = new Div();
+        rewardCard.addClassName("report-pending-reward");
+        Span coin = new Span("T");
+        coin.addClassName("report-coin-mark");
+        coin.getElement().setAttribute("aria-hidden", "true");
+        Div rewardInfo = new Div();
+        rewardInfo.addClassName("report-reward-info");
+        Span rewardLabel = I18n.localize(new Span("Kutilayotgan mukofot"));
         int coins = wasterReportDto.getRewardCoins() != null ? wasterReportDto.getRewardCoins() : 0;
-        H1 coinAmount = I18n.localize(new H1(coins + " tanga kutilmoqda"));
-        coinAmount.getStyle().set("margin", "0").set("font-size", "32px").set("font-weight", "900").set("color", "#d97706");
+        H3 amount = I18n.localize(new H3(coins + " tanga"));
+        Span rewardNote = I18n.localize(new Span("AI tasdiqlasa beriladi"));
+        rewardInfo.add(rewardLabel, amount, rewardNote);
+        rewardCard.add(coin, rewardInfo);
 
-        Span statusBadge = I18n.localize(new Span(cleaning
-                ? "🟡 AI tekshiruvi kutilmoqda"
-                : "🟡 AI tekshiruvi kutilmoqda"));
-        statusBadge.getStyle()
-                .set("background-color", "#ffffff")
-                .set("color", "#92400e")
-                .set("font-size", "12px")
-                .set("font-weight", "700")
-                .set("padding", "6px 14px")
-                .set("border-radius", "20px")
-                .set("margin-top", "4px");
+        Span status = I18n.localize(new Span("AI tekshiruvi kutilmoqda"));
+        status.addClassName("report-review-status");
+        Paragraph explanation = I18n.localize(new Paragraph(
+                "AI suratni tekshirib, chiqindi turi va og'irlik darajasini aniqlaydi. Natijani mening xabarlarim bo'limida kuzating."));
+        explanation.addClassName("report-review-explanation");
 
-        rewardCard.add(rewardTitle, coinAmount, statusBadge);
-
-        // Two Primary CTA Action Buttons
-        Div btnRow = I18n.localize(new Div());
-        btnRow.getStyle()
-                .set("display", "flex")
-                .set("gap", "14px")
-                .set("width", "100%")
-                .set("margin-top", "24px");
-
-        Button btnNewReport = I18n.localize(new Button("+ Yangi xabar berish"));
-        btnNewReport.addClassName("btn-step-next-green");
-        btnNewReport.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        btnNewReport.getStyle().set("flex", "1");
-        btnNewReport.addClickListener(e -> {
+        Button myReports = I18n.localize(new Button("Mening xabarlarim",
+                e -> UI.getCurrent().navigate("user/my-reports")));
+        myReports.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        myReports.addClassName("report-received-primary");
+        Button newReport = I18n.localize(new Button("+ Yangi xabar berish", e -> {
             resetFormState();
             renderStepCard(1);
-        });
-
-        Button btnMyReports = I18n.localize(new Button("📋 Mening xabarlarim"));
-        btnMyReports.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        btnMyReports.getStyle()
-                .set("flex", "1")
-                .set("height", "48px")
-                .set("border-radius", "12px")
-                .set("font-weight", "700")
-                .set("cursor", "pointer");
-        btnMyReports.addClickListener(e -> UI.getCurrent().navigate("user/my-reports"));
-
-        btnRow.add(btnNewReport, btnMyReports);
-
-        card.add(celebrationBadge, title, subtitle, rewardCard, btnRow);
+        }));
+        newReport.addClassName("report-received-secondary");
+        Div actions = new Div(myReports, newReport);
+        actions.addClassName("report-received-actions");
+        card.add(emblem, eyebrow, title, subtitle, rewardCard, status, explanation, actions);
         return card;
     }
 
@@ -1002,8 +698,8 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         wasterReportDto.setBeforeImageUrl(null);
         wasterReportDto.setAfterImageUrl(null);
         wasterReportDto.setCleanPeriod(null);
-        wasterReportDto.setWasteType(null);
-        wasterReportDto.setSeverityLevel(null);
+        wasterReportDto.setWasteType(WasteTypeEnum.OTHER);
+        wasterReportDto.setSeverityLevel(SeverityLevelEnum.UNDER_REVIEW);
         wasterReportDto.setDescription(null);
         wasterReportDto.setReportAction(null);
         wasterReportDto.setRewardCoins(null);
@@ -1012,9 +708,6 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         this.cleaningStartedAt = null;
         this.cleaningDurationMillis = null;
         this.openAfterPhotoCameraOnEntry = false;
-        this.selectedCategoryCard = null;
-        this.selectedSeverityCard = null;
-        this.selectedActionCard = null;
 
         LocationDto locationDto = new LocationDto();
         locationDto.setLatitude(0.0);
@@ -1023,9 +716,9 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
         locationDto.setDistrict(null);
         wasterReportDto.setLocation(locationDto);
 
-        I18n.text(btnCapture, "📷 Kamera orqali rasm olish");
+        I18n.text(btnCapture, "Kamera orqali rasm olish");
         btnNextStep1.setEnabled(false);
-        I18n.text(btnAfterPhotoCapture, "📷 Tozalangandan keyingi surat");
+        I18n.text(btnAfterPhotoCapture, "Tozalangandan keyingi surat");
         btnAfterPhotoNext.setEnabled(false);
         UI.getCurrent().getPage().executeJs(
                 "if (window._tozaCleaningTimer) clearInterval(window._tozaCleaningTimer);" +
@@ -1033,7 +726,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     }
 
     private String formatCategoryName(WasteTypeEnum cat) {
-        if (cat == null) return "Plastik chiqindi";
+        if (cat == null) return "Boshqa";
         return switch (cat) {
             case PLASTIC -> "Plastik chiqindi";
             case ILLEGAL_DUMP -> "Noqonuniy tashlash";
@@ -1045,11 +738,12 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     }
 
     private String formatSeverityName(SeverityLevelEnum sev) {
-        if (sev == null) return "O'rta";
+        if (sev == null) return "Tekshiruv ostida";
         return switch (sev) {
             case LOW -> "Past";
             case MEDIUM -> "O'rta";
             case HIGH -> "Yuqori";
+            case UNDER_REVIEW -> "Tekshiruv ostida";
         };
     }
 
@@ -1062,7 +756,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
                         const overlay = document.createElement('div');
                         overlay.id = 'camera-fullscreen-overlay';
-                        overlay.className = 'fullscreen-camera-overlay';
+                        overlay.className = 'fullscreen-camera-overlay report-camera-overlay';
                         const video = document.createElement('video');
                         video.id = 'live-camera-video';
                         video.autoplay = true;
@@ -1083,6 +777,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
 
                         const status = document.createElement('div');
                         status.className = 'camera-status-message';
+                        status.setAttribute('role', 'status');
                         window.tozaSetText(status, 'Kamera ishga tushmoqda...');
                         const bottomControls = document.createElement('div');
                         bottomControls.className = 'camera-bottom-controls';
@@ -1196,7 +891,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
             AttachDto attachDTO = attachService.uploadBase64CameraPhoto(base64Image);
             if (afterPhoto) {
                 wasterReportDto.setAfterImageUrl(attachDTO.getPath());
-                I18n.text(btnAfterPhotoCapture, "🔄 Keyingi suratni qayta olish");
+                I18n.text(btnAfterPhotoCapture, "Keyingi suratni qayta olish");
                 btnAfterPhotoNext.setEnabled(true);
                 afterPhotoBox.removeAll();
                 Image preview = I18n.localize(new Image(attachDTO.getPath(), "Tozalashdan keyingi surat"));
@@ -1204,7 +899,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                 afterPhotoBox.add(preview);
             } else {
                 wasterReportDto.setBeforeImageUrl(attachDTO.getPath());
-                I18n.text(btnCapture, "🔄 Qayta rasmga olish");
+                I18n.text(btnCapture, "Qayta rasmga olish");
                 btnNextStep1.setEnabled(true);
             }
 
@@ -1220,7 +915,7 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
                         "if (overlay) overlay.remove();" +
                         "overlay = document.createElement('div');" +
                         "overlay.id = 'fullscreen-map-overlay';" +
-                        "overlay.className = 'fullscreen-map-overlay';" +
+                        "overlay.className = 'fullscreen-map-overlay report-map-overlay';" +
                         "const mapDiv = document.createElement('div');" +
                         "mapDiv.id = 'full-satellite-map';" +
                         "mapDiv.className = 'fullscreen-map-div';" +
@@ -1439,12 +1134,6 @@ public class ReportWasteView extends VerticalLayout implements com.vaadin.flow.r
     @ClientCallable
     public void openFullMapFromFailedGps() {
         openFullScreenMapModal();
-    }
-
-    private record CategoryItem(String name, String emoji, WasteTypeEnum type) {
-    }
-
-    private record SeverityItem(String title, String desc, String dotEmoji, SeverityLevelEnum level) {
     }
 
     @Override

@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WasteReportRepository extends JpaRepository<WasteReportEntity, String> {
+    long countByReportStatus(ReportStatus status);
+
+    long countByAiReviewStatus(teamwork.enums.AiReviewStatus status);
+
     Page<WasteReportEntity> findAllByReporterId(String reporterId, Pageable pageable);
 
     Page<WasteReportEntity> findAllByReporterIdAndReportStatus(String reporterId, ReportStatus reportStatus, Pageable pageable);
