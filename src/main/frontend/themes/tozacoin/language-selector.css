@@ -1,0 +1,40 @@
+.language-selector { display: inline-flex; flex: 0 0 auto; align-items: center; }
+.language-selector vaadin-select { width: 118px; padding: 0; font-size: 12px; --vaadin-input-field-height: 36px; }
+.language-selector vaadin-select::part(input-field) { min-height: 36px; border-radius: 7px; border: 1px solid #b9c7ac65; background: #f4f7ee; color: #36542b; box-shadow: none; }
+.language-selector vaadin-select::part(toggle-button) { color: inherit; }
+.auth-top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 22px; }
+.auth-page .language-selector vaadin-select::part(input-field) { background: #133629a3; color: #edf6e1; border-color: #c7e6a449; }
+.eco-has-hero .eco-header:not(.eco-header-scrolled) .language-selector vaadin-select::part(input-field) { background: #173e2eb3; color: #fff; border-color: #ffffff4d; }
+@media (max-width: 1100px) { .eco-header-actions { gap: 14px; } }
+@media (max-width: 800px) {
+  .eco-header .language-selector vaadin-select { width: 105px; }
+  .eco-header .eco-header-actions { gap: 10px; }
+}
+@media (max-width: 520px) {
+  .auth-top-actions { gap: 10px; }
+  .auth-top-actions .auth-home-link { font-size: 0; width: 26px; min-width: 26px; max-width: 26px; }
+  .auth-top-actions .auth-home-link vaadin-icon { width: 18px; height: 18px; }
+  .language-selector vaadin-select { width: 102px; }
+  .user-layout-container .header-right-actions { gap: 6px; }
+  .user-layout-container .user-header-bar { gap: 8px; padding: 0 12px; }
+  .user-layout-container .header-left-section { flex: 1; min-width: 0; gap: 6px; }
+  .user-layout-container .header-drawer-toggle { flex: 0 0 36px; width: 36px; min-width: 36px; margin: 0; }
+  .user-layout-container .header-page-title { min-width: 0; max-width: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .user-layout-container .user-avatar-badge { width: 30px; height: 30px; }
+  .eco-header { padding-left: 12px; padding-right: 12px; gap: 8px; }
+  .eco-header .eco-brand { font-size: 20px; }
+  .eco-header .eco-brand::before { width: 27px; height: 27px; font-size: 17px; margin-right: 7px; }
+  .eco-header .eco-header-actions { flex-shrink: 0; gap: 6px; }
+  .eco-header .eco-header-actions > a:first-of-type { font-size: 12px; }
+  .eco-header .eco-header-actions .eco-button { padding: 0; font-size: 0; width: 34px; min-height: 36px; }
+  .eco-header .eco-header-actions .eco-button::after { content: "↗"; font-size: 18px; }
+  .admin-header-subtitle, .admin-header-actions .admin-live-badge { display: none; }
+}
+@media (max-width: 360px) {
+  .eco-header { padding-left: 10px; padding-right: 10px; }
+  .eco-header .eco-brand { font-size: 18px; }
+  .eco-header .eco-brand::before { width: 24px; height: 24px; margin-right: 6px; }
+  .eco-header .language-selector vaadin-select { width: 84px; font-size: 11px; }
+  .user-layout-container .btn-report-action { width: 36px; min-width: 36px; padding: 0; font-size: 0; }
+  .user-layout-container .btn-report-action vaadin-icon { width: 17px; height: 17px; }
+}

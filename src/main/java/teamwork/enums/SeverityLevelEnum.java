@@ -3,5 +3,6 @@ package teamwork.enums;
 public enum SeverityLevelEnum {
     LOW,
     MEDIUM,
-    HIGH
+    HIGH,
+    UNDER_REVIEW
 }

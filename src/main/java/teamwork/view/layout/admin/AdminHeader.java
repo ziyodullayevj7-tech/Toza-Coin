@@ -7,6 +7,8 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import teamwork.config.CustomUserDetails;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import teamwork.view.components.LanguageSelector;
 import teamwork.util.SecurityUtils;
 
 import java.util.Locale;
@@ -24,6 +26,11 @@ public class AdminHeader extends Div {
 
         DrawerToggle drawerToggle = new DrawerToggle();
         drawerToggle.addClassName("admin-drawer-toggle");
+        Span glyph = new Span(new Span(), new Span(), new Span());
+        glyph.addClassName("admin-menu-glyph");
+        glyph.getElement().setAttribute("aria-hidden", "true");
+        drawerToggle.getElement().appendChild(glyph.getElement());
+        I18n.attribute(drawerToggle, "aria-label", "Menyu");
 
         Div pageInfo = I18n.localize(new Div());
         pageInfo.addClassName("admin-header-page-info");
@@ -35,7 +42,7 @@ public class AdminHeader extends Div {
         Div actions = I18n.localize(new Div());
         actions.addClassName("admin-header-actions");
 
-        Span live = I18n.localize(new Span("● Jonli"));
+        Span live = I18n.localize(new Span("Admin panel"));
         live.addClassName("admin-live-badge");
 
         Span avatar = I18n.localize(new Span(SecurityUtils.getCurrentUser()
@@ -48,7 +55,12 @@ public class AdminHeader extends Div {
         I18n.title(avatar, username);
         I18n.attribute(avatar, "aria-label", "Administrator profile");
 
-        actions.add(new teamwork.view.components.LanguageSelector(), live, avatar);
+        LanguageSelector language = new LanguageSelector();
+        language.addClassName("admin-language-control");
+        var globe = VaadinIcon.GLOBE.create();
+        globe.getElement().setAttribute("aria-hidden", "true");
+        language.getElement().insertChild(0, globe.getElement());
+        actions.add(language, live, avatar);
         add(left, actions);
     }
 

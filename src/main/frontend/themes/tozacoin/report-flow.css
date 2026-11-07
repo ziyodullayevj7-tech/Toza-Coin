@@ -1,0 +1,164 @@
+/* Shared visual language for the photo, location, action and cleanup steps. */
+.eco-report-page .report-step-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 24px;
+  padding: 36px;
+  border: 1px solid rgba(93, 121, 77, .2);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: none;
+}
+.eco-report-page .report-flow-card { color: #233d2d; }
+.eco-report-page .report-flow-card h2 {
+  margin: 0; font-size: clamp(24px, 4vw, 28px); line-height: 1.25;
+  letter-spacing: -.025em; color: #233d2d;
+}
+.eco-report-page .report-flow-card > p {
+  margin: 0; color: #526452; font-size: 14px; line-height: 1.65;
+}
+.report-step-emblem {
+  display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0;
+  border-radius: 16px; border: 1px solid #c6d8bb;
+  background: #e6efdf; color: #486f3b;
+}
+.report-step-emblem vaadin-icon { width: 23px; height: 23px; }
+.eco-report-page .jungle-report-progress {
+  box-sizing: border-box; max-width: 680px; padding: 22px 28px !important;
+}
+.user-jungle-layout.user-layout-container .eco-report-page .jungle-report-progress { max-width: 680px; }
+.eco-report-page .report-progress-inner { max-width: 100% !important; }
+.eco-report-page .report-progress-step { min-width: 0; }
+.eco-report-page .report-progress-step > div { background: #d4dfce !important; height: 4px !important; }
+.eco-report-page .report-progress-step[data-state="complete"] > div { background: #6f915c !important; }
+.eco-report-page .report-progress-step[data-state="current"] > div { background: #426c38 !important; }
+.eco-report-page .report-progress-step > span { font-size: 11px !important; color: #67795e !important; }
+.eco-report-page .report-progress-step[aria-current="step"] > span { color: #35552f !important; }
+.eco-report-page .btn-step-back-circle {
+  border-radius: 12px !important; border-color: #c8d5c0 !important;
+  background: rgba(255,255,255,.6) !important; color: #35552f !important; box-shadow: none !important;
+}
+.eco-report-page .report-flow-card vaadin-button {
+  min-height: 48px; height: auto; margin: 0; border-radius: 12px !important;
+  font-size: 14px !important; font-weight: 600 !important;
+  cursor: pointer; transition: background .18s, border-color .18s, transform .18s;
+}
+.eco-report-page .report-flow-card vaadin-button::part(label) { white-space: normal; line-height: 1.4; }
+.eco-report-page .report-flow-card vaadin-button.btn-step-next-green {
+  width: 100%; padding: 14px 18px !important; margin-top: 8px;
+  background: #426c38 !important; color: white !important; border: 1px solid #426c38 !important;
+}
+.eco-report-page .report-flow-card vaadin-button.btn-step-next-green:not([disabled]):hover { background: #355a2d !important; }
+.eco-report-page .report-flow-card vaadin-button.btn-step-next-green[disabled] {
+  background: #d6dfce !important; border-color: #d6dfce !important;
+  color: #677560 !important; opacity: 1 !important; cursor: default !important;
+}
+.eco-report-page .report-flow-card :is(.btn-camera-capture, .report-map-picker) {
+  width: 100%; padding: 12px 16px !important;
+  background: rgba(255,255,255,.55) !important; color: #35552f !important;
+  border: 1px solid #bdcdb4 !important; box-shadow: none !important;
+}
+.eco-report-page .report-flow-card :is(.btn-camera-capture, .report-map-picker):hover { background: #e6efdf !important; }
+.eco-report-page vaadin-button:focus-visible,
+.eco-report-page vaadin-button[focus-ring] { outline: 3px solid #8fae7e; outline-offset: 3px; }
+.eco-report-page .camera-preview-dashed-box {
+  box-sizing: border-box; height: clamp(220px, 32vw, 300px);
+  border: 1px dashed #aabc9d; border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255,255,255,.6), rgba(224,237,214,.55));
+}
+.eco-report-page .camera-placeholder-content { padding: 20px; color: #5d7152; }
+.eco-report-page .camera-placeholder-content h3 { margin: 8px 0 0; font-size: 16px; color: #35552f; }
+.eco-report-page .camera-placeholder-content p { margin: 0; font-size: 12px; line-height: 1.5; }
+.eco-report-page .camera-placeholder-content > span { font-size: 28px; }
+.eco-report-page .camera-placeholder-content > vaadin-icon { width: 32px; height: 32px; color: #69875a; }
+.eco-report-page .report-flow-card .camera-note-text { font-size: 12px; color: #64765a; }
+.eco-report-page .yandex-map-container { box-shadow: none; border-color: #b8cbaa; height: 290px; }
+.eco-report-page .yandex-center-pin { animation: none; }
+.eco-report-page .yandex-center-pin vaadin-icon { width: 38px; height: 38px; color: #426c38; }
+.eco-report-page .location-result-pill vaadin-icon { width: 17px; height: 17px; flex-shrink: 0; }
+.eco-report-page .btn-recenter-gps { border-radius: 12px !important; box-shadow: 0 2px 8px #233d2d22 !important; color: #35552f; }
+.eco-report-page .location-result-pill {
+  display: flex; align-items: center; gap: 8px; padding: 12px 14px;
+  border: 1px solid #c9d9bf; border-radius: 12px; background: #eaf1e3;
+  font-size: 13px; color: #3f6034; overflow-wrap: anywhere;
+}
+.eco-report-page .street-address-input { width: 100%; --vaadin-input-field-border-radius: 12px; --vaadin-input-field-background: rgba(255,255,255,.6); }
+.eco-report-page .street-address-input::part(label) { color: #45603b; font-size: 13px; }
+.eco-report-page .report-action-options { width: 100%; padding: 0; }
+.eco-report-page .report-action-options vaadin-radio-button {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center;
+  width: 100%; box-sizing: border-box; margin: 0 0 12px; padding: 0;
+  border: 1px solid #c2d1b8; border-radius: 16px; background: rgba(255,255,255,.5);
+  transition: background .18s, border-color .18s; cursor: pointer;
+  --vaadin-radio-button-dot-color: #426c38;
+  --vaadin-radio-button-marker-color: #426c38;
+  --lumo-primary-color: #426c38;
+}
+.eco-report-page .report-action-options vaadin-radio-button > [slot="label"] { min-width: 0; width: 100%; padding: 0; }
+.eco-report-page .report-action-options vaadin-radio-button::part(radio) { margin-inline: 16px 0; flex-shrink: 0; }
+.eco-report-page .report-action-options vaadin-radio-button:hover { background: #edf4e6; border-color: #8eaa7b; }
+.eco-report-page .report-action-options vaadin-radio-button[checked] { background: #e4efda; border-color: #648450; box-shadow: inset 0 0 0 1px #648450; }
+.eco-report-page .report-action-options vaadin-radio-button[focus-ring] { outline: 3px solid #8fae7e; outline-offset: 3px; }
+.report-action-option { display: flex; align-items: center; gap: 14px; padding: 20px 18px; text-align: left; }
+.report-action-copy { flex: 1; min-width: 0; }
+.report-action-title { font-weight: 700; font-size: 15px; color: #2f4a28; }
+.report-action-copy p { margin: 6px 0 0; font-size: 12px; line-height: 1.65; color: #52664a; }
+.report-action-reward { flex-shrink: 0; align-self: flex-start; padding: 6px 10px; border-radius: 20px; background: #f5edd3; border: 1px solid #dfd1a4; color: #7a6028; font-size: 12px; font-weight: 700; }
+.report-flow-notice { display: flex; align-items: flex-start; gap: 10px; padding: 14px; border: 1px solid #cad8c0; border-radius: 12px; background: rgba(232,240,224,.7); color: #52664a; }
+.report-flow-notice vaadin-icon { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; }
+.report-flow-notice p { margin: 0; font-size: 12px; line-height: 1.6; }
+.eco-report-page .cleaning-elapsed-timer {
+  box-sizing: border-box; width: 100%; margin: 12px 0; padding: 28px 16px;
+  border: 1px solid #c4d6b6; border-radius: 18px; background: rgba(230,240,220,.65);
+  color: #35552f; font-size: clamp(44px, 9vw, 64px); letter-spacing: -.02em;
+}
+.eco-report-page .cleaning-timer-note { background: transparent; border: 0; color: #5e7253; font-size: 12px; }
+.report-summary-list { border: 1px solid #c8d6be; border-radius: 14px; overflow: hidden; }
+.report-summary-row { display: flex; justify-content: space-between; gap: 20px; padding: 14px 18px; background: rgba(255,255,255,.35); border-bottom: 1px solid #d4decd; font-size: 13px; }
+.report-summary-row:last-child { border-bottom: 0; }
+.report-summary-row > span:first-child { color: #627657; }
+.report-summary-row > span:last-child { color: #2f4a28; font-weight: 600; text-align: right; overflow-wrap: anywhere; min-width: 0; }
+.report-summary-reward { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px; background: #f5efd9; border: 1px solid #dfd4ad; border-radius: 14px; color: #71603d; font-size: 13px; }
+.report-summary-reward > span:last-child { font-size: 22px; font-weight: 800; white-space: nowrap; color: #75551d; }
+.eco-report-page .report-photo-comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.eco-report-page .report-photo-preview { height: 200px; border-color: #c6d4bc; }
+.eco-report-page .report-photo-caption { background: rgba(35,61,45,.85); font-weight: 600; }
+.report-camera-overlay .camera-status-message { background: rgba(28,47,35,.85) !important; font-weight: 500 !important; }
+.report-camera-overlay .btn-close-camera { border-radius: 12px !important; background: rgba(28,47,35,.85) !important; font-weight: 600 !important; }
+.report-camera-overlay .btn-shutter-capture,
+.report-map-overlay .btn-confirm-map-location {
+  min-height: 52px; border: 1px solid #c7d8be !important; border-radius: 14px !important;
+  padding: 14px 28px !important; background: #426c38 !important;
+  font-size: 15px !important; font-weight: 600 !important; box-shadow: none !important;
+}
+.report-camera-overlay .btn-shutter-capture:not(:disabled):hover,
+.report-map-overlay .btn-confirm-map-location:hover { background: #355a2d !important; }
+.report-camera-overlay .camera-bottom-controls { bottom: max(28px, env(safe-area-inset-bottom)) !important; }
+.report-map-overlay .map-bottom-controls { bottom: max(24px, env(safe-area-inset-bottom)) !important; }
+.report-map-overlay .map-top-bar { background: #eef4e8 !important; color: #35552f !important; border-radius: 14px !important; box-shadow: none !important; font-size: 13px !important; }
+.report-map-overlay .yandex-center-pin { animation: none; }
+.report-camera-overlay button:focus-visible,
+.report-map-overlay button:focus-visible { outline: 3px solid #b6d49e; outline-offset: 4px; }
+@media (max-width: 768px) {
+  .eco-report-page .report-step-card { width: 100% !important; margin: 0 auto 18px !important; }
+}
+@media (max-width: 520px) {
+  .user-jungle-layout.user-layout-container .eco-report-page { padding: 18px 12px; }
+  .eco-report-page .report-flow-card { padding: 24px 18px !important; gap: 14px; }
+  .eco-report-page .jungle-report-progress { padding: 18px 14px !important; }
+  .eco-report-page .report-progress-step > span { font-size: 10px !important; text-align: center; }
+  .report-action-option { flex-wrap: wrap; gap: 10px; padding: 16px 12px; }
+  .report-action-option .report-step-emblem { display: none; }
+  .report-action-copy { flex-basis: 100%; }
+  .eco-report-page .report-action-options vaadin-radio-button::part(radio) { margin-inline: 12px 0; }
+  .eco-report-page .report-photo-preview { height: 160px; }
+  .report-summary-row { padding: 12px; gap: 12px; }
+  .report-summary-reward { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eco-report-page .report-flow-card vaadin-button,
+  .eco-report-page .report-action-options vaadin-radio-button { transition: none; }
+}

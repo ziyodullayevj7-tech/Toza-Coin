@@ -2,9 +2,10 @@ package teamwork.view.layout.admin;
 
 import teamwork.i18n.I18n;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.RouterLink;
+import teamwork.view.layout.user.JungleBackground;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
@@ -24,14 +25,16 @@ import java.util.Map;
 
 @CssImport("./themes/tozacoin/user-layout.css")
 @CssImport("./themes/tozacoin/trashout.css")
+@CssImport("./themes/tozacoin/user-jungle.css")
+@CssImport("./themes/tozacoin/admin-jungle.css")
 public class AdminLayout extends AppLayout implements BeforeEnterObserver {
 
     private final AdminHeader header = new AdminHeader();
-    private final Map<Class<? extends Component>, Div> navigationItems = new LinkedHashMap<>();
+    private final Map<Class<? extends Component>, RouterLink> navigationItems = new LinkedHashMap<>();
     private final Map<Class<? extends Component>, String> pageTitles = new LinkedHashMap<>();
 
     public AdminLayout() {
-        addClassName("admin-layout-container");
+        addClassNames("admin-layout-container", "admin-jungle-layout");
         addToNavbar(header);
         addToDrawer(buildSidebar());
         setPrimarySection(Section.DRAWER);
@@ -47,9 +50,11 @@ public class AdminLayout extends AppLayout implements BeforeEnterObserver {
         navigationItems.forEach((view, item) -> {
             if (view.equals(target)) {
                 item.addClassName("active");
+                item.getElement().setAttribute("aria-current", "page");
                 header.setPageTitle(pageTitles.get(view));
             } else {
                 item.removeClassName("active");
+                item.getElement().removeAttribute("aria-current");
             }
         });
     }
@@ -74,41 +79,30 @@ public class AdminLayout extends AppLayout implements BeforeEnterObserver {
         Div navigation = I18n.localize(new Div());
         navigation.addClassName("admin-navigation");
         navigation.add(
-                createNavigationItem("Boshqaruv paneli", "📊", AdminDashboard.class),
-                createNavigationItem("Moderatsiya navbati", "⏳", AdminModerationView.class),
-                createNavigationItem("Shubhali holatlar", "🚨", AdminSuspiciousActivityView.class),
-                createNavigationItem("Foydalanuvchilar", "👥", AdminUsersView.class),
-                createNavigationItem("Mukofotlar", "🎁", AdminRewardsView.class),
-                createNavigationItem("Statistika", "📈", AdminStatisticsView.class),
-                createNavigationItem("Sozlamalar", "⚙️", AdminSettingsView.class)
+                createNavigationItem("Boshqaruv paneli", VaadinIcon.DASHBOARD, AdminDashboard.class),
+                createNavigationItem("Moderatsiya navbati", VaadinIcon.CLOCK, AdminModerationView.class),
+                createNavigationItem("Shubhali holatlar", VaadinIcon.WARNING, AdminSuspiciousActivityView.class),
+                createNavigationItem("Foydalanuvchilar", VaadinIcon.USERS, AdminUsersView.class),
+                createNavigationItem("Mukofotlar", VaadinIcon.GIFT, AdminRewardsView.class),
+                createNavigationItem("Statistika", VaadinIcon.CHART, AdminStatisticsView.class),
+                createNavigationItem("Sozlamalar", VaadinIcon.COG, AdminSettingsView.class)
         );
 
-        sidebar.add(brand, navigation, new AdminFooter());
+        sidebar.add(brand, navigation, new JungleBackground(), new AdminFooter());
         return sidebar;
     }
 
-    private Div createNavigationItem(String title, String icon, Class<? extends Component> view) {
-        Div item = I18n.localize(new Div());
+    private RouterLink createNavigationItem(String title, VaadinIcon icon, Class<? extends Component> view) {
+        RouterLink item = new RouterLink();
+        item.setRoute(view);
         item.addClassName("admin-nav-item");
         I18n.title(item, title);
-        item.getElement().setAttribute("role", "link");
-        item.getElement().setAttribute("tabindex", "0");
-        I18n.attribute(item, "aria-label", title);
-
-        Span iconSpan = I18n.localize(new Span(icon));
-        iconSpan.addClassName("admin-nav-icon");
+        var symbol = icon.create();
+        symbol.addClassName("admin-nav-icon");
+        symbol.getElement().setAttribute("aria-hidden", "true");
         Span label = I18n.localize(new Span(title));
         label.addClassName("admin-nav-label");
-        item.add(iconSpan, label);
-
-        item.addClickListener(event -> UI.getCurrent().navigate(view));
-        item.getElement().addEventListener("keydown", event -> {
-            String key = event.getEventData().get("event.key").asText();
-            if ("Enter".equals(key) || " ".equals(key)) {
-                UI.getCurrent().navigate(view);
-            }
-        }).addEventData("event.key");
-
+        item.add(symbol, label);
         navigationItems.put(view, item);
         pageTitles.put(view, title);
         return item;

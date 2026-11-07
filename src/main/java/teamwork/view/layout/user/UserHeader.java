@@ -6,7 +6,6 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
@@ -47,9 +46,9 @@ public class UserHeader extends Div {
         actionsWrapper.addClassName("header-right-actions");
 
         // + Xabar berish Button
-        btnReport.addClassName("btn-report-action");
+        btnReport.addClassNames("btn-report-action", "user-shell-action");
         I18n.title(btnReport, "Report");
-        btnReport.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        I18n.attribute(btnReport, "aria-label", "Report");
         btnReport.addClickListener(event -> UI.getCurrent().navigate(ReportWasteView.class));
 
         // Notification Bell Button with badge 2

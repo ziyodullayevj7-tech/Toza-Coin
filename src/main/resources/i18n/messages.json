@@ -1,0 +1,2017 @@
+{
+  "Menyu": ["Navigation menu", "Меню навигации"],
+  "Til": [
+    "Language",
+    "Язык"
+  ],
+  "Tilni tanlash": [
+    "Choose language",
+    "Выбрать язык"
+  ],
+  "Bosh sahifaga qaytish": [
+    "Back to home",
+    "На главную"
+  ],
+  "YANGI BOSHLANISH": [
+    "A NEW BEGINNING",
+    "НОВОЕ НАЧАЛО"
+  ],
+  "YANA BIRGALIKDA": [
+    "TOGETHER AGAIN",
+    "СНОВА ВМЕСТЕ"
+  ],
+  "Kelajakni birga yaratamiz": [
+    "Building the future together",
+    "Создаём будущее вместе"
+  ],
+  "Qaytganingizdan xursandmiz": [
+    "Welcome back",
+    "Рады вашему возвращению"
+  ],
+  "BIR YAXSHI HARAKATDAN": [
+    "ONE GOOD ACTION AT A TIME",
+    "С ОДНОГО ДОБРОГО ДЕЛА"
+  ],
+  "Tozaroq dunyo. Yashilroq kelajak.": [
+    "A cleaner world. A greener future.",
+    "Чище мир. Зеленее будущее."
+  ],
+  "Chiqindini xabar qiling, tozalashga hissa qo'shing. O'zgarish sizdan boshlanadi.": [
+    "Report waste and help clean it up. Change starts with you.",
+    "Сообщайте о мусоре, помогайте с уборкой. Перемены начинаются с вас."
+  ],
+  "Tabiat uchun. Birgalikda.": [
+    "For nature. Together.",
+    "Для природы. Вместе."
+  ],
+  "Toza muhit o'zimizdan boshlanadi.": [
+    "A cleaner environment starts with us.",
+    "Чистая среда начинается с нас."
+  ],
+  "Yashil kelajakka": [
+    "A greener future",
+    "К зелёному будущему"
+  ],
+  "qo'shiling.": [
+    "starts with you.",
+    "присоединяйтесь."
+  ],
+  "Hisob yarating. Toza muhit sari birinchi qadamni tashlang.": [
+    "Create an account. Take the first step towards a cleaner environment.",
+    "Создайте аккаунт. Сделайте первый шаг к чистой окружающей среде."
+  ],
+  "Xush kelibsiz.": [
+    "Welcome back.",
+    "С возвращением."
+  ],
+  "Yana birgalikda.": [
+    "Together again.",
+    "Снова вместе."
+  ],
+  "Hisobingizga kiring va yaxshi harakatni davom ettiring.": [
+    "Sign in and keep making a difference.",
+    "Войдите и продолжайте делать добрые дела."
+  ],
+  "Ism": [
+    "First name",
+    "Имя"
+  ],
+  "Familiya": [
+    "Last name",
+    "Фамилия"
+  ],
+  "Email": [
+    "Email",
+    "Электронная почта"
+  ],
+  "Telefon raqam": [
+    "Phone number",
+    "Номер телефона"
+  ],
+  "Parol": [
+    "Password",
+    "Пароль"
+  ],
+  "Parolni tasdiqlash": [
+    "Confirm password",
+    "Подтвердите пароль"
+  ],
+  "Foydalanish shartlari va maxfiylik siyosatiga roziman.": [
+    "I agree to the terms of use and privacy policy.",
+    "Я принимаю условия использования и политику конфиденциальности."
+  ],
+  "Hisob yaratish": [
+    "Create account",
+    "Создать аккаунт"
+  ],
+  "Ismingiz": [
+    "Your first name",
+    "Ваше имя"
+  ],
+  "Familiyangiz": [
+    "Your last name",
+    "Ваша фамилия"
+  ],
+  "Kamida 8 ta belgi": [
+    "At least 8 characters",
+    "Не менее 8 символов"
+  ],
+  "Parolni qayta kiriting": [
+    "Enter your password again",
+    "Повторите пароль"
+  ],
+  "Ismingizni kiriting.": [
+    "Enter your first name.",
+    "Введите имя."
+  ],
+  "Familiyangizni kiriting.": [
+    "Enter your last name.",
+    "Введите фамилию."
+  ],
+  "Email manzilingizni kiriting.": [
+    "Enter your email address.",
+    "Введите адрес электронной почты."
+  ],
+  "To'g'ri email manzilini kiriting.": [
+    "Enter a valid email address.",
+    "Введите корректный адрес электронной почты."
+  ],
+  "Telefon raqamingizni kiriting.": [
+    "Enter your phone number.",
+    "Введите номер телефона."
+  ],
+  "O'zbekiston telefon raqamini kiriting.": [
+    "Enter a valid Uzbekistan phone number.",
+    "Введите корректный номер телефона Узбекистана."
+  ],
+  "Parol yarating.": [
+    "Create a password.",
+    "Придумайте пароль."
+  ],
+  "Parol kamida 8 ta belgidan iborat bo'lsin.": [
+    "Use at least 8 characters for your password.",
+    "Пароль должен содержать не менее 8 символов."
+  ],
+  "Parolni tasdiqlang.": [
+    "Confirm your password.",
+    "Подтвердите пароль."
+  ],
+  "Parollar bir-biriga mos kelmadi.": [
+    "The passwords do not match.",
+    "Пароли не совпадают."
+  ],
+  "Davom etish uchun roziligingiz kerak.": [
+    "Please accept the terms to continue.",
+    "Для продолжения необходимо принять условия."
+  ],
+  "Hisobingiz bormi?": [
+    "Already have an account?",
+    "Уже есть аккаунт?"
+  ],
+  "Kirish": [
+    "Sign in",
+    "Войти"
+  ],
+  "Bu email bilan hisob mavjud yoki ma'lumotlar qabul qilinmadi. Tekshiring yoki hisobingizga kiring.": [
+    "An account may already use this email, or the details were not accepted. Check them or sign in.",
+    "Возможно, аккаунт с этой почтой уже существует или данные не приняты. Проверьте их или войдите."
+  ],
+  "Hisobni yaratib bo'lmadi. Birozdan so'ng qayta urinib ko'ring.": [
+    "We could not create your account. Please try again shortly.",
+    "Не удалось создать аккаунт. Попробуйте немного позже."
+  ],
+  "Parolingizni kiriting": [
+    "Enter your password",
+    "Введите пароль"
+  ],
+  "Parolingizni kiriting.": [
+    "Enter your password.",
+    "Введите пароль."
+  ],
+  "Google orqali davom etish": [
+    "Continue with Google",
+    "Продолжить с Google"
+  ],
+  "Hali hisobingiz yo'qmi?": [
+    "Don't have an account yet?",
+    "Ещё нет аккаунта?"
+  ],
+  "Ro'yxatdan o'tish": [
+    "Sign up",
+    "Зарегистрироваться"
+  ],
+  "Email yoki parol noto'g'ri, yoki hisob faol emas. Ma'lumotlarni tekshirib qayta urinib ko'ring.": [
+    "The email or password is incorrect, or your account is inactive. Check your details and try again.",
+    "Неверная почта или пароль, либо аккаунт неактивен. Проверьте данные и попробуйте ещё раз."
+  ],
+  "Hozir kirib bo'lmadi. Birozdan so'ng qayta urinib ko'ring.": [
+    "We could not sign you in. Please try again shortly.",
+    "Не удалось войти. Попробуйте немного позже."
+  ],
+  "Hisobingiz yaratildi. Endi email va parolingiz bilan kiring.": [
+    "Your account has been created. Sign in with your email and password.",
+    "Аккаунт создан. Войдите с помощью почты и пароля."
+  ],
+  "Kirish amalga oshmadi. Qayta urinib ko'ring.": [
+    "Sign-in was unsuccessful. Please try again.",
+    "Не удалось войти. Попробуйте ещё раз."
+  ],
+  "yoki": [
+    "or",
+    "или"
+  ],
+  "Boshqaruv paneli": [
+    "Dashboard",
+    "Панель управления"
+  ],
+  "Report": [
+    "Report",
+    "Сообщить"
+  ],
+  "Mening ishlarim": [
+    "My activity",
+    "Мои дела"
+  ],
+  "Xarita": [
+    "Map",
+    "Карта"
+  ],
+  "Profil": [
+    "Profile",
+    "Профиль"
+  ],
+  "Sozlamalar": [
+    "Settings",
+    "Настройки"
+  ],
+  "Chiqish": [
+    "Sign out",
+    "Выйти"
+  ],
+  "Foydalanuvchi": [
+    "User",
+    "Пользователь"
+  ],
+  "TozaCoin a’zosi": [
+    "TozaCoin member",
+    "Участник TozaCoin"
+  ],
+  "do'stim": [
+    "friend",
+    "друг"
+  ],
+  "BIRGALIKDA TOZAROQ": [
+    "CLEANER TOGETHER",
+    "ВМЕСТЕ ЧИЩЕ"
+  ],
+  "Salom, {0}!": [
+    "Hello, {0}!",
+    "Привет, {0}!"
+  ],
+  "Bugun atrofingizdagi muhit uchun bir yaxshi ish qiling.": [
+    "Do something good for your environment today.",
+    "Сделайте сегодня доброе дело для окружающей среды."
+  ],
+  "Chiqindi bor joyni suratga oling va xabar bering.": [
+    "Photograph waste and send a report.",
+    "Сфотографируйте мусор и отправьте сообщение."
+  ],
+  "Xaritani ochish": [
+    "Open map",
+    "Открыть карту"
+  ],
+  "Tozalash uchun berilgan joylarni toping.": [
+    "Find places available for cleanup.",
+    "Найдите места, доступные для уборки."
+  ],
+  "Xabarlaringiz va tozalashlaringizni bir joyda kuzating.": [
+    "Track your reports and cleanups in one place.",
+    "Следите за сообщениями и уборками в одном месте."
+  ],
+  "Birinchi marta foydalanayapsizmi?": [
+    "New here?",
+    "Впервые здесь?"
+  ],
+  "Report tugmasini bosing, suratga oling va joylashuvni belgilang. Keyin o'zingiz tozalashni yoki boshqalarga yuborishni tanlang.": [
+    "Select Report, take a photo and mark the location. Then choose to clean it yourself or share it with others.",
+    "Нажмите «Сообщить», сделайте фото и укажите место. Затем выберите самостоятельную уборку или помощь других."
+  ],
+  "Qanday ishlaydi": [
+    "How it works",
+    "Как это работает"
+  ],
+  "Haqida": [
+    "About",
+    "О нас"
+  ],
+  "Aloqa": [
+    "Contact",
+    "Контакты"
+  ],
+  "Asosiy navigatsiya": [
+    "Main navigation",
+    "Основная навигация"
+  ],
+  "Qo'shilish": [
+    "Join us",
+    "Присоединиться"
+  ],
+  "TOZA MUHIT. BIRGALIKDA.": [
+    "A CLEANER ENVIRONMENT. TOGETHER.",
+    "ЧИСТАЯ СРЕДА. ВМЕСТЕ."
+  ],
+  "Toza kelajak sizdan boshlanadi.": [
+    "A cleaner future starts with you.",
+    "Чистое будущее начинается с вас."
+  ],
+  "Chiqindini ko'rdingizmi? Suratga oling va xaritada belgilang. O'zingiz tozalang yoki boshqalarga yordam berish imkonini bering.": [
+    "Spotted waste? Take a photo and mark it on the map. Clean it yourself or let others help.",
+    "Увидели мусор? Сфотографируйте и отметьте на карте. Уберите сами или дайте другим возможность помочь."
+  ],
+  "Report qilish": [
+    "Report waste",
+    "Сообщить о мусоре"
+  ],
+  "Xaritani ko'rish": [
+    "View map",
+    "Посмотреть карту"
+  ],
+  "Kichik harakat. Katta o'zgarish.": [
+    "Small action. Big change.",
+    "Маленькое действие. Большие перемены."
+  ],
+  "QANDAY ISHLAYDI": [
+    "HOW IT WORKS",
+    "КАК ЭТО РАБОТАЕТ"
+  ],
+  "Ko'ring va xabar qiling": [
+    "Spot it and report it",
+    "Увидели — сообщите"
+  ],
+  "Chiqindini suratga oling. Joylashuvni belgilang va qisqa izoh yozing.": [
+    "Take a photo of the waste. Mark its location and add a short note.",
+    "Сфотографируйте мусор. Отметьте место и добавьте короткое описание."
+  ],
+  "Birgalikda tozalaymiz": [
+    "Clean up together",
+    "Убираем вместе"
+  ],
+  "O'zingiz tozalang yoki xabaringizni boshqalar tozalashi uchun yuboring.": [
+    "Clean it yourself or share your report for others to clean up.",
+    "Уберите сами или отправьте сообщение, чтобы другие помогли с уборкой."
+  ],
+  "Natijani ko'ring": [
+    "See the result",
+    "Увидьте результат"
+  ],
+  "Tozalashdan keyingi suratni yuboring. Tekshiruvdan so'ng tangalar hisobingizga tushadi.": [
+    "Submit an after-cleanup photo. Coins are credited after verification.",
+    "Отправьте фото после уборки. После проверки монеты поступят на ваш счёт."
+  ],
+  "Yaxshi o'zgarish uchun oddiy qadamlar.": [
+    "Simple steps towards a positive change.",
+    "Простые шаги к добрым переменам."
+  ],
+  "Tabiat hammamizning uyimiz.": [
+    "Nature is home to us all.",
+    "Природа — наш общий дом."
+  ],
+  "TOZACOIN HAQIDA": [
+    "ABOUT TOZACOIN",
+    "О TOZACOIN"
+  ],
+  "Mahallamizdan boshlaymiz.": [
+    "Let's start with our neighborhood.",
+    "Начнём с нашего района."
+  ],
+  "TozaCoin — O'zbekistonda atrof-muhitni tozalashga hissa qo'shishni osonlashtiradigan platforma. Chiqindi bor joyni bildirish ham, uni tozalash ham foydali harakat.": [
+    "TozaCoin makes it easier to help clean up the environment in Uzbekistan. Reporting waste and cleaning it up both make a difference.",
+    "TozaCoin помогает заботиться о чистоте окружающей среды в Узбекистане. Сообщить о мусоре и убрать его — одинаково полезные дела."
+  ],
+  "Xabarlar xaritada birlashadi. Tozalash natijalari suratlar orqali tekshiriladi. Tasdiqlangan harakatingiz uchun TozaCoin tangalarini olasiz.": [
+    "Reports come together on the map. Cleanup results are verified through photos. Confirmed actions earn you TozaCoin coins.",
+    "Сообщения объединяются на карте. Результаты уборки проверяются по фотографиям. За подтверждённые действия вы получаете монеты TozaCoin."
+  ],
+  "XARITA": [
+    "MAP",
+    "КАРТА"
+  ],
+  "Yordam kerak bo'lgan joylar.": [
+    "Places that need a helping hand.",
+    "Места, где нужна помощь."
+  ],
+  "Bu xaritada tekshiruvdan o'tgan va tozalash uchun berilgan joylar ko'rsatiladi. Nuqtani bosib manzilni ko'ring.": [
+    "This map shows verified reports available for cleanup. Select a marker to see the address.",
+    "На карте показаны проверенные сообщения, доступные для уборки. Нажмите на точку, чтобы увидеть адрес."
+  ],
+  "Hozircha tozalash uchun berilgan joylar yo'q.": [
+    "There are no places available for cleanup yet.",
+    "Пока нет мест, доступных для уборки."
+  ],
+  "Xarita ma'lumotlarini yuklab bo'lmadi.": [
+    "Could not load map data.",
+    "Не удалось загрузить данные карты."
+  ],
+  "Qayta yuklash": [
+    "Reload",
+    "Перезагрузить"
+  ],
+  "Faqat tozalanmagan, tozalash uchun mavjud joylar.": [
+    "Only uncleaned places available for cleanup.",
+    "Только неубранные места, доступные для уборки."
+  ],
+  "Tozalash uchun berilgan joylar xaritasi": [
+    "Map of available cleanups",
+    "Карта мест для уборки"
+  ],
+  "Xarita yuklanmoqda…": [
+    "Loading map…",
+    "Загрузка карты…"
+  ],
+  "Xaritani yuklab bo'lmadi. Internet aloqasini tekshiring.": [
+    "Could not load the map. Check your internet connection.",
+    "Не удалось загрузить карту. Проверьте подключение к интернету."
+  ],
+  "Qayta urinish": [
+    "Try again",
+    "Повторить"
+  ],
+  "Tozalash uchun berilgan": [
+    "Available for cleanup",
+    "Доступно для уборки"
+  ],
+  "Manzil xaritada belgilangan": [
+    "Location marked on the map",
+    "Место отмечено на карте"
+  ],
+  "ALOQA": [
+    "CONTACT",
+    "КОНТАКТЫ"
+  ],
+  "Biz bilan bog'laning": [
+    "Get in touch",
+    "Свяжитесь с нами"
+  ],
+  "Savol, taklif yoki hamkorlik takliflari bo'lsa — yozing. 1–2 ish kuni ichida javob beramiz.": [
+    "Questions, suggestions or interested in partnering? Write to us. We reply within 1–2 business days.",
+    "Есть вопросы, предложения или желание сотрудничать? Напишите нам. Ответим в течение 1–2 рабочих дней."
+  ],
+  "Manzil": [
+    "Address",
+    "Адрес"
+  ],
+  "Ish vaqti": [
+    "Opening hours",
+    "Часы работы"
+  ],
+  "Dushanba–Juma: 09:00–18:00": [
+    "Monday–Friday: 09:00–18:00",
+    "Понедельник–пятница: 09:00–18:00"
+  ],
+  "Ism familiya": [
+    "Full name",
+    "Имя и фамилия"
+  ],
+  "Xabar yuborish": [
+    "Send message",
+    "Отправить сообщение"
+  ],
+  "Mavzu": [
+    "Subject",
+    "Тема"
+  ],
+  "Tanlang...": [
+    "Select...",
+    "Выберите..."
+  ],
+  "Umumiy savol": [
+    "General question",
+    "Общий вопрос"
+  ],
+  "Taklif": [
+    "Suggestion",
+    "Предложение"
+  ],
+  "Hamkorlik": [
+    "Partnership",
+    "Сотрудничество"
+  ],
+  "Muammo haqida xabar": [
+    "Report an issue",
+    "Сообщить о проблеме"
+  ],
+  "Savolingiz yoki taklifingizni yozing...": [
+    "Write your question or suggestion...",
+    "Напишите вопрос или предложение..."
+  ],
+  "Iltimos, ism familiyangizni kiriting!": [
+    "Please enter your full name.",
+    "Введите имя и фамилию."
+  ],
+  "Iltimos, email manzilingizni kiriting!": [
+    "Please enter your email address.",
+    "Введите адрес электронной почты."
+  ],
+  "Iltimos, mavzuni tanlang!": [
+    "Please choose a subject.",
+    "Выберите тему."
+  ],
+  "Iltimos, xabar matnini kiriting!": [
+    "Please enter a message.",
+    "Введите текст сообщения."
+  ],
+  "Xabaringiz muvaffaqiyatli yuborildi!": [
+    "Your message has been sent.",
+    "Сообщение отправлено."
+  ],
+  "Xabar": [
+    "Report",
+    "Сообщение"
+  ],
+  "Xabarlaringiz va tozalashlaringiz — barchasi bir joyda.": [
+    "Your reports and cleanups — all in one place.",
+    "Ваши сообщения и уборки — в одном месте."
+  ],
+  "Ishlarni saralash": [
+    "Filter activity",
+    "Фильтр дел"
+  ],
+  "Barchasi": [
+    "All",
+    "Все"
+  ],
+  "Xabar berilgan": [
+    "Reported",
+    "Сообщено"
+  ],
+  "Tozalangan": [
+    "Cleaned",
+    "Убрано"
+  ],
+  "Tozalanmagan": [
+    "Not cleaned",
+    "Не убрано"
+  ],
+  "Xabarlar topilmadi": [
+    "No reports found",
+    "Сообщения не найдены"
+  ],
+  "Bu bo'limda hali ish yo'q. Report yuboring yoki boshqa bo'limni tanlang.": [
+    "No activity here yet. Send a report or select another filter.",
+    "Здесь пока нет дел. Отправьте сообщение или выберите другой фильтр."
+  ],
+  "Avvalgi": [
+    "Previous",
+    "Предыдущая"
+  ],
+  "Oldingi": [
+    "Previous",
+    "Предыдущая"
+  ],
+  "Keyingi": [
+    "Next",
+    "Следующая"
+  ],
+  "Ushbu ifloslik joyi yuzasidan xabar qoldirilgan.": [
+    "Waste has been reported at this location.",
+    "О мусоре в этом месте уже сообщено."
+  ],
+  "Tekshiruv qayta ko'rib chiqilishi kerak": [
+    "The review needs attention",
+    "Требуется повторная проверка"
+  ],
+  "Mukofot tasdiqlanmagan": [
+    "Reward not approved",
+    "Награда не подтверждена"
+  ],
+  "Tekshiruv kutilmoqda": [
+    "Awaiting review",
+    "Ожидает проверки"
+  ],
+  "Tekshiruv kutilmoqda (+ {0} tanga)": [
+    "Awaiting review (+ {0} coins)",
+    "Ожидает проверки (+ {0} монет)"
+  ],
+  "+{0} tanga berildi": [
+    "+{0} coins awarded",
+    "Начислено +{0} монет"
+  ],
+  "+{0} tanga kutilmoqda": [
+    "+{0} coins pending",
+    "Ожидается +{0} монет"
+  ],
+  "Tozalash tasdiqlangan": [
+    "Cleanup confirmed",
+    "Уборка подтверждена"
+  ],
+  "Tozalash jarayonida": [
+    "Cleanup in progress",
+    "Уборка в процессе"
+  ],
+  "Yuqori": [
+    "High",
+    "Высокая"
+  ],
+  "O'rta": [
+    "Medium",
+    "Средняя"
+  ],
+  "Past": [
+    "Low",
+    "Низкая"
+  ],
+  "Chiqindi": [
+    "Waste",
+    "Мусор"
+  ],
+  "Qattiq chiqindi": [
+    "Solid waste",
+    "Твёрдые отходы"
+  ],
+  "Noqonuniy tashlash": [
+    "Illegal dumping",
+    "Незаконная свалка"
+  ],
+  "Plastik chiqindi to'plami": [
+    "Plastic waste",
+    "Пластиковый мусор"
+  ],
+  "Noqonuniy tashlash — avtomobil qismlari": [
+    "Illegal dumping — car parts",
+    "Незаконная свалка — автозапчасти"
+  ],
+  "Suv havzasi ifloslanishi": [
+    "Water pollution",
+    "Загрязнение водоёма"
+  ],
+  "Havo ifloslanishi — zavod tutuni": [
+    "Air pollution — factory smoke",
+    "Загрязнение воздуха — заводской дым"
+  ],
+  "Ifloslik xabari": [
+    "Waste report",
+    "Сообщение о мусоре"
+  ],
+  "Shaxsiy ma'lumotlaringiz va hisob sozlamalari.": [
+    "Your personal details and account settings.",
+    "Личные данные и настройки аккаунта."
+  ],
+  "O'zgarishlarni saqlash": [
+    "Save changes",
+    "Сохранить изменения"
+  ],
+  "Shaxsiy ma'lumotlar": [
+    "Personal details",
+    "Личные данные"
+  ],
+  "Email manzilingiz hisobga kirish uchun ishlatiladi.": [
+    "Your email address is used to sign in.",
+    "Адрес электронной почты используется для входа."
+  ],
+  "Mahalla": [
+    "Neighborhood",
+    "Махалля"
+  ],
+  "Tuman": [
+    "District",
+    "Район"
+  ],
+  "Bekor qilish": [
+    "Cancel",
+    "Отмена"
+  ],
+  "Ism, familiya va to'g'ri email manzilini kiriting.": [
+    "Enter your first name, last name and a valid email address.",
+    "Введите имя, фамилию и корректную электронную почту."
+  ],
+  "Ma'lumotlar saqlandi.": [
+    "Your details have been saved.",
+    "Данные сохранены."
+  ],
+  "Saqlab bo'lmadi. Qayta urinib ko'ring.": [
+    "Could not save. Please try again.",
+    "Не удалось сохранить. Попробуйте ещё раз."
+  ],
+  "Jonli Chiqindi Xaritasi": [
+    "Live waste map",
+    "Карта мусора"
+  ],
+  "Jonli Xarita": [
+    "Live map",
+    "Карта в реальном времени"
+  ],
+  "● JONLI": [
+    "● LIVE",
+    "● ОНЛАЙН"
+  ],
+  "● Jonli": [
+    "● Live",
+    "● Онлайн"
+  ],
+  "Toshkent Xaritasi": [
+    "Tashkent map",
+    "Карта Ташкента"
+  ],
+  "Real vaqt rejimida": [
+    "Live updates",
+    "Обновления в реальном времени"
+  ],
+  "Tuman bo'yicha": [
+    "By district",
+    "По району"
+  ],
+  "Chiqindi turi": [
+    "Waste type",
+    "Тип отходов"
+  ],
+  "{0} ta muammo": [
+    "{0} reported locations",
+    "Мест с мусором: {0}"
+  ],
+  "Boshqa": [
+    "Other",
+    "Другое"
+  ],
+  "Plastik": [
+    "Plastic",
+    "Пластик"
+  ],
+  "Noqonuniy tashlama": [
+    "Illegal dump",
+    "Незаконная свалка"
+  ],
+  "Suv ifloslanishi": [
+    "Water pollution",
+    "Загрязнение воды"
+  ],
+  "Havo ifloslanishi": [
+    "Air pollution",
+    "Загрязнение воздуха"
+  ],
+  "Elektron chiqindi": [
+    "Electronic waste",
+    "Электронные отходы"
+  ],
+  "Yangilash": [
+    "Refresh",
+    "Обновить"
+  ],
+  "Parolni ko'rsatish": [
+    "Show password",
+    "Показать пароль"
+  ],
+  "Parolni yashirish": [
+    "Hide password",
+    "Скрыть пароль"
+  ],
+  "Moderatsiya": [
+    "Moderation",
+    "Модерация"
+  ],
+  "Moderatsiya navbati": [
+    "Moderation queue",
+    "Очередь модерации"
+  ],
+  "Kiruvchi xabarlar va tozalash tasdiqlarini ko'rib chiqing": [
+    "Review incoming reports and cleanup submissions",
+    "Проверяйте сообщения и подтверждения уборки"
+  ],
+  "Hozircha ko'rib chiqilishi kerak bo'lgan xabar yo'q.": [
+    "There are no reports awaiting review.",
+    "Пока нет сообщений для проверки."
+  ],
+  "ta navbatda": [
+    "in the queue",
+    "в очереди"
+  ],
+  "Joriy sahifadagi foydalanuvchi, tuman yoki ID...": [
+    "User, district or ID on this page...",
+    "Пользователь, район или ID на этой странице..."
+  ],
+  "Suratlar": [
+    "Photos",
+    "Фотографии"
+  ],
+  "Foydalanuvchi / tuman": [
+    "User / district",
+    "Пользователь / район"
+  ],
+  "Sana": [
+    "Date",
+    "Дата"
+  ],
+  "AI tahlili": [
+    "AI review",
+    "Анализ ИИ"
+  ],
+  "Holat": [
+    "Status",
+    "Статус"
+  ],
+  "Ko'rish": [
+    "View",
+    "Посмотреть"
+  ],
+  "Amallar": [
+    "Actions",
+    "Действия"
+  ],
+  "Kutilmoqda": [
+    "Pending",
+    "Ожидает"
+  ],
+  "Ko'rib chiqilmoqda": [
+    "Under review",
+    "На рассмотрении"
+  ],
+  "Tozalashdan oldin": [
+    "Before cleanup",
+    "До уборки"
+  ],
+  "Tozalashdan keyin": [
+    "After cleanup",
+    "После уборки"
+  ],
+  "{0} mavjud emas": [
+    "{0} unavailable",
+    "{0} недоступно"
+  ],
+  "Noma'lum foydalanuvchi": [
+    "Unknown user",
+    "Неизвестный пользователь"
+  ],
+  "Manzil ko'rsatilmagan": [
+    "Address not provided",
+    "Адрес не указан"
+  ],
+  "AI tekshiruvi kutilmoqda": [
+    "Awaiting AI review",
+    "Ожидает проверки ИИ"
+  ],
+  "AI tekshiruvi bajarilmadi": [
+    "AI review failed",
+    "Проверка ИИ не выполнена"
+  ],
+  "Tahlil yo'q": [
+    "No analysis",
+    "Нет анализа"
+  ],
+  "Sana noma'lum": [
+    "Unknown date",
+    "Дата неизвестна"
+  ],
+  "Xabarlarni yuklab bo'lmadi. Iltimos, qayta urinib ko'ring.": [
+    "Could not load reports. Please try again.",
+    "Не удалось загрузить сообщения. Попробуйте ещё раз."
+  ],
+  "Moderatsiya navbatini yuklashda xatolik yuz berdi.": [
+    "Could not load the moderation queue.",
+    "Ошибка загрузки очереди модерации."
+  ],
+  "Sahifa {0} / {1} · {2} ta xabar": [
+    "Page {0} / {1} · {2} reports",
+    "Страница {0} / {1} · Сообщений: {2}"
+  ],
+  "Xabar tafsilotlari": [
+    "Report details",
+    "Подробности сообщения"
+  ],
+  "Ko'rsatilmagan": [
+    "Not provided",
+    "Не указано"
+  ],
+  "Yuborilgan vaqt": [
+    "Submitted at",
+    "Время отправки"
+  ],
+  "Tozalash vaqti": [
+    "Cleanup duration",
+    "Время уборки"
+  ],
+  "AI tahlili (qaror uchun yordamchi)": [
+    "AI review (decision support)",
+    "Анализ ИИ (помощь в принятии решения)"
+  ],
+  "Ishonch darajasi mavjud emas": [
+    "Confidence score unavailable",
+    "Оценка уверенности недоступна"
+  ],
+  "Ishonch darajasi: {0}": [
+    "Confidence score: {0}",
+    "Уровень уверенности: {0}"
+  ],
+  "{0}% ishonch": [
+    "{0}% confidence",
+    "Уверенность: {0}%"
+  ],
+  "AI tahlili uchun izoh mavjud emas.": [
+    "No explanation available for the AI review.",
+    "Пояснение к анализу ИИ отсутствует."
+  ],
+  "AI tekshiruvi yakunlandi": [
+    "AI review completed",
+    "Проверка ИИ завершена"
+  ],
+  "AI tekshiruvini bajarib bo'lmadi": [
+    "Could not complete AI review",
+    "Не удалось выполнить проверку ИИ"
+  ],
+  "Chiqindi aniqlandi": [
+    "Waste detected",
+    "Мусор обнаружен"
+  ],
+  "Chiqindi aniqlanmadi": [
+    "No waste detected",
+    "Мусор не обнаружен"
+  ],
+  "Joy bir xil": [
+    "Same location",
+    "То же место"
+  ],
+  "Joy mos kelmadi": [
+    "Location does not match",
+    "Место не совпадает"
+  ],
+  "Belgilar: {0}": [
+    "Landmarks: {0}",
+    "Ориентиры: {0}"
+  ],
+  "AI baholash tafsilotlari hozircha mavjud emas.": [
+    "AI assessment details are not available yet.",
+    "Подробности оценки ИИ пока недоступны."
+  ],
+  "Yopish": [
+    "Close",
+    "Закрыть"
+  ],
+  "Ko'rib chiqishni boshlash": [
+    "Start review",
+    "Начать проверку"
+  ],
+  "Rad etish": [
+    "Reject",
+    "Отклонить"
+  ],
+  "Tasdiqlash": [
+    "Approve",
+    "Подтвердить"
+  ],
+  "Surat mavjud emas": [
+    "Photo unavailable",
+    "Фото отсутствует"
+  ],
+  "Xabarni tasdiqlaysizmi?": [
+    "Approve this report?",
+    "Подтвердить сообщение?"
+  ],
+  "Xabar hal qilingan deb belgilanadi va foydalanuvchiga mukofot tangalari beriladi.": [
+    "The report will be marked resolved and the user will receive reward coins.",
+    "Сообщение будет отмечено как решённое, а пользователь получит монеты."
+  ],
+  "Xabarni rad etasizmi?": [
+    "Reject this report?",
+    "Отклонить сообщение?"
+  ],
+  "Rad etilgan xabar moderatsiya navbatidan olib tashlanadi.": [
+    "The rejected report will be removed from the moderation queue.",
+    "Отклонённое сообщение будет удалено из очереди модерации."
+  ],
+  "Ko'rib chiqishni boshlaysizmi?": [
+    "Start reviewing this report?",
+    "Начать рассмотрение сообщения?"
+  ],
+  "Xabar holati ko'rib chiqilmoqda deb belgilanadi.": [
+    "The report will be marked as under review.",
+    "Сообщение будет отмечено как находящееся на рассмотрении."
+  ],
+  "Boshlash": [
+    "Start",
+    "Начать"
+  ],
+  "Xabar holatini yangilashda xatolik yuz berdi.": [
+    "Could not update the report status.",
+    "Не удалось обновить статус сообщения."
+  ],
+  "Xabar ko'rib chiqishga olindi.": [
+    "The report is now under review.",
+    "Сообщение принято на рассмотрение."
+  ],
+  "Xabar tasdiqlandi va mukofot berildi.": [
+    "Report approved and reward granted.",
+    "Сообщение подтверждено, награда начислена."
+  ],
+  "Xabar rad etildi.": [
+    "Report rejected.",
+    "Сообщение отклонено."
+  ],
+  "Xabar holati yangilandi.": [
+    "Report status updated.",
+    "Статус сообщения обновлён."
+  ],
+  "Noma'lum": [
+    "Unknown",
+    "Неизвестно"
+  ],
+  "Tasdiqlandi": [
+    "Approved",
+    "Подтверждено"
+  ],
+  "Rad etildi": [
+    "Rejected",
+    "Отклонено"
+  ],
+  "Foydalanuvchilar": [
+    "Users",
+    "Пользователи"
+  ],
+  "Foydalanuvchilar topilmadi.": [
+    "No users found.",
+    "Пользователи не найдены."
+  ],
+  "Barcha ro'yxatdan o'tgan foydalanuvchilar": [
+    "All registered users",
+    "Все зарегистрированные пользователи"
+  ],
+  "Ism yoki shahar bo'yicha qidirish (joriy sahifa)": [
+    "Search by name or city (current page)",
+    "Поиск по имени или городу (на этой странице)"
+  ],
+  "Reyting": [
+    "Leaderboard",
+    "Рейтинг"
+  ],
+  "Tanga": [
+    "Coins",
+    "Монеты"
+  ],
+  "Seriya": [
+    "Streak",
+    "Серия"
+  ],
+  "Harakat": [
+    "Action",
+    "Действие"
+  ],
+  "Blok": [
+    "Block",
+    "Блокировка"
+  ],
+  "Faol": [
+    "Active",
+    "Активен"
+  ],
+  "Bloklangan": [
+    "Blocked",
+    "Заблокирован"
+  ],
+  "Foydalanuvchilarni yuklab bo'lmadi. Qayta urinib ko'ring.": [
+    "Could not load users. Please try again.",
+    "Не удалось загрузить пользователей. Попробуйте ещё раз."
+  ],
+  "Foydalanuvchilar ro'yxatini yuklashda xatolik yuz berdi.": [
+    "Could not load the user list.",
+    "Ошибка загрузки списка пользователей."
+  ],
+  "Sahifa {0} / {1} · {2} ta foydalanuvchi": [
+    "Page {0} / {1} · {2} users",
+    "Страница {0} / {1} · Пользователей: {2}"
+  ],
+  "Foydalanuvchi profili": [
+    "User profile",
+    "Профиль пользователя"
+  ],
+  "Profil oynasini yopish": [
+    "Close profile",
+    "Закрыть профиль"
+  ],
+  "Xabarlar": [
+    "Reports",
+    "Сообщения"
+  ],
+  "Jami ishlab topilgan": [
+    "Total earned",
+    "Всего заработано"
+  ],
+  "Qo'shilgan": [
+    "Joined",
+    "Дата регистрации"
+  ],
+  "Foydalanuvchi bloklangan": [
+    "User blocked",
+    "Пользователь заблокирован"
+  ],
+  "Bloklash": [
+    "Block",
+    "Заблокировать"
+  ],
+  "Foydalanuvchini bloklash": [
+    "Block user",
+    "Заблокировать пользователя"
+  ],
+  "{0} bloklansinmi? U tizimdan foydalana olmaydi.": [
+    "Block {0}? They will no longer be able to use the platform.",
+    "Заблокировать {0}? Пользователь не сможет пользоваться платформой."
+  ],
+  "Foydalanuvchi bloklanmadi. Profil topilmadi.": [
+    "The user was not blocked. Profile not found.",
+    "Пользователь не заблокирован. Профиль не найден."
+  ],
+  "Foydalanuvchi bloklandi.": [
+    "User blocked.",
+    "Пользователь заблокирован."
+  ],
+  "Foydalanuvchini bloklashda xatolik yuz berdi.": [
+    "Could not block the user.",
+    "Не удалось заблокировать пользователя."
+  ],
+  "Ma'lumot yo'q": [
+    "No data",
+    "Нет данных"
+  ],
+  "Administrator": [
+    "Administrator",
+    "Администратор"
+  ],
+  "Admin panel": [
+    "Admin panel",
+    "Панель администратора"
+  ],
+  "Administrator profile": [
+    "Administrator profile",
+    "Профиль администратора"
+  ],
+  "TozaCoin boshqaruv paneli": [
+    "TozaCoin administration",
+    "Панель управления TozaCoin"
+  ],
+  "Shubhali holatlar": [
+    "Suspicious activity",
+    "Подозрительная активность"
+  ],
+  "Mukofotlar": [
+    "Rewards",
+    "Награды"
+  ],
+  "Statistika": [
+    "Statistics",
+    "Статистика"
+  ],
+  "Profil va sozlamalar": [
+    "Profile and settings",
+    "Профиль и настройки"
+  ],
+  "Kampaniyalar": [
+    "Campaigns",
+    "Кампании"
+  ],
+  "Kompaniyalar": [
+    "Campaigns",
+    "Кампании"
+  ],
+  "Bildirishnomalar": [
+    "Notifications",
+    "Уведомления"
+  ],
+  "Mukofotlar do'koni": [
+    "Rewards store",
+    "Магазин наград"
+  ],
+  "Tanga hamyon": [
+    "Coin wallet",
+    "Кошелёк"
+  ],
+  "Eng faol foydalanuvchilar": [
+    "Most active members",
+    "Самые активные участники"
+  ],
+  "TozaCoin hamjamiyatida eng ko'p tanga jamg'arganlar": [
+    "Top coin earners in the TozaCoin community",
+    "Участники TozaCoin с наибольшим количеством монет"
+  ],
+  "Foydalanuvchilar reytingi": [
+    "Member leaderboard",
+    "Рейтинг участников"
+  ],
+  "Umumiy ishlab topilgan tangalar bo'yicha": [
+    "By total coins earned",
+    "По общему числу заработанных монет"
+  ],
+  "Barcha ishtirokchilar": [
+    "All participants",
+    "Все участники"
+  ],
+  "Reytingni yuklab bo'lmadi. Qayta urinib ko'ring.": [
+    "Could not load the leaderboard. Please try again.",
+    "Не удалось загрузить рейтинг. Попробуйте ещё раз."
+  ],
+  "Hozircha reytingda foydalanuvchilar yo'q.": [
+    "No members on the leaderboard yet.",
+    "В рейтинге пока нет участников."
+  ],
+  "Hozircha barcha ishtirokchilar kuchli uchlikda!": [
+    "All participants are in the top three for now!",
+    "Пока все участники входят в тройку лидеров!"
+  ],
+  "{0}-o'rin": [
+    "Place {0}",
+    "{0}-е место"
+  ],
+  "Siz": [
+    "You",
+    "Вы"
+  ],
+  "Kamera orqali rasm olish": [
+    "Take a photo",
+    "Сделать фото"
+  ],
+  "Davom etish": [
+    "Continue",
+    "Продолжить"
+  ],
+  "Tozalangandan keyingi surat": [
+    "After-cleanup photo",
+    "Фото после уборки"
+  ],
+  "Murojaat yuborildi": [
+    "Report submitted",
+    "Сообщение отправлено"
+  ],
+  "Qadam {0} / {1}": [
+    "Step {0} / {1}",
+    "Шаг {0} из {1}"
+  ],
+  "Oldin rasm": [
+    "Before photo",
+    "Фото до"
+  ],
+  "Joylashuv": [
+    "Location",
+    "Местоположение"
+  ],
+  "Tafsilotlar": [
+    "Details",
+    "Подробности"
+  ],
+  "Tozalash": [
+    "Cleanup",
+    "Уборка"
+  ],
+  "Keyin rasm": [
+    "After photo",
+    "Фото после"
+  ],
+  "Rasm": [
+    "Photo",
+    "Фото"
+  ],
+  "Rasm oling": [
+    "Take a photo",
+    "Сделайте фото"
+  ],
+  "Ifloslangan joyning rasmini telefon kamerasidan oling.": [
+    "Use your phone camera to photograph the waste.",
+    "Сфотографируйте загрязнённое место камерой телефона."
+  ],
+  "Tozalashdan oldingi surat": [
+    "Before-cleanup photo",
+    "Фото до уборки"
+  ],
+  "Qayta rasmga olish": [
+    "Retake photo",
+    "Переснять фото"
+  ],
+  "Hali rasm olinmadi": [
+    "No photo taken yet",
+    "Фото ещё не сделано"
+  ],
+  "Pastdagi tugmani bosib kamera oching": [
+    "Use the button below to open the camera",
+    "Нажмите кнопку ниже, чтобы открыть камеру"
+  ],
+  "Suiiste'molning oldini olish uchun surat faqat kameradan olinadi.": [
+    "Photos must be taken with the camera to prevent misuse.",
+    "Во избежание злоупотреблений фото можно сделать только камерой."
+  ],
+  "Joylashuvni tasdiqlang": [
+    "Confirm location",
+    "Подтвердите местоположение"
+  ],
+  "GPS orqali aniqlangan joylashuv. To'g'rilab qo'ying.": [
+    "Location detected by GPS. Adjust it if necessary.",
+    "Местоположение определено по GPS. При необходимости уточните его."
+  ],
+  "Joylashuv aniqlanmoqda...": [
+    "Finding your location...",
+    "Определение местоположения..."
+  ],
+  "Xaritadan aniqroq joyni tanlash": [
+    "Choose a more precise location on the map",
+    "Уточнить место на карте"
+  ],
+  "Aniq manzil (ixtiyoriy)": [
+    "Exact address (optional)",
+    "Точный адрес (необязательно)"
+  ],
+  "Ko'cha, uy raqami...": [
+    "Street, building number...",
+    "Улица, номер дома..."
+  ],
+  "Tafsilotlarni kiriting": [
+    "Add details",
+    "Укажите подробности"
+  ],
+  "Toifa": [
+    "Category",
+    "Категория"
+  ],
+  "Plastik chiqindi": [
+    "Plastic waste",
+    "Пластиковые отходы"
+  ],
+  "Og'irlik darajasi": [
+    "Severity",
+    "Степень загрязнения"
+  ],
+  "Kichik miqdordagi chiqindi": [
+    "Small amount of waste",
+    "Небольшое количество мусора"
+  ],
+  "O'rta miqdordagi chiqindi": [
+    "Moderate amount of waste",
+    "Среднее количество мусора"
+  ],
+  "Katta miqdordagi chiqindi": [
+    "Large amount of waste",
+    "Большое количество мусора"
+  ],
+  "Tavsif": [
+    "Description",
+    "Описание"
+  ],
+  "Holat haqida qisqacha yozing...": [
+    "Briefly describe the situation...",
+    "Кратко опишите ситуацию..."
+  ],
+  "Yo'lni tanlang": [
+    "Choose an action",
+    "Выберите действие"
+  ],
+  "Tozalashni o'zingiz bajaring yoki muammo haqida xabar bering": [
+    "Clean up yourself or report the problem",
+    "Уберите сами или сообщите о проблеме"
+  ],
+  "O'zim tozalayman": [
+    "I'll clean it myself",
+    "Уберу самостоятельно"
+  ],
+  "Joyni tozalang. AI tekshiruvdan o'tsa 50 tanga beriladi.": [
+    "Clean the location. Earn 50 coins if the AI review approves it.",
+    "Уберите место. При одобрении проверки ИИ вы получите 50 монет."
+  ],
+  "Xabar berish": [
+    "Report it",
+    "Сообщить"
+  ],
+  "Faqat suratni yuboring. AI tasdiqlasa 15 tanga beriladi.": [
+    "Submit a photo. Earn 15 coins if the AI review approves it.",
+    "Отправьте фото. При одобрении ИИ вы получите 15 монет."
+  ],
+  "Surat yuborilgach, AI tekshiruvi fonda bajariladi. Kutishingiz shart emas.": [
+    "AI reviews your photo in the background. You don't need to wait.",
+    "ИИ проверит фото в фоновом режиме. Вам не нужно ждать."
+  ],
+  "Xabarni yuborish": [
+    "Submit report",
+    "Отправить сообщение"
+  ],
+  "Tanlandi": [
+    "Selected",
+    "Выбрано"
+  ],
+  "Ishni boshlang. Tayyor bo'lgach, keyingi tugmani bosib tozalangan joyni suratga oling.": [
+    "Start cleaning. When you're done, continue to take an after-cleanup photo.",
+    "Начните уборку. Закончив, нажмите кнопку, чтобы сделать фото результата."
+  ],
+  "Tozalash vaqti saqlanadi va AI tekshiruviga yuboriladi.": [
+    "Cleanup duration is saved and sent for AI review.",
+    "Время уборки сохраняется и отправляется на проверку ИИ."
+  ],
+  "Tozalash tugadi — suratga olish": [
+    "Cleanup finished — take photo",
+    "Уборка завершена — сделать фото"
+  ],
+  "Tozalashdan keyingi surat": [
+    "After-cleanup photo",
+    "Фото после уборки"
+  ],
+  "Xuddi shu joyni kameradan suratga oling. AI ikkala surat va sarflangan vaqtni tekshiradi.": [
+    "Photograph the same location. AI checks both photos and the time spent.",
+    "Сфотографируйте то же место. ИИ проверит оба снимка и затраченное время."
+  ],
+  "Tozalash tugagach suratga oling": [
+    "Take a photo when cleanup is finished",
+    "Сделайте фото после уборки"
+  ],
+  "Surat admin tasdig'i uchun hisobotga biriktiriladi.": [
+    "The photo is attached to the report for administrator approval.",
+    "Фото прикрепляется к отчёту для подтверждения администратором."
+  ],
+  "{0} soat {1} daqiqa {2} soniya": [
+    "{0} hr {1} min {2} sec",
+    "{0} ч {1} мин {2} сек"
+  ],
+  "{0} daqiqa {1} soniya": [
+    "{0} min {1} sec",
+    "{0} мин {1} сек"
+  ],
+  "Tozalash hisoboti": [
+    "Cleanup report",
+    "Отчёт об уборке"
+  ],
+  "Xulosa": [
+    "Summary",
+    "Итоги"
+  ],
+  "Og'irlik": [
+    "Severity",
+    "Степень загрязнения"
+  ],
+  "AI tasdiqlasa beriladi": [
+    "Awarded after AI approval",
+    "Начисляется при одобрении ИИ"
+  ],
+  "Yuborish": [
+    "Submit",
+    "Отправить"
+  ],
+  "Something went wrong": [
+    "Something went wrong",
+    "Произошла ошибка",
+    "Xatolik yuz berdi."
+  ],
+  "Tozalash hisoboti yuborildi!": [
+    "Cleanup report submitted!",
+    "Отчёт об уборке отправлен!"
+  ],
+  "Xabaringiz qabul qilindi!": [
+    "Your report has been received!",
+    "Ваше сообщение принято!"
+  ],
+  "Suratlar va tozalash vaqti saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas.": [
+    "Photos and cleanup duration saved. AI review runs in the background — no need to wait.",
+    "Фото и время уборки сохранены. Проверка ИИ идёт в фоне — ждать не нужно."
+  ],
+  "Surat va joylashuv saqlandi. AI tekshiruvi fonda bajariladi — kutishingiz shart emas.": [
+    "Photo and location saved. AI review runs in the background — no need to wait.",
+    "Фото и местоположение сохранены. Проверка ИИ идёт в фоне — ждать не нужно."
+  ],
+  "Yangi xabar berish": [
+    "New report",
+    "Новое сообщение"
+  ],
+  "Mening xabarlarim": [
+    "My reports",
+    "Мои сообщения"
+  ],
+  "Keyingi suratni qayta olish": [
+    "Retake the after photo",
+    "Переснять фото после уборки"
+  ],
+  "Surat muvaffaqiyatli olindi!": [
+    "Photo captured successfully!",
+    "Фото успешно сделано!"
+  ],
+  "Xatolik: {0}": [
+    "Error: {0}",
+    "Ошибка: {0}"
+  ],
+  "tanga": [
+    "coins",
+    "монет"
+  ],
+  "kun": [
+    "days",
+    "дней"
+  ],
+  "Xabarlarni ko'rish": [
+    "View reports",
+    "Посмотреть сообщения"
+  ],
+  "TozaCoin — Toza muhit o'zimizdan boshlanadi": [
+    "TozaCoin — A cleaner environment starts with us",
+    "TozaCoin — Чистая среда начинается с нас"
+  ],
+  "Suspicious Reports": [
+    "Suspicious reports",
+    "Подозрительные сообщения",
+    "Shubhali xabarlar"
+  ],
+  "Ifloslik xabar berish": [
+    "Report waste",
+    "Сообщить о мусоре"
+  ],
+  "Harakatga qo'shiling": [
+    "Join the movement",
+    "Присоединяйтесь к движению"
+  ],
+  "O'zbekistonni tozaroq qilishga yordam bering. Bugun ro'yxatdan o'ting — bepul!": [
+    "Help make Uzbekistan cleaner. Sign up today — it's free!",
+    "Помогите сделать Узбекистан чище. Зарегистрируйтесь бесплатно!"
+  ],
+  "Bepul ro'yxatdan o'tish": [
+    "Sign up for free",
+    "Зарегистрироваться бесплатно"
+  ],
+  "Ilova yaqinda": [
+    "App coming soon",
+    "Приложение скоро появится"
+  ],
+  "SAVOL-JAVOB": [
+    "FAQ",
+    "ВОПРОСЫ И ОТВЕТЫ"
+  ],
+  "Ko'p so'raladigan savollar": [
+    "Frequently asked questions",
+    "Часто задаваемые вопросы"
+  ],
+  "TozaCoin qanday ishlaydi?": [
+    "How does TozaCoin work?",
+    "Как работает TozaCoin?"
+  ],
+  "TozaCoin platformasida siz ifloslangan hudud rasmini olib GPS joylashuvi bilan yuborasiz. Xabar tasdiqlangach, sizga raqamli tangalar beriladi.": [
+    "Take a photo of a polluted location and submit it with its GPS coordinates. Approved reports earn digital coins.",
+    "Сфотографируйте загрязнённое место и отправьте фото с GPS-координатами. За подтверждённые сообщения начисляются монеты."
+  ],
+  "Tangalarni qanday ishlatish mumkin?": [
+    "How can I use coins?",
+    "Как использовать монеты?"
+  ],
+  "Yig'ilgan tangalarni katalogdagi internet-paketlar, transport kartalari, kino chiptalari va boshqa mukofotlarga almashtirishingiz mumkin.": [
+    "Exchange your coins for data packages, transport cards, cinema tickets and other catalog rewards.",
+    "Обменивайте монеты на интернет-пакеты, транспортные карты, билеты в кино и другие награды из каталога."
+  ],
+  "Rasm nima uchun faqat kamerasidan olinadi?": [
+    "Why must photos be taken with the camera?",
+    "Почему фото нужно делать только камерой?"
+  ],
+  "Soxta yoki internetdan olingan suratlarni oldini olish hamda aniq vaqt va geolokatsiyani tasdiqlash uchun foto faqat ilova kamerasi orqali olinadi.": [
+    "Camera capture helps prevent fake or downloaded photos and confirms the time and location.",
+    "Съёмка камерой помогает избежать поддельных фото и подтвердить время и местоположение."
+  ],
+  "Nima uchun o'z xabarimni o'zim tozalasam kam tanga olaman?": [
+    "Why do I earn fewer coins for cleaning my own report?",
+    "Почему за уборку собственного сообщения начисляется меньше монет?"
+  ],
+  "Tizim adolat tamoyiliga asoslangan: boshqa fuqarolar yuborgan muammoni hal etish ko'proq rag'batlantiriladi va suiiste'mol qilishning oldi olinadi.": [
+    "The system rewards helping with other people's reports and discourages misuse.",
+    "Система поощряет помощь с сообщениями других участников и предотвращает злоупотребления."
+  ],
+  "Xabar qanchalik tez tekshiriladi?": [
+    "How quickly are reports reviewed?",
+    "Как быстро проверяются сообщения?"
+  ],
+  "AI tekshiruvi bir necha soniyada amalga oshiriladi. Keyin moderator 24–48 soat ichida yakuniy tasdiqlaydi. Favqulodda holatlarda tezroq ko'rib chiqiladi.": [
+    "AI reviews take a few seconds. A moderator then gives final approval within 24–48 hours, sooner for urgent cases.",
+    "Проверка ИИ занимает несколько секунд. Модератор подтверждает результат в течение 24–48 часов, в срочных случаях быстрее."
+  ],
+  "Kampaniyaga qo'shilish bepulmi?": [
+    "Is joining a campaign free?",
+    "Участие в кампании бесплатное?"
+  ],
+  "Ha, barcha tozalash kampaniyalari va tadbirlarda ishtirok etish to'liq bepul.": [
+    "Yes, all cleanup campaigns and events are free to join.",
+    "Да, участие во всех кампаниях и мероприятиях по уборке бесплатное."
+  ],
+  "Ilova qaysi qurilmalarda ishlaydi?": [
+    "Which devices support the app?",
+    "На каких устройствах работает приложение?"
+  ],
+  "TozaCoin ilovasi Android va iOS smartfonlarida, shuningdek veb-brauzer orqali har qanday qurilmada ishlaydi.": [
+    "TozaCoin works on Android and iOS phones and through a web browser on any device.",
+    "TozaCoin работает на Android и iOS, а также в браузере на любом устройстве."
+  ],
+  "Shaxsiya ma'lumotlarim xavfsizmi?": [
+    "Are my personal details safe?",
+    "В безопасности ли мои личные данные?"
+  ],
+  "Ha, barcha shaxsiy ma'lumotlar xavfsiz shifrlanadi va uchinchi shaxslarga berilmaydi.": [
+    "Yes, personal details are encrypted and are not shared with third parties.",
+    "Да, личные данные зашифрованы и не передаются третьим лицам."
+  ],
+  "Barchasini ko'rish": [
+    "View all",
+    "Посмотреть все"
+  ],
+  "KAMPANIYALAR": [
+    "CAMPAIGNS",
+    "КАМПАНИИ"
+  ],
+  "Dolzarb kampaniyalar": [
+    "Featured campaigns",
+    "Актуальные кампании"
+  ],
+  "Chirchiq daryosi tozalash": [
+    "Chirchiq river cleanup",
+    "Уборка реки Чирчик"
+  ],
+  "Parklar tozalash haftaligi": [
+    "Park cleanup week",
+    "Неделя уборки парков"
+  ],
+  "Amudaryo qirg'og'i": [
+    "Amu Darya riverbank",
+    "Берег Амударьи"
+  ],
+  "To'liq reytingni ko'rish": [
+    "View full leaderboard",
+    "Посмотреть полный рейтинг"
+  ],
+  "REYTING": [
+    "LEADERBOARD",
+    "РЕЙТИНГ"
+  ],
+  "Eng faol ko'ngillilar": [
+    "Most active volunteers",
+    "Самые активные волонтёры"
+  ],
+  "Haftalik va oylik reytingda o'z o'rningizni egallang. Top 10 ga kirganlar maxsus mukofotlar olishadi.": [
+    "Find your place in the weekly and monthly rankings. The top 10 receive special rewards.",
+    "Займите своё место в недельном и месячном рейтинге. Десятка лучших получает особые награды."
+  ],
+  "Top ko'ngillilar": [
+    "Top volunteers",
+    "Лучшие волонтёры"
+  ],
+  "Haftalik": [
+    "Weekly",
+    "За неделю"
+  ],
+  "FIKRLAR": [
+    "TESTIMONIALS",
+    "ОТЗЫВЫ"
+  ],
+  "Ko'ngillilar nima deyishadi": [
+    "What volunteers say",
+    "Что говорят волонтёры"
+  ],
+  "Barcha mukofotlarni ko'rish": [
+    "View all rewards",
+    "Посмотреть все награды"
+  ],
+  "MUKOFOTLAR": [
+    "REWARDS",
+    "НАГРАДЫ"
+  ],
+  "Tangangizni haqiqiy narsalarga almashtiring": [
+    "Turn your coins into real rewards",
+    "Обменивайте монеты на реальные награды"
+  ],
+  "Ishlagan tangangizni Internet, transport, kino va boshqa mukofotlarga almashtiring.": [
+    "Exchange earned coins for data, transport, cinema and other rewards.",
+    "Обменивайте заработанные монеты на интернет, транспорт, кино и другие награды."
+  ],
+  "Internet paket (1GB)": [
+    "Data package (1GB)",
+    "Интернет-пакет (1 ГБ)"
+  ],
+  "Internet": [
+    "Internet",
+    "Интернет"
+  ],
+  "Telefon balansini to'ldirish": [
+    "Mobile top-up",
+    "Пополнение баланса телефона"
+  ],
+  "To'lov": [
+    "Payment",
+    "Оплата"
+  ],
+  "Transport kartasi (ATTO)": [
+    "Transport card (ATTO)",
+    "Транспортная карта (ATTO)"
+  ],
+  "Transport": [
+    "Transport",
+    "Транспорт"
+  ],
+  "Kino chiptasi": [
+    "Cinema ticket",
+    "Билет в кино"
+  ],
+  "Ko'ngilochar": [
+    "Entertainment",
+    "Развлечения"
+  ],
+  "Supermarket sertifikati": [
+    "Supermarket voucher",
+    "Сертификат супермаркета"
+  ],
+  "Oziq-ovqat": [
+    "Groceries",
+    "Продукты"
+  ],
+  "Ko'chat — daraxt ekish": [
+    "Sapling — plant a tree",
+    "Саженец — посадка дерева"
+  ],
+  "Ekologiya": [
+    "Environment",
+    "Экология"
+  ],
+  "Faol ko'ngillilar": [
+    "Active volunteers",
+    "Активные волонтёры"
+  ],
+  "Yuborilgan xabarlar": [
+    "Reports submitted",
+    "Отправленные сообщения"
+  ],
+  "Tozalangan chiqindi": [
+    "Waste cleaned",
+    "Убранный мусор"
+  ],
+  "Yakunlangan aksiyalar": [
+    "Completed campaigns",
+    "Завершённые акции"
+  ],
+  "Tarqatilgan tangalar": [
+    "Coins awarded",
+    "Начисленные монеты"
+  ],
+  "ADOLAT VA ISHONCH": [
+    "FAIRNESS AND TRUST",
+    "СПРАВЕДЛИВОСТЬ И ДОВЕРИЕ"
+  ],
+  "Adolat qanday ta'minlanadi?": [
+    "How do we ensure fairness?",
+    "Как обеспечивается справедливость?"
+  ],
+  "TozaCoin tizimi suiiste'molni minimallashtirish va haqiqiy harakatlarni rag'batlantirish uchun mo'ljallangan.": [
+    "TozaCoin is designed to minimize misuse and reward genuine action.",
+    "TozaCoin создан для предотвращения злоупотреблений и поощрения реальных действий."
+  ],
+  "Faqat ilova kamerasi + GPS": [
+    "App camera + GPS only",
+    "Только камера приложения + GPS"
+  ],
+  "Surat galereadan emas, faqat ilova kamerasidan olinadi. GPS koordinatalari avtomatik qo'shiladi.": [
+    "Photos are taken through the app camera, not uploaded from a gallery. GPS coordinates are attached automatically.",
+    "Фото снимается камерой приложения, а не загружается из галереи. GPS-координаты добавляются автоматически."
+  ],
+  "24–48 soat kutish davri": [
+    "24–48 hour review period",
+    "Проверка в течение 24–48 часов"
+  ],
+  "Har bir xabar moderatsiya va AI tekshiruvidan o'tadi. Shoshilmasdan, lekin ishonchli.": [
+    "Every report goes through moderation and AI verification for a reliable result.",
+    "Каждое сообщение проходит модерацию и проверку ИИ для надёжного результата."
+  ],
+  "O'z xabari uchun minimal ball": [
+    "Minimum points for your own report",
+    "Минимум баллов за своё сообщение"
+  ],
+  "O'zingiz qayd etgan muammoni o'zingiz tozalasangiz ball minimal. To'liq tanga boshqa fuqaro muammosini hal qilganda beriladi.": [
+    "Cleaning your own reported location earns fewer points. Full rewards are given for helping with someone else's report.",
+    "За уборку собственного сообщения начисляется меньше баллов. Полная награда даётся за помощь с сообщением другого участника."
+  ],
+  "AI va moderatsiya nazorati": [
+    "AI and moderator oversight",
+    "Контроль ИИ и модераторов"
+  ],
+  "Sun'iy intellekt surat tahlili va jamoat moderatsiyasi — har bir tozalash ikki tomonlama tekshiriladi.": [
+    "AI photo analysis and community moderation provide two levels of verification for each cleanup.",
+    "Анализ фото ИИ и общественная модерация обеспечивают двойную проверку каждой уборки."
+  ],
+  "TOIFALAR": [
+    "CATEGORIES",
+    "КАТЕГОРИИ"
+  ],
+  "Ifloslanish turlari": [
+    "Types of pollution",
+    "Виды загрязнения"
+  ],
+  "Jamoat ifloslanishi": [
+    "Public-space pollution",
+    "Загрязнение общественных мест"
+  ],
+  "Kamera tasviri hali tayyor emas. Biroz kuting.": [
+    "The camera is not ready yet. Please wait.",
+    "Камера ещё не готова. Подождите немного."
+  ],
+  "Surat saqlanmoqda...": [
+    "Saving photo...",
+    "Сохранение фото..."
+  ],
+  "Suratni tayyorlab bo‘lmadi. Qayta urinib ko‘ring.": [
+    "Could not prepare the photo. Please try again.",
+    "Не удалось подготовить фото. Попробуйте ещё раз."
+  ],
+  "Kameraga ruxsat berilmadi. Brauzer sozlamalarida ruxsat bering.": [
+    "Camera permission denied. Allow access in your browser settings.",
+    "Доступ к камере запрещён. Разрешите его в настройках браузера."
+  ],
+  "Qurilmada kamera topilmadi.": [
+    "No camera found on this device.",
+    "Камера на устройстве не найдена."
+  ],
+  "Kamera boshqa ilovada band. Uni yoping va qayta urinib ko‘ring.": [
+    "The camera is being used by another app. Close it and try again.",
+    "Камера занята другим приложением. Закройте его и попробуйте ещё раз."
+  ],
+  "Kamera uchun xavfsiz HTTPS ulanishidan yoki localhost manzilidan foydalaning.": [
+    "Use a secure HTTPS connection or localhost to access the camera.",
+    "Для доступа к камере используйте HTTPS или localhost."
+  ],
+  "Kamera ochilmadi: {0}": [
+    "Could not open the camera: {0}",
+    "Не удалось открыть камеру: {0}"
+  ],
+  "noma’lum xatolik": [
+    "unknown error",
+    "неизвестная ошибка"
+  ],
+  "Joylashuvni tasdiqlash": [
+    "Confirm location",
+    "Подтвердить местоположение"
+  ],
+  "GPS joylashuvni aniqlab bo'lmadi": [
+    "Could not determine GPS location",
+    "Не удалось определить местоположение по GPS"
+  ],
+  "GPS joylashuvni avtomatik aniqlab bo'lmadi": [
+    "Could not detect GPS location automatically",
+    "Не удалось автоматически определить местоположение по GPS"
+  ],
+  "Iltimos, pastdagi tugma orqali xaritadan joylashuvingizni belgilang": [
+    "Use the button below to mark your location on the map",
+    "Нажмите кнопку ниже, чтобы указать место на карте"
+  ],
+  "Xaritadan joyni tanlash": [
+    "Choose location on map",
+    "Выбрать место на карте"
+  ],
+  "Kamera ochilmoqda...": [
+    "Opening camera...",
+    "Открытие камеры..."
+  ],
+  "Surat olish": [
+    "Capture photo",
+    "Сделать снимок"
+  ],
+  "Name is required": [
+    "First name is required",
+    "Введите имя",
+    "Ismni kiriting."
+  ],
+  "Surname is required": [
+    "Last name is required",
+    "Введите фамилию",
+    "Familiyani kiriting."
+  ],
+  "Email is required": [
+    "Email is required",
+    "Введите электронную почту",
+    "Email manzilini kiriting."
+  ],
+  "Phone is required": [
+    "Phone is required",
+    "Введите номер телефона",
+    "Telefon raqamini kiriting."
+  ],
+  "Password is required": [
+    "Password is required",
+    "Введите пароль",
+    "Parolni kiriting."
+  ],
+  "Username is already in use": [
+    "This email is already registered",
+    "Эта почта уже зарегистрирована",
+    "Bu email allaqachon ishlatilmoqda."
+  ],
+  "Current profile not found": [
+    "Profile not found",
+    "Профиль не найден",
+    "Profil topilmadi."
+  ],
+  "Ism va familiya maydonlari to'ldirilishi shart.": [
+    "First name and last name are required.",
+    "Имя и фамилия обязательны."
+  ],
+  "Email manzilini kiriting.": [
+    "Enter your email address.",
+    "Введите адрес электронной почты."
+  ],
+  "Bu email allaqachon ishlatilmoqda.": [
+    "This email is already in use.",
+    "Эта почта уже используется."
+  ],
+  "Salom, do'stim!": [
+    "Hello, friend!",
+    "Привет, друг!"
+  ],
+  "foydalanuvchi": [
+    "users",
+    "пользователей"
+  ],
+  "Toshkent sh., Yunusobod tumani, Amir Temur ko'chasi 107B": [
+    "107B Amir Temur Street, Yunusabad district, Tashkent",
+    "Ташкент, Юнусабадский район, ул. Амира Темура, 107Б"
+  ],
+  "siz@example.com": [
+    "you@example.com",
+    "you@example.com"
+  ],
+  "Kamera ochilmadi:": [
+    "Could not open the camera:",
+    "Не удалось открыть камеру:"
+  ],
+  "{0} tanga": [
+    "{0} coins",
+    "{0} монет"
+  ],
+  "{0} kun": [
+    "{0} days",
+    "{0} дней"
+  ],
+  "Suratni olish uchun tayyor": [
+    "Ready to take a photo",
+    "Можно сделать фото"
+  ],
+  "Tozalash uchun joylar": [
+    "Places to clean",
+    "Места для уборки"
+  ],
+  "Telefon raqamni kiriting": [
+    "Enter phone number",
+    "Введите номер телефона"
+  ],
+  "Iltimos, barcha maydonlarni to'ldiring": [
+    "Please fill in all fields",
+    "Заполните все поля"
+  ],
+  "Kamera ishga tushmoqda...": [
+    "Starting camera...",
+    "Запуск камеры..."
+  ],
+  "Suratga olishga tayyor": [
+    "Ready to take a photo",
+    "Камера готова к съёмке"
+  ],
+  "Fon harakatini to'xtatish": [
+    "Pause background",
+    "Остановить фон"
+  ],
+  "Fon harakatini yoqish": [
+    "Play background",
+    "Включить фон"
+  ],
+  "Harakat kamaytirilgan": [
+    "Reduced motion",
+    "Без анимации"
+  ],
+  "Tekshiruv ostida": [
+    "Under review",
+    "На проверке"
+  ],
+  "Kutilayotgan mukofot": [
+    "Pending reward",
+    "Ожидаемая награда"
+  ],
+  "AI suratni tekshirib, chiqindi turi va og'irlik darajasini aniqlaydi. Natijani mening xabarlarim bo'limida kuzating.": [
+    "AI will review the photo and determine the waste type and severity. Track the result in My reports.",
+    "ИИ проверит фото и определит тип отходов и степень тяжести. Следите за результатом в разделе Мои отчёты."
+  ],
+  "Pending reports": ["Pending reports", "Ожидающие отчёты", "Kutilayotgan xabarlar"],
+  "Resolved reports": ["Resolved reports", "Решённые отчёты", "Hal qilingan xabarlar"],
+  "Reports in progress": ["Reports in progress", "Отчёты в работе", "Ko'rib chiqilayotgan xabarlar"],
+  "Rejected reports": ["Rejected reports", "Отклонённые отчёты", "Rad etilgan xabarlar"],
+  "Report overview": ["Report overview", "Обзор отчётов", "Xabarlar sharhi"],
+  "Current report status across the platform.": ["Current report status across the platform.", "Текущие статусы отчётов на платформе.", "Platformadagi xabarlarning joriy holati."],
+  "Overview unavailable. Please try again.": ["Overview unavailable. Please try again.", "Не удалось загрузить обзор. Попробуйте ещё раз.", "Ma'lumotlarni yuklab bo'lmadi. Qayta urinib ko'ring."],
+  "A clear view of your community and the work that needs attention.": ["A clear view of your community and the work that needs attention.", "Обзор сообщества и задач, требующих внимания.", "Hamjamiyat va e'tibor talab qiladigan ishlar sharhi."],
+  "Review photos and make report decisions.": ["Review photos and make report decisions.", "Проверяйте фотографии и принимайте решения по отчётам.", "Suratlarni tekshiring va xabarlar bo'yicha qaror qabul qiling."],
+  "Find accounts and review community activity.": ["Find accounts and review community activity.", "Находите аккаунты и просматривайте активность участников.", "Foydalanuvchilarni toping va ularning faolligini ko'rib chiqing."],
+  "Explore the current report breakdown.": ["Explore the current report breakdown.", "Изучите распределение отчётов по статусам.", "Xabarlarning holatlar bo'yicha taqsimotini ko'ring."],
+  "Current totals from submitted reports and registered accounts.": ["Current totals from submitted reports and registered accounts.", "Текущие показатели отправленных отчётов и зарегистрированных аккаунтов.", "Yuborilgan xabarlar va ro'yxatdan o'tgan foydalanuvchilar bo'yicha joriy ko'rsatkichlar."],
+  "Recognize verified reports and completed cleanups.": ["Recognize verified reports and completed cleanups.", "Награды за проверенные отчёты и завершённые уборки.", "Tasdiqlangan xabarlar va bajarilgan tozalash ishlari uchun mukofotlar."],
+  "A report photo is verified before the reward is granted.": ["A report photo is verified before the reward is granted.", "Перед начислением награды фотография отчёта проходит проверку.", "Mukofot berilishidan oldin xabardagi surat tekshiriladi."],
+  "Before and after photos are reviewed to verify a cleanup.": ["Before and after photos are reviewed to verify a cleanup.", "Фотографии до и после проверяются для подтверждения уборки.", "Tozalashni tasdiqlash uchun oldingi va keyingi suratlar tekshiriladi."],
+  "Rewards are credited after AI approval. These are the current reward rules.": ["Rewards are credited after AI approval. These are the current reward rules.", "Награды начисляются после одобрения ИИ. Здесь указаны действующие правила.", "Mukofotlar AI tasdig'idan so'ng beriladi. Bu amaldagi mukofot qoidalari."],
+  "Review submitted evidence and report status.": ["Review submitted evidence and report status.", "Просматривайте отправленные доказательства и статусы отчётов.", "Yuborilgan dalillar va xabarlar holatini ko'rib chiqing."],
+  "Make this workspace comfortable for you.": ["Make this workspace comfortable for you.", "Настройте рабочее пространство для удобной работы.", "Ish maydonini o'zingizga qulay qiling."],
+  "Choose the language used across your workspace.": ["Choose the language used across your workspace.", "Выберите язык интерфейса рабочего пространства.", "Ish maydoni uchun interfeys tilini tanlang."],
+  "Workspace appearance": ["Workspace appearance", "Оформление рабочего пространства", "Ish maydoni ko'rinishi"],
+  "The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.": ["The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.", "Управляйте анимацией фона кнопкой в боковой панели. Настройки уменьшения движения и экономии трафика учитываются автоматически.", "Yon paneldagi tugma orqali fon harakatini to'xtatish yoki yoqish mumkin. Harakatni kamaytirish va trafikni tejash sozlamalari hisobga olinadi."],
+  "Use the account action in the sidebar to sign out securely.": ["Use the account action in the sidebar to sign out securely.", "Для безопасного выхода используйте кнопку аккаунта в боковой панели.", "Hisobdan chiqish uchun yon paneldagi chiqish tugmasidan foydalaning."],
+  "Review uncertain evidence carefully before making a decision.": ["Review uncertain evidence carefully before making a decision.", "Внимательно изучайте неоднозначные доказательства перед принятием решения.", "Qaror qabul qilishdan oldin noaniq dalillarni diqqat bilan tekshiring."],
+  "Manual review": ["Manual review", "Ручная проверка", "Qo'lda tekshirish"],
+  "An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.": ["An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.", "Незавершённая проверка ИИ требует изучения доказательств и не доказывает нарушение.", "Yakunlanmagan AI tekshiruvi dalillarni ko'rib chiqishni talab qiladi va qoidabuzarlikni anglatmaydi."],
+  "Reports with an unsuccessful AI review": ["Reports with an unsuccessful AI review", "Отчёты с неудачной проверкой ИИ", "AI tekshiruvi bajarilmagan xabarlar"],
+  "Open reports to compare photos, AI findings and the submitted details.": ["Open reports to compare photos, AI findings and the submitted details.", "Откройте отчёты, чтобы сравнить фотографии, выводы ИИ и отправленные сведения.", "Suratlar, AI xulosalari va yuborilgan ma'lumotlarni taqqoslash uchun xabarlarni oching."],
+  "User statistics": ["User statistics", "Статистика пользователей", "Foydalanuvchilar statistikasi"],
+  "Compare user reports, earned coins, balances and activity.": ["Compare user reports, earned coins, balances and activity.", "Сравнивайте отчёты, заработанные монеты, балансы и активность пользователей.", "Foydalanuvchilarning xabarlari, ishlab topgan tangalari, balansi va faolligini taqqoslang."],
+  "Ranked by total earned coins": ["Ranked by total earned coins", "Рейтинг по общему числу заработанных монет", "Jami ishlab topilgan tangalar bo'yicha reyting"],
+  "Top contributors": ["Top contributors", "Самые активные участники", "Eng faol ishtirokchilar"],
+  "Coin balance": ["Coin balance", "Баланс монет", "Tangalar balansi"],
+  "Streak (days)": ["Streak (days)", "Серия (дней)", "Seriya (kun)"]
+}

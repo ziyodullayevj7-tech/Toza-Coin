@@ -366,6 +366,7 @@ public class MapView extends VerticalLayout implements com.vaadin.flow.router.Ha
                                     markerLocations.push([p.lat, p.lng]);
 
                                     var color  = p.sev === 'HIGH'   ? '#ef4444'
+                                               : p.sev === 'UNDER_REVIEW' ? '#819080'
                                                : p.sev === 'MEDIUM' ? '#f97316'
                                                : '#22c55e';
                                     var radius = p.sev === 'HIGH'   ? 12
@@ -448,7 +449,7 @@ public class MapView extends VerticalLayout implements com.vaadin.flow.router.Ha
             if (!first) sb.append(",");
             first = false;
 
-            String sev = p.getSeverityLevel() != null ? p.getSeverityLevel().name() : "LOW";
+            String sev = p.getSeverityLevel() != null ? p.getSeverityLevel().name() : "UNDER_REVIEW";
             String label = jsonEsc(I18n.t(wasteLabel(p.getWasteType())));
             String dist = jsonEsc(p.getLocation().getDistrict());
             int coins = p.getRewardCoins() != null ? p.getRewardCoins() : 0;
