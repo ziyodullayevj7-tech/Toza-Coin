@@ -46,6 +46,13 @@ class TranslationTests {
     }
 
     @Test
+    void rewardCheckoutTemplatesTranslateAndPreserveAmounts() {
+        assertEquals("Balance after purchase: 40 coins", I18n.translate("Xariddan keyingi balans: 40 tanga", "en"));
+        assertEquals("Total: 60 coins", I18n.translate("Jami: 60 tanga", "en"));
+        assertFalse(I18n.translate("Mening mukofotlarim", "ru").contains("?"));
+    }
+
+    @Test
     void providerSupportsAllRequestedLanguages() {
         var provider = new TranslationProvider();
         assertEquals(3, provider.getProvidedLocales().size());

@@ -9,7 +9,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -78,7 +78,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         setSpacing(false);
         addClassName("admin-moderation-page");
 
-        add(buildPageHeader(), buildToolbar(), buildReportsPanel(), buildPagination());
+        add(buildPageHeader(), buildReportsPanel());
         configureSearch();
         loadReports();
     }
@@ -88,7 +88,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         header.addClassName("moderation-page-header");
 
         Div titleBlock = I18n.localize(new Div());
-        H2 title = I18n.localize(new H2("Moderatsiya navbati"));
+        H1 title = I18n.localize(new H1("Moderatsiya navbati"));
         title.addClassName("moderation-page-title");
         Paragraph subtitle = I18n.localize(new Paragraph("Kiruvchi xabarlar va tozalash tasdiqlarini ko'rib chiqing"));
         subtitle.addClassName("moderation-page-subtitle");
@@ -110,15 +110,18 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
         I18n.placeholder(searchField, "Joriy sahifadagi foydalanuvchi, tuman yoki ID...");
         searchField.setClearButtonVisible(true);
-        searchField.setPrefixComponent(I18n.localize(new Span("⌕")));
+        searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
         searchField.addClassName("moderation-search");
 
         Button refreshButton = I18n.localize(new Button("Yangilash", event -> loadReports()));
+        refreshButton.setIcon(VaadinIcon.REFRESH.create());
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("moderation-refresh-button");
 
-        toolbar.add(statusFilters, searchField, refreshButton);
-        return toolbar;
+        toolbar.add(searchField, refreshButton);
+        Div controls = new Div(toolbar, statusFilters);
+        controls.addClassName("admin-list-controls");
+        return controls;
     }
 
     private Div buildReportsPanel() {
@@ -130,7 +133,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
         configureGrid();
         emptyMessage.addClassName("moderation-empty-state");
-        panel.add(errorMessage, reportsGrid, emptyMessage);
+        panel.add(buildToolbar(), errorMessage, reportsGrid, emptyMessage, buildPagination());
         return panel;
     }
 
@@ -173,7 +176,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildReporterCell)
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Foydalanuvchi / tuman")))
-                .setAutoWidth(true)
+                .setWidth("230px")
                 .setFlexGrow(1);
         reportsGrid.addColumn(report -> formatDate(report))
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Sana")))
@@ -181,7 +184,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildConfidenceBadge)
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("AI tahlili")))
-                .setWidth("130px")
+                .setWidth("175px")
                 .setFlexGrow(0);
         reportsGrid.addComponentColumn(this::buildStatusBadge)
                 .setHeader(I18n.localize(new com.vaadin.flow.component.html.Span("Holat")))
@@ -214,6 +217,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
     private Button createStatusFilter(String label, ReportStatus status) {
         Button button = I18n.localize(new Button(label));
         button.addClassName("moderation-filter-button");
+        button.getElement().setAttribute("aria-pressed", String.valueOf(selectedStatus == status));
         if (selectedStatus == status) {
             button.addClassName("active");
         }
@@ -470,7 +474,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         String theme;
         if (status == ReportStatus.RESOLVED) {
             title = "Xabarni tasdiqlaysizmi?";
-            message = "Xabar hal qilingan deb belgilanadi va foydalanuvchiga mukofot tangalari beriladi.";
+            message = "Xabar tasdiqlanadi. Tegishli mukofotlar beriladi; avval berilgan mukofot qayta berilmaydi.";
             confirmLabel = "Tasdiqlash";
             theme = "primary success";
         } else if (status == ReportStatus.REJECTED) {
@@ -497,12 +501,13 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
             try {
                 ConfirmWasteDto update = new ConfirmWasteDto();
                 update.setReportId(report.getReportId());
-                update.setReporterId(report.getReporterId());
                 update.setStatus(status);
-                adminService.confirmReport(update);
+                if (!adminService.confirmReport(update)) {
+                    throw new IllegalStateException("Report confirmation did not succeed");
+                }
                 detailsDialog.close();
                 I18n.notify(statusSuccessMessage(status), 3500, Position.TOP_END);
-                if (currentPage > 0 && reports.size() == 1) {
+                if (status != ReportStatus.IN_PROGRESS && currentPage > 0 && reports.size() == 1) {
                     currentPage--;
                 }
                 loadReports();

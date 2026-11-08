@@ -40,6 +40,45 @@ public class AttachService {
     @Value("${server.url}")
     private String attacheUrl;
 
+    public static final int MAX_REWARD_IMAGE_BYTES = 5 * 1024 * 1024;
+
+    /** Checks actual image content rather than trusting the browser's MIME type. */
+    public String validateRewardImage(byte[] bytes, String filename) {
+        if (bytes == null || bytes.length == 0 || bytes.length > MAX_REWARD_IMAGE_BYTES) {
+            throw new AppBadRequestException("Choose a JPG or PNG image up to 5 MB.");
+        }
+        String name = filename == null ? "" : filename.toLowerCase(Locale.ROOT);
+        if (!(name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png"))) {
+            throw new AppBadRequestException("Choose a JPG or PNG image up to 5 MB.");
+        }
+        try (var input = javax.imageio.ImageIO.createImageInputStream(new ByteArrayInputStream(bytes))) {
+            var readers = javax.imageio.ImageIO.getImageReaders(input);
+            if (!readers.hasNext()) throw new IOException("Unsupported image");
+            var reader = readers.next();
+            try {
+                reader.setInput(input);
+                String format = reader.getFormatName().toLowerCase(Locale.ROOT);
+                if (!Set.of("jpeg", "png").contains(format)
+                        || reader.getWidth(0) > 6000 || reader.getHeight(0) > 6000
+                        || (long) reader.getWidth(0) * reader.getHeight(0) > 20_000_000
+                        || reader.read(0) == null) {
+                    throw new IOException("Invalid or oversized image");
+                }
+                return "png".equals(format) ? "image/png" : "image/jpeg";
+            } finally { reader.dispose(); }
+        } catch (IOException | RuntimeException exception) {
+            throw new AppBadRequestException("Choose a valid JPG or PNG image, no larger than 6000 pixels per side.");
+        }
+    }
+
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
+    public AttachDto uploadRewardImage(byte[] bytes, String filename) {
+        String mimeType = validateRewardImage(bytes, filename);
+        // Match the stored extension to the detected format, even for renamed files.
+        String storedName = "reward_" + UUID.randomUUID() + (mimeType.equals("image/png") ? ".png" : ".jpg");
+        return upload(new ByteArrayInputStream(bytes), storedName, mimeType, bytes.length);
+    }
+
     // UPLOAD LIVE WebRTC CAMERA PHOTO (Base64 String)
     public AttachDto uploadBase64CameraPhoto(String base64Data) {
         if (base64Data == null || base64Data.isBlank()) {

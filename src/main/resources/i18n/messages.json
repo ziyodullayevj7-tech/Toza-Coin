@@ -1,5 +1,8 @@
 {
-  "Menyu": ["Navigation menu", "Меню навигации"],
+  "Menyu": [
+    "Navigation menu",
+    "Меню навигации"
+  ],
   "Til": [
     "Language",
     "Язык"
@@ -1925,10 +1928,6 @@
     "Could not open the camera:",
     "Не удалось открыть камеру:"
   ],
-  "{0} tanga": [
-    "{0} coins",
-    "{0} монет"
-  ],
   "{0} kun": [
     "{0} days",
     "{0} дней"
@@ -1981,37 +1980,457 @@
     "AI will review the photo and determine the waste type and severity. Track the result in My reports.",
     "ИИ проверит фото и определит тип отходов и степень тяжести. Следите за результатом в разделе Мои отчёты."
   ],
-  "Pending reports": ["Pending reports", "Ожидающие отчёты", "Kutilayotgan xabarlar"],
-  "Resolved reports": ["Resolved reports", "Решённые отчёты", "Hal qilingan xabarlar"],
-  "Reports in progress": ["Reports in progress", "Отчёты в работе", "Ko'rib chiqilayotgan xabarlar"],
-  "Rejected reports": ["Rejected reports", "Отклонённые отчёты", "Rad etilgan xabarlar"],
-  "Report overview": ["Report overview", "Обзор отчётов", "Xabarlar sharhi"],
-  "Current report status across the platform.": ["Current report status across the platform.", "Текущие статусы отчётов на платформе.", "Platformadagi xabarlarning joriy holati."],
-  "Overview unavailable. Please try again.": ["Overview unavailable. Please try again.", "Не удалось загрузить обзор. Попробуйте ещё раз.", "Ma'lumotlarni yuklab bo'lmadi. Qayta urinib ko'ring."],
-  "A clear view of your community and the work that needs attention.": ["A clear view of your community and the work that needs attention.", "Обзор сообщества и задач, требующих внимания.", "Hamjamiyat va e'tibor talab qiladigan ishlar sharhi."],
-  "Review photos and make report decisions.": ["Review photos and make report decisions.", "Проверяйте фотографии и принимайте решения по отчётам.", "Suratlarni tekshiring va xabarlar bo'yicha qaror qabul qiling."],
-  "Find accounts and review community activity.": ["Find accounts and review community activity.", "Находите аккаунты и просматривайте активность участников.", "Foydalanuvchilarni toping va ularning faolligini ko'rib chiqing."],
-  "Explore the current report breakdown.": ["Explore the current report breakdown.", "Изучите распределение отчётов по статусам.", "Xabarlarning holatlar bo'yicha taqsimotini ko'ring."],
-  "Current totals from submitted reports and registered accounts.": ["Current totals from submitted reports and registered accounts.", "Текущие показатели отправленных отчётов и зарегистрированных аккаунтов.", "Yuborilgan xabarlar va ro'yxatdan o'tgan foydalanuvchilar bo'yicha joriy ko'rsatkichlar."],
-  "Recognize verified reports and completed cleanups.": ["Recognize verified reports and completed cleanups.", "Награды за проверенные отчёты и завершённые уборки.", "Tasdiqlangan xabarlar va bajarilgan tozalash ishlari uchun mukofotlar."],
-  "A report photo is verified before the reward is granted.": ["A report photo is verified before the reward is granted.", "Перед начислением награды фотография отчёта проходит проверку.", "Mukofot berilishidan oldin xabardagi surat tekshiriladi."],
-  "Before and after photos are reviewed to verify a cleanup.": ["Before and after photos are reviewed to verify a cleanup.", "Фотографии до и после проверяются для подтверждения уборки.", "Tozalashni tasdiqlash uchun oldingi va keyingi suratlar tekshiriladi."],
-  "Rewards are credited after AI approval. These are the current reward rules.": ["Rewards are credited after AI approval. These are the current reward rules.", "Награды начисляются после одобрения ИИ. Здесь указаны действующие правила.", "Mukofotlar AI tasdig'idan so'ng beriladi. Bu amaldagi mukofot qoidalari."],
-  "Review submitted evidence and report status.": ["Review submitted evidence and report status.", "Просматривайте отправленные доказательства и статусы отчётов.", "Yuborilgan dalillar va xabarlar holatini ko'rib chiqing."],
-  "Make this workspace comfortable for you.": ["Make this workspace comfortable for you.", "Настройте рабочее пространство для удобной работы.", "Ish maydonini o'zingizga qulay qiling."],
-  "Choose the language used across your workspace.": ["Choose the language used across your workspace.", "Выберите язык интерфейса рабочего пространства.", "Ish maydoni uchun interfeys tilini tanlang."],
-  "Workspace appearance": ["Workspace appearance", "Оформление рабочего пространства", "Ish maydoni ko'rinishi"],
-  "The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.": ["The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.", "Управляйте анимацией фона кнопкой в боковой панели. Настройки уменьшения движения и экономии трафика учитываются автоматически.", "Yon paneldagi tugma orqali fon harakatini to'xtatish yoki yoqish mumkin. Harakatni kamaytirish va trafikni tejash sozlamalari hisobga olinadi."],
-  "Use the account action in the sidebar to sign out securely.": ["Use the account action in the sidebar to sign out securely.", "Для безопасного выхода используйте кнопку аккаунта в боковой панели.", "Hisobdan chiqish uchun yon paneldagi chiqish tugmasidan foydalaning."],
-  "Review uncertain evidence carefully before making a decision.": ["Review uncertain evidence carefully before making a decision.", "Внимательно изучайте неоднозначные доказательства перед принятием решения.", "Qaror qabul qilishdan oldin noaniq dalillarni diqqat bilan tekshiring."],
-  "Manual review": ["Manual review", "Ручная проверка", "Qo'lda tekshirish"],
-  "An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.": ["An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.", "Незавершённая проверка ИИ требует изучения доказательств и не доказывает нарушение.", "Yakunlanmagan AI tekshiruvi dalillarni ko'rib chiqishni talab qiladi va qoidabuzarlikni anglatmaydi."],
-  "Reports with an unsuccessful AI review": ["Reports with an unsuccessful AI review", "Отчёты с неудачной проверкой ИИ", "AI tekshiruvi bajarilmagan xabarlar"],
-  "Open reports to compare photos, AI findings and the submitted details.": ["Open reports to compare photos, AI findings and the submitted details.", "Откройте отчёты, чтобы сравнить фотографии, выводы ИИ и отправленные сведения.", "Suratlar, AI xulosalari va yuborilgan ma'lumotlarni taqqoslash uchun xabarlarni oching."],
-  "User statistics": ["User statistics", "Статистика пользователей", "Foydalanuvchilar statistikasi"],
-  "Compare user reports, earned coins, balances and activity.": ["Compare user reports, earned coins, balances and activity.", "Сравнивайте отчёты, заработанные монеты, балансы и активность пользователей.", "Foydalanuvchilarning xabarlari, ishlab topgan tangalari, balansi va faolligini taqqoslang."],
-  "Ranked by total earned coins": ["Ranked by total earned coins", "Рейтинг по общему числу заработанных монет", "Jami ishlab topilgan tangalar bo'yicha reyting"],
-  "Top contributors": ["Top contributors", "Самые активные участники", "Eng faol ishtirokchilar"],
-  "Coin balance": ["Coin balance", "Баланс монет", "Tangalar balansi"],
-  "Streak (days)": ["Streak (days)", "Серия (дней)", "Seriya (kun)"]
+  "Pending reports": [
+    "Pending reports",
+    "Ожидающие отчёты",
+    "Kutilayotgan xabarlar"
+  ],
+  "Resolved reports": [
+    "Resolved reports",
+    "Решённые отчёты",
+    "Hal qilingan xabarlar"
+  ],
+  "Reports in progress": [
+    "Reports in progress",
+    "Отчёты в работе",
+    "Ko'rib chiqilayotgan xabarlar"
+  ],
+  "Rejected reports": [
+    "Rejected reports",
+    "Отклонённые отчёты",
+    "Rad etilgan xabarlar"
+  ],
+  "Report overview": [
+    "Report overview",
+    "Обзор отчётов",
+    "Xabarlar sharhi"
+  ],
+  "Current report status across the platform.": [
+    "Current report status across the platform.",
+    "Текущие статусы отчётов на платформе.",
+    "Platformadagi xabarlarning joriy holati."
+  ],
+  "Overview unavailable. Please try again.": [
+    "Overview unavailable. Please try again.",
+    "Не удалось загрузить обзор. Попробуйте ещё раз.",
+    "Ma'lumotlarni yuklab bo'lmadi. Qayta urinib ko'ring."
+  ],
+  "A clear view of your community and the work that needs attention.": [
+    "A clear view of your community and the work that needs attention.",
+    "Обзор сообщества и задач, требующих внимания.",
+    "Hamjamiyat va e'tibor talab qiladigan ishlar sharhi."
+  ],
+  "Review photos and make report decisions.": [
+    "Review photos and make report decisions.",
+    "Проверяйте фотографии и принимайте решения по отчётам.",
+    "Suratlarni tekshiring va xabarlar bo'yicha qaror qabul qiling."
+  ],
+  "Find accounts and review community activity.": [
+    "Find accounts and review community activity.",
+    "Находите аккаунты и просматривайте активность участников.",
+    "Foydalanuvchilarni toping va ularning faolligini ko'rib chiqing."
+  ],
+  "Explore the current report breakdown.": [
+    "Explore the current report breakdown.",
+    "Изучите распределение отчётов по статусам.",
+    "Xabarlarning holatlar bo'yicha taqsimotini ko'ring."
+  ],
+  "Current totals from submitted reports and registered accounts.": [
+    "Current totals from submitted reports and registered accounts.",
+    "Текущие показатели отправленных отчётов и зарегистрированных аккаунтов.",
+    "Yuborilgan xabarlar va ro'yxatdan o'tgan foydalanuvchilar bo'yicha joriy ko'rsatkichlar."
+  ],
+  "Recognize verified reports and completed cleanups.": [
+    "Recognize verified reports and completed cleanups.",
+    "Награды за проверенные отчёты и завершённые уборки.",
+    "Tasdiqlangan xabarlar va bajarilgan tozalash ishlari uchun mukofotlar."
+  ],
+  "A report photo is verified before the reward is granted.": [
+    "A report photo is verified before the reward is granted.",
+    "Перед начислением награды фотография отчёта проходит проверку.",
+    "Mukofot berilishidan oldin xabardagi surat tekshiriladi."
+  ],
+  "Before and after photos are reviewed to verify a cleanup.": [
+    "Before and after photos are reviewed to verify a cleanup.",
+    "Фотографии до и после проверяются для подтверждения уборки.",
+    "Tozalashni tasdiqlash uchun oldingi va keyingi suratlar tekshiriladi."
+  ],
+  "Rewards are credited after AI approval. These are the current reward rules.": [
+    "Rewards are credited after AI approval. These are the current reward rules.",
+    "Награды начисляются после одобрения ИИ. Здесь указаны действующие правила.",
+    "Mukofotlar AI tasdig'idan so'ng beriladi. Bu amaldagi mukofot qoidalari."
+  ],
+  "Review submitted evidence and report status.": [
+    "Review submitted evidence and report status.",
+    "Просматривайте отправленные доказательства и статусы отчётов.",
+    "Yuborilgan dalillar va xabarlar holatini ko'rib chiqing."
+  ],
+  "Make this workspace comfortable for you.": [
+    "Make this workspace comfortable for you.",
+    "Настройте рабочее пространство для удобной работы.",
+    "Ish maydonini o'zingizga qulay qiling."
+  ],
+  "Choose the language used across your workspace.": [
+    "Choose the language used across your workspace.",
+    "Выберите язык интерфейса рабочего пространства.",
+    "Ish maydoni uchun interfeys tilini tanlang."
+  ],
+  "Workspace appearance": [
+    "Workspace appearance",
+    "Оформление рабочего пространства",
+    "Ish maydoni ko'rinishi"
+  ],
+  "The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.": [
+    "The background control in the sidebar lets you pause or resume motion. Reduced motion and data-saving preferences are respected.",
+    "Управляйте анимацией фона кнопкой в боковой панели. Настройки уменьшения движения и экономии трафика учитываются автоматически.",
+    "Yon paneldagi tugma orqali fon harakatini to'xtatish yoki yoqish mumkin. Harakatni kamaytirish va trafikni tejash sozlamalari hisobga olinadi."
+  ],
+  "Use the account action in the sidebar to sign out securely.": [
+    "Use the account action in the sidebar to sign out securely.",
+    "Для безопасного выхода используйте кнопку аккаунта в боковой панели.",
+    "Hisobdan chiqish uchun yon paneldagi chiqish tugmasidan foydalaning."
+  ],
+  "Review uncertain evidence carefully before making a decision.": [
+    "Review uncertain evidence carefully before making a decision.",
+    "Внимательно изучайте неоднозначные доказательства перед принятием решения.",
+    "Qaror qabul qilishdan oldin noaniq dalillarni diqqat bilan tekshiring."
+  ],
+  "Manual review": [
+    "Manual review",
+    "Ручная проверка",
+    "Qo'lda tekshirish"
+  ],
+  "An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.": [
+    "An incomplete AI review is a reason to inspect the evidence, not proof of misconduct.",
+    "Незавершённая проверка ИИ требует изучения доказательств и не доказывает нарушение.",
+    "Yakunlanmagan AI tekshiruvi dalillarni ko'rib chiqishni talab qiladi va qoidabuzarlikni anglatmaydi."
+  ],
+  "Reports with an unsuccessful AI review": [
+    "Reports with an unsuccessful AI review",
+    "Отчёты с неудачной проверкой ИИ",
+    "AI tekshiruvi bajarilmagan xabarlar"
+  ],
+  "Open reports to compare photos, AI findings and the submitted details.": [
+    "Open reports to compare photos, AI findings and the submitted details.",
+    "Откройте отчёты, чтобы сравнить фотографии, выводы ИИ и отправленные сведения.",
+    "Suratlar, AI xulosalari va yuborilgan ma'lumotlarni taqqoslash uchun xabarlarni oching."
+  ],
+  "User statistics": [
+    "User statistics",
+    "Статистика пользователей",
+    "Foydalanuvchilar statistikasi"
+  ],
+  "Compare user reports, earned coins, balances and activity.": [
+    "Compare user reports, earned coins, balances and activity.",
+    "Сравнивайте отчёты, заработанные монеты, балансы и активность пользователей.",
+    "Foydalanuvchilarning xabarlari, ishlab topgan tangalari, balansi va faolligini taqqoslang."
+  ],
+  "Ranked by total earned coins": [
+    "Ranked by total earned coins",
+    "Рейтинг по общему числу заработанных монет",
+    "Jami ishlab topilgan tangalar bo'yicha reyting"
+  ],
+  "Top contributors": [
+    "Top contributors",
+    "Самые активные участники",
+    "Eng faol ishtirokchilar"
+  ],
+  "Coin balance": [
+    "Coin balance",
+    "Баланс монет",
+    "Tangalar balansi"
+  ],
+  "Streak (days)": [
+    "Streak (days)",
+    "Серия (дней)",
+    "Seriya (kun)"
+  ],
+  "Tangalar evaziga olinadigan xizmat va chegirmalarni boshqaring.": [
+    "Manage services and discounts available for coins.",
+    "Управляйте услугами и скидками за монеты."
+  ],
+  "Mukofot qo'shish": [
+    "Add reward",
+    "Добавить награду"
+  ],
+  "Mukofotlar katalogi": [
+    "Reward catalog",
+    "Каталог наград"
+  ],
+  "Mukofot": [
+    "Reward",
+    "Награда"
+  ],
+  "Narxi (tanga)": [
+    "Price (coins)",
+    "Цена (монеты)"
+  ],
+  "Mavjud soni": [
+    "Available quantity",
+    "Доступное количество"
+  ],
+  "Nofaol": [
+    "Inactive",
+    "Неактивна"
+  ],
+  "To'xtatish": [
+    "Pause",
+    "Приостановить"
+  ],
+  "Faollashtirish": [
+    "Activate",
+    "Активировать"
+  ],
+  "Hali mukofotlar yo'q. Birinchi mukofotni qo'shing.": [
+    "No rewards yet. Add your first reward.",
+    "Наград пока нет. Добавьте первую награду."
+  ],
+  "Mukofotlarni yuklab bo'lmadi. Yangilash tugmasini bosing.": [
+    "Could not load rewards. Select Refresh to try again.",
+    "Не удалось загрузить награды. Нажмите «Обновить»."
+  ],
+  "Mukofotni tahrirlash": [
+    "Edit reward",
+    "Изменить награду"
+  ],
+  "Nomi": [
+    "Title",
+    "Название"
+  ],
+  "Xizmat ko'rsatuvchi": [
+    "Provider",
+    "Поставщик"
+  ],
+  "Rasm havolasi (ixtiyoriy)": [
+    "Image URL (optional)",
+    "Ссылка на изображение (необязательно)"
+  ],
+  "Maydonlarni tekshiring. Narx musbat, son esa nol yoki undan katta bo'lishi kerak.": [
+    "Check the fields. Price must be positive, quantity zero or more, and image URL valid.",
+    "Проверьте поля. Цена должна быть положительной, количество — неотрицательным."
+  ],
+  "Mukofot saqlandi.": [
+    "Reward saved.",
+    "Награда сохранена."
+  ],
+  "Mukofot holatini o'zgartirish": [
+    "Change reward status",
+    "Изменить статус награды"
+  ],
+  "Mukofot katalogdan yashiriladi. Avvalgi xaridlar saqlanadi.": [
+    "The reward will be hidden from the catalog. Existing purchases are kept.",
+    "Награда будет скрыта из каталога. Прошлые покупки сохранятся."
+  ],
+  "Mukofot mavjud bo'lsa foydalanuvchilar katalogida ko'rinadi.": [
+    "The reward will appear in the user catalog when stock is available.",
+    "Награда появится в каталоге пользователей при наличии."
+  ],
+  "Mukofot holati yangilandi.": [
+    "Reward status updated.",
+    "Статус награды обновлён."
+  ],
+  "Holatni yangilab bo'lmadi. Qayta urinib ko'ring.": [
+    "Could not update status. Please try again.",
+    "Не удалось обновить статус. Попробуйте ещё раз."
+  ],
+  "To'plagan tangalaringizni foydali xizmat va chegirmalarga almashtiring.": [
+    "Exchange your earned coins for useful services and discounts.",
+    "Обменивайте заработанные монеты на полезные услуги и скидки."
+  ],
+  "Sizning balansingiz": [
+    "Your balance",
+    "Ваш баланс"
+  ],
+  "Katalog": [
+    "Catalog",
+    "Каталог"
+  ],
+  "Mening mukofotlarim": [
+    "My rewards",
+    "Мои награды"
+  ],
+  "Soni": [
+    "Quantity",
+    "Количество"
+  ],
+  "Sarflangan tangalar": [
+    "Coins spent",
+    "Потрачено монет"
+  ],
+  "Xarid sanasi": [
+    "Purchased on",
+    "Дата покупки"
+  ],
+  "Xarid raqami": [
+    "Purchase reference",
+    "Номер покупки"
+  ],
+  "Hali xaridlar yo'q. Katalogdan o'zingizga mos mukofotni tanlang.": [
+    "No purchases yet. Find a reward in the catalog.",
+    "Покупок пока нет. Выберите награду в каталоге."
+  ],
+  "Hozircha mukofotlar mavjud emas. Keyinroq yana tekshiring.": [
+    "No rewards available right now. Check back later.",
+    "Сейчас нет доступных наград. Загляните позже."
+  ],
+  "Mavjud soni: {0}": [
+    "Available: {0}",
+    "Доступно: {0}"
+  ],
+  "Tangaga olish": [
+    "Get with coins",
+    "Получить за монеты"
+  ],
+  "Tangalar yetarli emas": [
+    "Not enough coins",
+    "Недостаточно монет"
+  ],
+  "Mukofotni olish": [
+    "Get reward",
+    "Получить награду"
+  ],
+  "Xaridni tasdiqlash": [
+    "Confirm purchase",
+    "Подтвердить покупку"
+  ],
+  "Jami: {0} tanga": [
+    "Total: {0} coins",
+    "Итого: {0} монет"
+  ],
+  "To'g'ri sonni kiriting.": [
+    "Enter a valid quantity.",
+    "Введите корректное количество."
+  ],
+  "Mukofot olindi. Xaridni Mening mukofotlarim bo'limida ko'rishingiz mumkin.": [
+    "Reward purchased. View it in My rewards.",
+    "Награда куплена. Она доступна в разделе «Мои награды»."
+  ],
+  "Xarid yakunlanmadi. Oynani yoping va balans hamda xaridlar tarixini yangilang.": [
+    "Purchase could not be confirmed. Close this window and refresh your balance and purchase history.",
+    "Не удалось подтвердить покупку. Закройте окно и обновите баланс и историю покупок."
+  ],
+  "Tasdiqlangandan so'ng tangalar balansingizdan yechiladi.": [
+    "Coins will be deducted from your balance when you confirm.",
+    "После подтверждения монеты будут списаны с вашего баланса."
+  ],
+  "Insufficient balance": [
+    "Insufficient balance",
+    "Недостаточно монет",
+    "Tangalar yetarli emas"
+  ],
+  "Reward is inactive": [
+    "This reward is no longer active.",
+    "Эта награда больше не активна.",
+    "Bu mukofot hozir faol emas."
+  ],
+  "Not enough rewards available": [
+    "Not enough rewards available.",
+    "Недостаточно наград в наличии.",
+    "Mavjud mukofotlar soni yetarli emas."
+  ],
+  "This reward has already been created": [
+    "A reward with this title and provider already exists.",
+    "Награда с таким названием и поставщиком уже существует.",
+    "Shu nom va xizmat ko'rsatuvchi bilan mukofot mavjud."
+  ],
+  "Reward not found": [
+    "Reward not found.",
+    "Награда не найдена.",
+    "Mukofot topilmadi."
+  ],
+  "Mukofot rasmi": [
+    "Reward image",
+    "Изображение награды"
+  ],
+  "Joriy rasm": [
+    "Current image",
+    "Текущее изображение"
+  ],
+  "Rasmni olib tashlash": [
+    "Remove image",
+    "Удалить изображение"
+  ],
+  "Rasm tanlash": [
+    "Choose image",
+    "Выбрать изображение"
+  ],
+  "JPG yoki PNG faylni shu yerga tashlang": [
+    "Drop a JPG or PNG here",
+    "Перетащите сюда JPG или PNG"
+  ],
+  "Ixtiyoriy. JPG yoki PNG, 5 MB gacha.": [
+    "Optional. JPG or PNG, up to 5 MB.",
+    "Необязательно. JPG или PNG, до 5 МБ."
+  ],
+  "JPG yoki PNG fayl tanlang. Eng katta hajm: 5 MB.": [
+    "Choose a JPG or PNG file. Maximum size: 5 MB.",
+    "Выберите JPG или PNG. Максимальный размер: 5 МБ."
+  ],
+  "Rasmni yuklab bo'lmadi. Qayta urinib ko'ring.": [
+    "Could not upload the image. Please try again.",
+    "Не удалось загрузить изображение. Попробуйте ещё раз."
+  ],
+  "Choose a JPG or PNG image up to 5 MB.": [
+    "Choose a JPG or PNG image up to 5 MB.",
+    "Выберите изображение JPG или PNG размером до 5 МБ.",
+    "5 MB gacha JPG yoki PNG rasm tanlang."
+  ],
+  "Choose a valid JPG or PNG image, no larger than 6000 pixels per side.": [
+    "Choose a valid JPG or PNG image, no larger than 6000 pixels per side.",
+    "Выберите корректный JPG или PNG, не более 6000 пикселей по каждой стороне.",
+    "Har bir tomoni 6000 pikseldan oshmaydigan haqiqiy JPG yoki PNG tanlang."
+  ],
+  "Wait for the image upload to finish.": [
+    "Wait for the image upload to finish.",
+    "Дождитесь завершения загрузки изображения.",
+    "Rasm yuklanishi tugashini kuting."
+  ],
+  "Mukofot tafsilotlari": [
+    "Reward details",
+    "Сведения о награде"
+  ],
+  "Rasm mavjud emas": [
+    "No image available",
+    "Изображение отсутствует"
+  ],
+  "Tavsif kiritilmagan.": [
+    "No description provided.",
+    "Описание не указано."
+  ],
+  "Siz olgan mukofotlar": [
+    "Your purchased rewards",
+    "Купленные награды"
+  ],
+  "O'zingizga mos mukofotni tanlang": [
+    "Find your next reward",
+    "Выберите награду для себя"
+  ],
+  "Xariddan keyingi balans: {0} tanga": [
+    "Balance after purchase: {0} coins",
+    "Баланс после покупки: {0} монет"
+  ],
+  "Soni: {0}": [
+    "Quantity: {0}",
+    "Количество: {0}"
+  ],
+  "Xarid tafsilotlari": [
+    "Purchase details",
+    "Сведения о покупке"
+  ],
+  "Xarid muvaffaqiyatli yakunlandi": [
+    "Purchase complete",
+    "Покупка завершена"
+  ],
+  "Jami: {0}": [
+    "Total: {0}",
+    "Всего: {0}"
+  ],
+  "Katalogga o'tish": [
+    "Browse catalog",
+    "Открыть каталог"
+  ],
+  "{0} tanga": [
+    "{0} coins",
+    "{0} монет"
+  ]
 }

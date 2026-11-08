@@ -90,7 +90,7 @@ public class UserLayout extends AppLayout implements BeforeEnterObserver {
 
         logoHeader.add(logoLink);
 
-        // Five primary destinations
+        // Primary destinations
         Div scrollNav = I18n.localize(new Div());
         scrollNav.addClassName("sidebar-scroll-area");
 
@@ -99,6 +99,7 @@ public class UserLayout extends AppLayout implements BeforeEnterObserver {
                 createNavItem("Report", "camera", ReportWasteView.class),
                 createNavItem("Mening ishlarim", "reports", MyReportsView.class),
                 createNavItem("Xarita", "map", MapView.class),
+                createNavItem("Mukofotlar", "rewards", RewardsView.class),
                 createNavItem("Profil", "profile", ProfileView.class)
         );
 

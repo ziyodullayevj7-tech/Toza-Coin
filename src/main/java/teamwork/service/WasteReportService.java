@@ -157,6 +157,7 @@ public class WasteReportService {
         if (wasteReport.getCleaner() == null) {
             wasteReport.setCleaner(cleaner);
         }
+        wasteReport.setCleanerRewardCoins(50);
         wasteReport.setAfterImageUrl(dto.getCleanedImageUrl());
         wasteReport.setCleanPeriod(dto.getCleanPeriod());
         wasteReport.setReportStatus(ReportStatus.PENDING);

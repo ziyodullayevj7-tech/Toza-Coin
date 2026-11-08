@@ -10,6 +10,7 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -71,7 +72,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         setSpacing(false);
         addClassName("admin-users-page");
 
-        add(buildPageHeader(), buildToolbar(), buildUsersPanel(), buildPagination());
+        add(buildPageHeader(), buildUsersPanel());
         configureSearch();
         loadUsers();
     }
@@ -81,7 +82,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         header.addClassName("admin-users-header");
 
         Div titleBlock = I18n.localize(new Div());
-        H2 title = I18n.localize(new H2("Foydalanuvchilar"));
+        H1 title = I18n.localize(new H1("Foydalanuvchilar"));
         title.addClassName("admin-users-title");
         Paragraph subtitle = I18n.localize(new Paragraph("Barcha ro'yxatdan o'tgan foydalanuvchilar"));
         subtitle.addClassName("admin-users-subtitle");
@@ -106,10 +107,13 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         updateStatusFilters();
 
         Button refreshButton = I18n.localize(new Button("Yangilash", event -> loadUsers()));
+        refreshButton.setIcon(VaadinIcon.REFRESH.create());
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("admin-users-refresh");
-        toolbar.add(searchField, statusFilters, refreshButton);
-        return toolbar;
+        toolbar.add(searchField, refreshButton);
+        Div controls = new Div(toolbar, statusFilters);
+        controls.addClassName("admin-list-controls");
+        return controls;
     }
 
     private Div buildUsersPanel() {
@@ -120,7 +124,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         errorMessage.setVisible(false);
         emptyMessage.addClassName("admin-users-empty");
         configureGrid();
-        panel.add(errorMessage, usersGrid, emptyMessage);
+        panel.add(buildToolbar(), errorMessage, usersGrid, emptyMessage, buildPagination());
         return panel;
     }
 
@@ -245,6 +249,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
     private Button createStatusFilter(String label, ProfileStatus status) {
         Button filter = I18n.localize(new Button(label));
         filter.addClassName("admin-users-filter");
+        filter.getElement().setAttribute("aria-pressed", String.valueOf(selectedStatus == status));
         if (selectedStatus == status) {
             filter.addClassName("active");
         }
@@ -276,6 +281,7 @@ public class AdminUsersView extends VerticalLayout implements com.vaadin.flow.ro
         } catch (RuntimeException exception) {
             log.error("Could not load admin user list", exception);
             pageUsers.clear();
+            errorMessage.setVisible(true);
             updateGridItems();
             updatePagination();
             I18n.text(errorMessage, "Foydalanuvchilarni yuklab bo'lmadi. Qayta urinib ko'ring.");
