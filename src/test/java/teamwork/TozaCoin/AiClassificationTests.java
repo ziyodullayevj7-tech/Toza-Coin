@@ -102,6 +102,30 @@ class AiClassificationTests {
         verify(reports, times(1)).save(report);
     }
 
+    @Test
+    void lateAiReviewDoesNotPayAnAdminRewardAgain() {
+        WasteReportEntity report = pendingReport();
+        report.setAiRewardGranted(true);
+        report.setReportStatus(ReportStatus.RESOLVED);
+        AiAnaliseResultDto result = analysis();
+        result.setWastePresent(true);
+        result.setConfidenceScore(99);
+        service.saveSuccessfulReview("report", result);
+        assertTrue(report.getAiRewardGranted());
+        verifyNoInteractions(auth, coins);
+    }
+
+    @Test
+    void lateAiReviewDoesNotRewardRejectedReport() {
+        WasteReportEntity report = pendingReport();
+        report.setReportStatus(ReportStatus.REJECTED);
+        AiAnaliseResultDto result = analysis();
+        result.setWastePresent(true);
+        result.setConfidenceScore(99);
+        service.saveSuccessfulReview("report", result);
+        verifyNoInteractions(auth, coins);
+    }
+
     private WasteReportEntity pendingReport() {
         WasteReportEntity report = new WasteReportEntity();
         report.setCategory(WasteTypeEnum.OTHER);

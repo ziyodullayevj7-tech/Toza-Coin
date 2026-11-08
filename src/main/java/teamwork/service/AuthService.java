@@ -28,6 +28,7 @@ import teamwork.entity.ProfileRoleEntity;
 import teamwork.enums.ProfileRole;
 import teamwork.enums.ProfileStatus;
 import teamwork.exceptions.AppBadRequestException;
+import teamwork.exceptions.ItemNotFoundException;
 import teamwork.repository.ProfileRepository;
 import teamwork.repository.ProfileRoleRepository;
 import teamwork.util.SecurityUtils;
@@ -186,7 +187,7 @@ public class AuthService {
 
     @Transactional
     public boolean creditAiReviewReward(String profileId, int amount) {
-        Optional<ProfileEntity> optional = profileRepository.findById(profileId);
+        Optional<ProfileEntity> optional = profileRepository.findByIdForUpdate(profileId);
         if (optional.isEmpty()) return false;
 
         ProfileEntity profile = optional.get();
@@ -310,5 +311,21 @@ public class AuthService {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public Boolean updateUserBalanceForRewardSell(String currentUserId, Integer coinsToSpend) {
+        if (coinsToSpend == null || coinsToSpend <= 0) {
+            throw new AppBadRequestException("Coins to spend must be positive");
+        }
+        ProfileEntity profile = profileRepository.findByIdForUpdate(currentUserId)
+                .orElseThrow(() -> new ItemNotFoundException("Profile not found"));
+        int balance = profile.getCoinBalance() == null ? 0 : profile.getCoinBalance();
+        if (balance < coinsToSpend) {
+            throw new AppBadRequestException("Insufficient balance");
+        }
+        profile.setCoinBalance(balance - coinsToSpend);
+        profileRepository.save(profile);
+        return true;
     }
 }

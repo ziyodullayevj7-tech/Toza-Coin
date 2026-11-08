@@ -3,6 +3,8 @@ package teamwork.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import teamwork.entity.ProfileEntity;
@@ -10,6 +12,10 @@ import teamwork.entity.ProfileEntity;
 import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM ProfileEntity p WHERE p.id = :profileId")
+    Optional<ProfileEntity> findByIdForUpdate(@Param("profileId") String profileId);
+
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN TRUE ELSE FALSE END " +
             "FROM ProfileEntity AS p " +
             "WHERE p.username = :username")

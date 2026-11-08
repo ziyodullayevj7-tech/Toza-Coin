@@ -8,6 +8,7 @@ import teamwork.entity.WasteReportEntity;
 import teamwork.enums.AiReviewStatus;
 import teamwork.enums.CoinType;
 import teamwork.enums.ReportActionEnum;
+import teamwork.enums.ReportStatus;
 import teamwork.exceptions.AppBadRequestException;
 import teamwork.repository.WasteReportRepository;
 
@@ -62,7 +63,15 @@ public class AiReviewPersistenceService {
                 && result.isEligibleForCleanupReward()) {
             reward = 50;
         }
-        report.setAiRewardGranted(reward > 0);
+        // Manual approval may have rewarded the report while AI was running.
+        if (Boolean.TRUE.equals(report.getAiRewardGranted())
+                || report.getReportStatus() == ReportStatus.REJECTED
+                || report.getReportStatus() == ReportStatus.RESOLVED) {
+            reward = 0;
+        }
+        if (reward > 0) {
+            report.setAiRewardGranted(true);
+        }
 
         if (reward > 0) {
             String profileId = report.getReporter().getId();
