@@ -231,6 +231,7 @@ public class WasteReportService {
         dto.setAfterImageUrl(entity.getAfterImageUrl());
         dto.setCleanPeriod(entity.getCleanPeriod());
         dto.setStatus(entity.getReportStatus());
+        dto.setReportAction(entity.getReportAction());
         dto.setReportedDateTime(entity.getCreatedDate());
         dto.setConfidenceScore(entity.getConfidenceScore());
         dto.setReasoning(entity.getAiReasoning());

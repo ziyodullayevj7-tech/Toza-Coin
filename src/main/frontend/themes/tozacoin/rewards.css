@@ -1,0 +1,182 @@
+/* Reward workspaces use the existing forest palette and restrained glass surfaces. */
+.user-jungle-layout.user-layout-container > vaadin-vertical-layout.rewards-user-page {
+  box-sizing:border-box; width:100%; max-width:1320px; margin:0 auto; padding:32px;
+  display:flex; flex-direction:column; align-items:stretch; gap:24px; background:transparent; border-radius:0;
+}
+.rewards-user-page,.rewards-admin-page { color:#294633; min-width:0; }
+.rewards-heading { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:28px;
+  background:linear-gradient(130deg,rgba(255,255,255,.72),rgba(221,244,207,.45));
+  border:1px solid rgba(255,255,255,.4); border-radius:18px; backdrop-filter:blur(10px); }
+.rewards-heading h1 { margin:0 0 10px; color:#243e2b; font-size:30px; line-height:1.25; letter-spacing:-.7px; }
+.rewards-heading p { margin:0; color:#526a4c; font-size:14px; line-height:1.7; max-width:560px; }
+.reward-balance { display:grid; grid-template-columns:32px auto; gap:5px 10px; flex-shrink:0; padding:16px 20px;
+  background:rgba(255,255,255,.5); border:1px solid rgba(66,108,56,.14); border-radius:14px; }
+.reward-balance vaadin-icon { grid-row:span 2; align-self:center; width:26px; height:26px; color:#62863f; }
+.reward-balance > span { font-size:12px; color:#526a4c; }
+.reward-balance > span:last-child { font-size:24px; font-weight:700; color:#294633; font-variant-numeric:tabular-nums; }
+.rewards-workspace { min-width:0; width:100%; box-sizing:border-box; overflow:hidden; border-radius:16px;
+  background:linear-gradient(135deg,rgba(250,253,247,.91),rgba(236,246,228,.85));
+  border:1px solid rgba(255,255,255,.55); backdrop-filter:blur(14px); box-shadow:0 8px 32px rgba(25,48,30,.05); }
+.rewards-toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid rgba(57,86,52,.14); }
+.rewards-toolbar h2 { margin:0; font-size:18px; color:#294633; font-weight:650; }
+.rewards-toolbar > div:not(.rewards-tabs) { display:flex; gap:10px; flex-wrap:wrap; }
+.rewards-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+.rewards-user-page vaadin-button,.rewards-admin-page vaadin-button,.reward-dialog vaadin-button { min-height:40px; margin:0; border-radius:10px; font-weight:600; }
+.rewards-user-page vaadin-button { color:#35552f; border:1px solid rgba(66,108,56,.2); background:rgba(255,255,255,.5); padding:0 14px; }
+.rewards-user-page vaadin-button:hover { background:#e4efdc; }
+.rewards-user-page vaadin-button[theme~="primary"],.reward-dialog vaadin-button[theme~="primary"] { background:#426c38; color:white; border-color:#426c38; }
+.rewards-tabs vaadin-button { border:1px solid transparent; background:transparent; color:#526a4c; }
+.rewards-tabs vaadin-button.active { color:#294633; background:#e1edda; border-color:#bed1b0; }
+.rewards-user-page vaadin-button[disabled] { opacity:.55; cursor:default; }
+.reward-catalog { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; padding:24px; }
+.reward-card { display:flex; flex-direction:column; min-width:0; overflow:hidden; border:1px solid rgba(57,86,52,.14); border-radius:14px; background:rgba(255,255,255,.55); }
+.reward-card-image { position:relative; display:grid; place-items:center; height:150px; overflow:hidden; background:linear-gradient(135deg,#e2edda,#d1e4c6); }
+.reward-card-image > vaadin-icon { width:44px; height:44px; color:#6f915d; }
+.reward-card-image img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.reward-card-body { display:flex; flex-direction:column; align-items:stretch; flex:1; gap:10px; padding:20px; }
+.reward-provider { color:#526a4c; font-size:12px; font-weight:600; overflow-wrap:anywhere; }
+.reward-card h2 { color:#294633; margin:0; font-size:19px; line-height:1.4; overflow-wrap:anywhere; }
+.reward-card p { color:#526a4c; margin:0 0 8px; font-size:13px; line-height:1.65; overflow-wrap:anywhere; flex:1; white-space:pre-line; }
+.reward-card-body > div { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; }
+.reward-price { font-size:18px; color:#35552f; font-weight:700; font-variant-numeric:tabular-nums; }
+.reward-stock { font-size:12px; color:#526a4c; }
+.rewards-pagination { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 24px; border-top:1px solid rgba(57,86,52,.14); color:#526a4c; font-size:12px; font-variant-numeric:tabular-nums; }
+.rewards-state { padding:64px 24px; text-align:center; color:#526a4c; font-size:14px; line-height:1.7; }
+.rewards-state.is-error,.reward-form-error { color:#864832; }
+.reward-form-error { margin-top:16px; padding:12px 14px; background:#f6e9e4; border:1px solid #dfb8ae; border-radius:10px; font-size:13px; }
+.reward-identity { display:flex; flex-direction:column; gap:4px; }
+.reward-identity > span:first-child { font-weight:600; }
+.reward-identity > span:last-child { color:#526a4c; font-size:12px; }
+.reward-row-actions { display:flex; gap:8px; }
+.reward-status { display:inline-flex; padding:4px 10px; font-size:12px; border-radius:20px; }
+.reward-status.is-active { color:#35552f; background:#deecd5; }
+.reward-status.is-inactive { color:#65715f; background:#e8ece4; }
+.reward-history-grid { --vaadin-grid-background:transparent; --vaadin-grid-border-width:0; --vaadin-grid-cell-background:transparent; font-size:13px; color:#294633; }
+.reward-history-grid::part(header-cell) { background:rgba(222,234,214,.48); color:#526a4c; font-weight:600; font-size:12px; padding:16px; }
+.reward-history-grid::part(body-cell) { background:transparent; padding:18px 16px; border-bottom:1px solid rgba(57,86,52,.1); }
+.reward-dialog { --lumo-primary-color:#426c38; --lumo-primary-text-color:#35552f; --vaadin-input-field-background:rgba(255,255,255,.8); }
+.reward-dialog::part(overlay) { max-width:calc(100vw - 24px); background:#f1f7eb; color:#294633; border:1px solid #c7d5bd; border-radius:18px; }
+.reward-dialog::part(backdrop) { background:rgba(25,48,30,.32); backdrop-filter:blur(4px); }
+.reward-dialog::part(footer) { background:#e8f0e0; }
+.reward-dialog h2 { color:#294633; font-size:20px; overflow-wrap:anywhere; }
+.reward-dialog p { color:#526a4c; font-size:14px; line-height:1.7; }
+.reward-dialog vaadin-integer-field { width:100%; }
+.reward-purchase-total { display:block; margin-top:20px; color:#294633; font-size:20px; font-weight:700; }
+@media(max-width:1100px) { .reward-catalog { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:768px) {
+  .user-jungle-layout.user-layout-container > vaadin-vertical-layout.rewards-user-page { padding:20px 16px; gap:18px; }
+  .rewards-heading { padding:22px; flex-wrap:wrap; align-items:flex-start; }
+  .rewards-heading h1 { font-size:26px; }
+  .rewards-toolbar { padding:16px; flex-wrap:wrap; }
+  .reward-catalog { gap:16px; padding:16px; }
+  .rewards-pagination { padding:14px 16px; }
+}
+@media(max-width:520px) {
+  .reward-catalog { grid-template-columns:1fr; }
+  .rewards-heading { flex-direction:column; gap:18px; }
+  .reward-balance { width:100%; box-sizing:border-box; }
+  .rewards-admin-page .rewards-toolbar > div { width:100%; }
+  .rewards-admin-page .rewards-toolbar vaadin-button { flex:1; }
+  .reward-card-image { height:170px; }
+}
+@media(prefers-reduced-transparency:reduce) {
+  .rewards-heading,.rewards-workspace { background:#f1f7eb; backdrop-filter:none; }
+}
+@supports not (backdrop-filter:blur(1px)) { .rewards-heading,.rewards-workspace { background:#f1f7eb; } }
+
+.reward-image-field { display:flex; flex-direction:column; gap:10px; padding-top:12px; min-width:0; }
+.reward-image-field > span:first-child { font-size:14px; font-weight:600; color:#294633; }
+.reward-image-help,.reward-image-filename { color:#526a4c; font-size:12px; overflow-wrap:anywhere; }
+.reward-image-field vaadin-upload { box-sizing:border-box; width:100%; padding:18px; border:1px dashed #9fb78c; border-radius:12px; background:rgba(255,255,255,.45); color:#526a4c; font-size:13px; }
+.reward-image-preview { display:block; width:100%; max-height:200px; object-fit:contain; border:1px solid #c7d5bd; border-radius:12px; background:#e8f0e0; box-sizing:border-box; }
+.reward-image-field > vaadin-button { align-self:flex-start; }
+
+/* Admin list thumbnails stay compact; detail images preserve the full picture. */
+.reward-admin-identity { display:flex; align-items:center; gap:12px; min-width:0; }
+.reward-admin-identity .reward-identity { min-width:0; }
+.reward-admin-identity .reward-identity > span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.reward-admin-thumbnail { position:relative; width:52px; height:52px; flex:0 0 52px; border:1px solid #c7d5bd; border-radius:10px; overflow:hidden; background:#e3eddb; }
+.reward-admin-thumbnail img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#e3eddb; }
+.reward-admin-photo-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#6b845e; font-size:13px; }
+.reward-admin-photo-placeholder vaadin-icon { width:24px; height:24px; }
+.reward-detail-photo { position:relative; min-height:240px; background:#e5eedf; border:1px solid #c7d5bd; border-radius:12px; overflow:hidden; }
+.reward-detail-photo img { position:relative; display:block; width:100%; height:300px; object-fit:contain; background:#e5eedf; }
+.reward-detail-photo .reward-admin-photo-placeholder vaadin-icon { width:40px; height:40px; }
+.reward-detail-content { display:flex; flex-direction:column; gap:20px; min-width:0; }
+.reward-detail-content .reward-detail-title { margin:6px 0 0; font-size:24px; line-height:1.3; }
+.reward-detail-provider { color:#526a4c; font-size:13px; overflow-wrap:anywhere; }
+.reward-detail-metadata { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.reward-detail-value { display:flex; flex-direction:column; gap:8px; padding:16px; border:1px solid #cbdac1; border-radius:10px; background:#e8f0e0; }
+.reward-detail-value > span:first-child { color:#526a4c; font-size:12px; }
+.reward-detail-value > span:last-child { color:#294633; font-size:18px; font-weight:650; font-variant-numeric:tabular-nums; }
+.reward-detail-content h3 { margin:0; color:#294633; font-size:14px; font-weight:650; }
+.reward-detail-content .reward-detail-description { margin:-10px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(max-width:520px) {
+  .reward-detail-photo img { height:220px; }
+  .reward-detail-photo { min-height:200px; }
+  .reward-detail-metadata { grid-template-columns:1fr; gap:8px; }
+  .reward-detail-value { flex-direction:row; align-items:center; justify-content:space-between; padding:12px 14px; }
+}
+
+/* User reward browsing and owned rewards share one calm, responsive workspace. */
+.rewards-user-page .rewards-heading { padding:32px; }
+.rewards-user-page .reward-card { transition:border-color 160ms ease,box-shadow 160ms ease; }
+.rewards-user-page .reward-card:hover { border-color:#acc399; box-shadow:0 6px 20px rgba(41,70,51,.07); }
+.rewards-user-page .reward-card-image { height:180px; }
+.rewards-user-page .reward-card-image img { background:#e2edda; }
+.rewards-user-page .reward-card-body > .reward-card-actions { display:flex; flex-wrap:nowrap; gap:10px; padding:0; margin-top:4px; }
+.reward-card-actions > vaadin-button { flex:1; min-width:0; }
+.reward-card-actions > vaadin-button:first-child { flex:0 0 auto; }
+.reward-section-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:24px 24px 0; }
+.reward-section-heading h2 { color:#294633; margin:0; font-size:18px; font-weight:650; }
+.reward-section-heading > span { color:#526a4c; font-size:12px; flex-shrink:0; }
+.reward-owned-list { display:flex; flex-direction:column; gap:14px; padding:24px; }
+.reward-owned-card { display:grid; grid-template-columns:52px minmax(0,1fr) auto auto; align-items:center; gap:20px; padding:20px;
+  background:rgba(255,255,255,.55); border:1px solid rgba(57,86,52,.14); border-radius:14px; }
+.reward-owned-icon { display:grid; place-items:center; width:52px; height:52px; border-radius:12px; background:#dfebd6; color:#5b7c49; }
+.reward-owned-identity { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.reward-owned-identity h3 { margin:0; color:#294633; font-size:17px; font-weight:650; overflow-wrap:anywhere; }
+.reward-owned-identity > span { color:#526a4c; font-size:12px; overflow-wrap:anywhere; }
+.reward-owned-amounts { display:flex; flex-direction:column; gap:8px; text-align:right; color:#526a4c; font-size:12px; }
+.reward-owned-amounts > span:last-child { color:#35552f; font-size:17px; font-weight:650; font-variant-numeric:tabular-nums; }
+.reward-success-banner { display:flex; align-items:center; gap:14px; margin:20px 24px 0; padding:18px; background:#e1eed8; border:1px solid #b4cda1; border-radius:12px; color:#35552f; }
+.reward-success-banner > vaadin-icon { flex-shrink:0; }
+.reward-success-banner > div { display:flex; flex:1; flex-direction:column; gap:5px; min-width:0; }
+.reward-success-banner > div > span { overflow-wrap:anywhere; font-size:13px; }
+.reward-success-banner > div > span:first-child { font-weight:650; }
+.reward-user-detail-content { display:flex; flex-direction:column; gap:14px; }
+.reward-user-detail-content .reward-card-image { height:240px; border-radius:12px; }
+.reward-user-detail-content .reward-card-image img { object-fit:contain; background:#e2edda; }
+.reward-user-detail-content h2,.reward-user-detail-content p { margin:0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.reward-user-detail-content > span { color:#526a4c; font-size:13px; }
+.reward-checkout-summary { display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; margin-bottom:24px; align-items:center; }
+.reward-checkout-summary .reward-card-image { width:80px; height:80px; border-radius:12px; }
+.reward-checkout-summary h2 { margin:0 0 4px; font-size:18px; }
+.reward-checkout-summary p { margin:0 0 6px; font-size:12px; }
+.reward-checkout-summary > div:last-child > span { color:#35552f; font-weight:650; }
+.reward-remaining-balance { display:block; color:#526a4c; font-size:13px; margin-top:10px; }
+.reward-receipt-content > vaadin-icon { width:36px; height:36px; color:#62863f; }
+.reward-receipt-content h2 { margin-bottom:8px; }
+.reward-receipt-content > p { margin:0 0 24px; }
+.reward-receipt-row { display:flex; justify-content:space-between; gap:20px; padding:14px 0; border-top:1px solid #d2dfc8; font-size:13px; }
+.reward-receipt-row > span:first-child { color:#526a4c; flex-shrink:0; }
+.reward-receipt-row > span:last-child { text-align:right; color:#294633; overflow-wrap:anywhere; user-select:text; }
+.rewards-user-page .rewards-state > vaadin-icon { width:36px; height:36px; color:#799469; }
+.rewards-user-page .rewards-state p { max-width:400px; margin:16px auto; }
+@media(max-width:900px) {
+  .reward-owned-card { grid-template-columns:48px minmax(0,1fr) auto; gap:14px; }
+  .reward-owned-card > vaadin-button { grid-column:2 / -1; justify-self:start; }
+}
+@media(max-width:520px) {
+  .rewards-user-page .rewards-heading { padding:22px; }
+  .reward-section-heading { padding:20px 16px 0; align-items:flex-start; }
+  .reward-section-heading h2 { font-size:16px; }
+  .reward-owned-list { padding:16px; }
+  .reward-owned-card { padding:16px; grid-template-columns:40px minmax(0,1fr); gap:12px; }
+  .reward-owned-icon { width:40px; height:40px; }
+  .reward-owned-amounts { grid-column:2; flex-direction:row; align-items:center; justify-content:space-between; text-align:left; }
+  .reward-owned-card > vaadin-button { grid-column:2; width:100%; }
+  .reward-success-banner { margin:16px 16px 0; flex-wrap:wrap; }
+  .reward-success-banner > vaadin-button { width:100%; }
+}
+@media(prefers-reduced-motion:reduce) { .rewards-user-page .reward-card { transition:none; } }

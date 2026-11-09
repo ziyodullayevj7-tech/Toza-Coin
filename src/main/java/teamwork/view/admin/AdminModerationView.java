@@ -18,6 +18,7 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -30,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import teamwork.dto.wasteReport.ConfirmWasteDto;
 import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportStatus;
+import teamwork.enums.ReportActionEnum;
 import teamwork.service.AdminService;
 import teamwork.service.WasteReportService;
 import teamwork.view.layout.admin.AdminLayout;
@@ -42,6 +44,7 @@ import java.util.Locale;
 @Route(value = "admin/moderation", layout = AdminLayout.class)
 @RolesAllowed("ADMIN")
 @CssImport("./themes/tozacoin/user-layout.css")
+@CssImport("./themes/tozacoin/community-cleanup.css")
 public class AdminModerationView extends VerticalLayout implements com.vaadin.flow.router.HasDynamicTitle {
 
     private static final Logger log = LoggerFactory.getLogger(AdminModerationView.class);
@@ -61,6 +64,8 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
     private final Div statusFilters = I18n.localize(new Div());
     private final Div errorMessage = I18n.localize(new Div());
     private final TextField searchField = I18n.localize(new TextField());
+
+    private final ComboBox<String> taskFilter = new ComboBox<>();
 
     private int currentPage;
     private int pageCount;
@@ -118,9 +123,18 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         refreshButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         refreshButton.addClassName("moderation-refresh-button");
 
-        toolbar.add(searchField, refreshButton);
+        taskFilter.setItems("Barcha vazifalar", "Xaritaga chiqarish", "Tozalash tasdig'i", "AI qo'lda tekshirish");
+        taskFilter.setItemLabelGenerator(I18n::t);taskFilter.setValue("Barcha vazifalar");
+        I18n.property(taskFilter, "helperText", "Filtrlar joriy sahifaga qo'llanadi.");
+        taskFilter.setId("moderation-task-filter");taskFilter.addClassName("moderation-task-filter");
+        I18n.attribute(taskFilter, "aria-label", "Vazifa turi (joriy sahifa)");
+        taskFilter.addValueChangeListener(e -> updateGridItems());
+        toolbar.add(searchField, taskFilter, refreshButton);
         Div controls = new Div(toolbar, statusFilters);
         controls.addClassName("admin-list-controls");
+        Div guide = new Div(VaadinIcon.INFO_CIRCLE.create(), I18n.localize(new Paragraph(
+                "AI ishlamasa yoki xulosa noaniq bo'lsa, surat va manzilni tekshiring. Ishonchli xabarni Xaritaga chiqarish orqali tasdiqlashingiz mumkin.")));
+        guide.addClassName("moderation-review-guide");controls.addComponentAsFirst(guide);
         return controls;
     }
 
@@ -290,7 +304,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         }
         Span badge = I18n.localize(new Span(report.getConfidenceScore() + "% ishonch"));
         badge.addClassName("moderation-ai-badge");
-        badge.addClassName(report.getConfidenceScore() >= 75 ? "high" : "low");
+        badge.addClassName(report.getConfidenceScore() >= 80 ? "high" : "low");
         return badge;
     }
 
@@ -337,6 +351,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
                 : searchField.getValue().trim().toLowerCase(Locale.ROOT);
         List<ConfirmWasteDto> filteredReports = reports.stream()
                 .filter(report -> selectedStatus == null || report.getStatus() == selectedStatus)
+                .filter(this::matchesTaskFilter)
                 .filter(report -> query.isEmpty()
                         || contains(report.getReporterFullName(), query)
                         || contains(report.getDistrict(), query)
@@ -355,7 +370,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         nextButton.setEnabled(currentPage + 1 < pageCount);
     }
 
-    private void openReportDetails(ConfirmWasteDto report) {
+    private Dialog openReportDetails(ConfirmWasteDto report) {
         Dialog dialog = new Dialog();
         dialog.addClassNames("moderation-detail-dialog", "admin-theme-dialog");
         I18n.headerTitle(dialog, "Xabar tafsilotlari");
@@ -378,8 +393,13 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
 
         Div photoSection = I18n.localize(new Div());
         photoSection.addClassName("moderation-detail-photos");
-        photoSection.add(buildDetailImage(report.getBeforeImageUrl(), "Tozalashdan oldin"),
-                buildDetailImage(report.getAfterImageUrl(), "Tozalashdan keyin"));
+        photoSection.add(buildDetailImage(report.getBeforeImageUrl(), "Tozalashdan oldin"));
+        if (!isReportOnly(report)) {
+            photoSection.add(buildDetailImage(report.getAfterImageUrl(), "Tozalashdan keyin"));
+        } else {
+            photoSection.getStyle().set("grid-template-columns", "1fr");
+            content.add(I18n.localize(new Paragraph("Bu xabar chiqindi joylashuvi haqida. Tasdiqlangach xaritada boshqalar uchun tozalashga ochiladi.")));
+        }
 
         Div aiCard = I18n.localize(new Div());
         aiCard.addClassName("moderation-ai-review");
@@ -416,6 +436,10 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         evaluation.addClassName("moderation-ai-reasoning");
         aiCard.add(aiTitle, reviewStatus, score, evaluation, reasoning);
 
+        if (report.getAiReviewStatus() != AiReviewStatus.COMPLETED || report.getConfidenceScore() == null || report.getConfidenceScore() < 80) {
+            Paragraph manual = I18n.localize(new Paragraph("AI xulosasi yetarli emas. Qarorni suratlar va manzilni qo'lda tekshirib qabul qiling."));
+            manual.addClassName("moderation-review-guide");content.add(manual);
+        }
         content.add(meta, photoSection, aiCard);
         dialog.add(content);
 
@@ -423,7 +447,7 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         dialog.getFooter().add(closeButton);
 
-        if (report.getStatus() == ReportStatus.PENDING) {
+        if (report.getStatus() == ReportStatus.PENDING && report.getReportAction() == ReportActionEnum.CLEAN_MYSELF) {
             Button startButton = I18n.localize(new Button("Ko'rib chiqishni boshlash", event ->
                     requestStatusChange(report, ReportStatus.IN_PROGRESS, dialog)));
             startButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -432,11 +456,12 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         Button rejectButton = I18n.localize(new Button("Rad etish", event ->
                 requestStatusChange(report, ReportStatus.REJECTED, dialog)));
         rejectButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        Button approveButton = I18n.localize(new Button("Tasdiqlash", event ->
-                requestStatusChange(report, ReportStatus.RESOLVED, dialog)));
+        Button approveButton = I18n.localize(new Button(isReportOnly(report) ? "Xaritaga chiqarish" : "Tasdiqlash", event ->
+                requestStatusChange(report, isReportOnly(report) ? ReportStatus.IN_PROGRESS : ReportStatus.RESOLVED, dialog)));
         approveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         dialog.getFooter().add(rejectButton, approveButton);
         dialog.open();
+        return dialog;
     }
 
     private Div buildDetailImage(String imageUrl, String label) {
@@ -467,12 +492,18 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
         return item;
     }
 
-    private void requestStatusChange(ConfirmWasteDto report, ReportStatus status, Dialog detailsDialog) {
+    private ConfirmDialog requestStatusChange(ConfirmWasteDto report, ReportStatus status, Dialog detailsDialog) {
         String title;
         String message;
         String confirmLabel;
         String theme;
-        if (status == ReportStatus.RESOLVED) {
+        boolean publishing = isReportOnly(report) && status == ReportStatus.IN_PROGRESS;
+        if (publishing) {
+            title = "Xabarni xaritaga chiqarasizmi?";
+            message = "Tasdiqlangach bu joy xaritada boshqalar uchun tozalashga ochiladi. Avval berilgan mukofot qayta berilmaydi.";
+            confirmLabel = "Xaritaga chiqarish";
+            theme = "primary";
+        } else if (status == ReportStatus.RESOLVED) {
             title = "Xabarni tasdiqlaysizmi?";
             message = "Xabar tasdiqlanadi. Tegishli mukofotlar beriladi; avval berilgan mukofot qayta berilmaydi.";
             confirmLabel = "Tasdiqlash";
@@ -506,8 +537,8 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
                     throw new IllegalStateException("Report confirmation did not succeed");
                 }
                 detailsDialog.close();
-                I18n.notify(statusSuccessMessage(status), 3500, Position.TOP_END);
-                if (status != ReportStatus.IN_PROGRESS && currentPage > 0 && reports.size() == 1) {
+                I18n.notify(publishing ? "Xabar xaritaga chiqarildi. Endi boshqalar bu joyni tozalashi mumkin." : statusSuccessMessage(status), 3500, Position.TOP_END);
+                if ((publishing || status != ReportStatus.IN_PROGRESS) && currentPage > 0 && reports.size() == 1) {
                     currentPage--;
                 }
                 loadReports();
@@ -518,6 +549,22 @@ public class AdminModerationView extends VerticalLayout implements com.vaadin.fl
             }
         });
         confirmation.open();
+        return confirmation;
+    }
+
+    private boolean matchesTaskFilter(ConfirmWasteDto report) {
+        String value = taskFilter.getValue();
+        if ("Xaritaga chiqarish".equals(value)) return isReportOnly(report);
+        if ("Tozalash tasdig'i".equals(value)) return !isReportOnly(report);
+        if ("AI qo'lda tekshirish".equals(value)) return report.getAiReviewStatus() != AiReviewStatus.COMPLETED
+                || report.getConfidenceScore() == null || report.getConfidenceScore() < 80;
+        return true;
+    }
+
+    private boolean isReportOnly(ConfirmWasteDto report) {
+        return report.getReportAction() == ReportActionEnum.SEND_TO_OTHERS
+                && report.getCleanerId() == null
+                && (report.getAfterImageUrl() == null || report.getAfterImageUrl().isBlank());
     }
 
     private String statusSuccessMessage(ReportStatus status) {
