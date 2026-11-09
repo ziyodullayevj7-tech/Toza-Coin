@@ -1,0 +1,40 @@
+/* Community cleaning UI stays scoped to the map and moderation views. */
+.map-active-cleanups { display:flex; flex-direction:column; gap:12px; padding:22px; background:rgba(242,250,235,.92); border:1px solid #c7d5bd; border-radius:16px; }
+.map-active-cleanups h2 { margin:0 0 4px; font-size:18px; color:#294633; }
+.map-active-cleanup-card { display:flex; align-items:center; gap:14px; padding:14px; border:1px solid #c7d5bd; border-radius:12px; background:rgba(255,255,255,.55); }
+.map-active-cleanup-card > vaadin-icon { color:#62863f; flex-shrink:0; }
+.map-active-cleanup-card > div { flex:1; display:flex; flex-direction:column; min-width:0; gap:5px; }
+.map-active-cleanup-card > div > span:first-child { color:#294633; font-weight:600; }
+.map-active-cleanup-card > div > span:last-child { color:#526a4c; font-size:12px; overflow-wrap:anywhere; }
+.community-cleanup-dialog::part(overlay) { max-width:calc(100vw - 24px); background:#f1f7eb; border:1px solid #c7d5bd; border-radius:16px; color:#294633; }
+.community-cleanup-dialog::part(backdrop) { background:rgba(25,48,30,.32); backdrop-filter:blur(4px); }
+.community-cleanup-dialog { --lumo-primary-color:#426c38; --lumo-primary-text-color:#35552f; }
+.community-cleanup-dialog vaadin-button { margin:0; min-height:42px; border-radius:10px; }
+.community-cleanup-dialog vaadin-button[theme~="primary"] { background:#426c38; color:white; }
+.cleanup-dialog-content { display:flex; flex-direction:column; gap:16px; }
+.cleanup-dialog-content h2 { margin:0; color:#294633; font-size:22px; }
+.cleanup-dialog-content p { margin:0; color:#526a4c; line-height:1.7; font-size:14px; overflow-wrap:anywhere; }
+.cleanup-dialog-content > span { color:#526a4c; font-size:13px; }
+.cleanup-before-photo { display:grid; place-items:center; position:relative; height:220px; overflow:hidden; background:#e1ecd8; border:1px solid #c7d5bd; border-radius:12px; }
+.cleanup-before-photo > vaadin-icon { width:40px; height:40px; color:#799469; }
+.cleanup-before-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#e1ecd8; }
+.cleanup-directions { display:flex; gap:10px; flex-wrap:wrap; }
+.cleanup-directions a { display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; color:#35552f; border:1px solid #b8cdaa; border-radius:10px; background:#edf5e6; font-size:13px; font-weight:600; text-decoration:none; }
+.cleanup-directions a:hover { background:#e0ecd6; text-decoration:none; }
+.cleanup-directions a:focus-visible { outline:2px solid #62863f; outline-offset:3px; }
+.cleanup-camera,.cleanup-photo-preview { overflow:hidden; border-radius:12px; border:1px solid #c7d5bd; background:#e1ecd8; }
+.cleanup-camera video,.cleanup-photo-preview img { display:block; width:100%; max-height:320px; object-fit:contain; }
+.cleanup-camera-controls { display:flex; flex-wrap:wrap; gap:10px; }
+.admin-jungle-layout .admin-moderation-page .moderation-toolbar { flex-wrap:wrap; }
+.admin-jungle-layout .moderation-task-filter { flex:1 1 210px; max-width:260px; --vaadin-input-field-height:40px; }
+.moderation-review-guide { display:flex; align-items:flex-start; gap:10px; padding:14px 16px; margin:0 0 18px; border:1px solid #cad9bd; border-radius:10px; background:rgba(232,243,222,.7); color:#526a4c; font-size:13px; line-height:1.65; }
+.moderation-review-guide vaadin-icon { flex:0 0 18px; width:18px; height:18px; margin-top:2px; color:#62863f; }
+.moderation-review-guide p { margin:0; }
+@media(max-width:520px) {
+ .map-active-cleanups { padding:16px; }
+ .map-active-cleanup-card { flex-wrap:wrap; }
+ .map-active-cleanup-card > vaadin-button { width:100%; }
+ .cleanup-directions a,.cleanup-camera-controls vaadin-button { width:100%; box-sizing:border-box; }
+ .admin-jungle-layout .moderation-task-filter { max-width:none; flex-basis:100%; }
+ .community-cleanup-dialog::part(footer) { flex-wrap:wrap; }
+}

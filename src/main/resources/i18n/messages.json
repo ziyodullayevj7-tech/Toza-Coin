@@ -2429,6 +2429,209 @@
     "Browse catalog",
     "Открыть каталог"
   ],
+  "Chiqindi xaritasi": [
+    "Waste map",
+    "Карта отходов"
+  ],
+  "Tozalash kerak bo'lgan joylarni toping va hudud bo'yicha saralang.": [
+    "Find cleanup locations and filter by area.",
+    "Находите места для уборки и фильтруйте их по району."
+  ],
+  "Filtrlarni tozalash": [
+    "Reset filters",
+    "Сбросить фильтры"
+  ],
+  "Chiqindi joylashuvlari xaritasi": [
+    "Map of waste locations",
+    "Карта мест скопления отходов"
+  ],
+  "Muammo darajasi": [
+    "Severity",
+    "Уровень проблемы"
+  ],
+  "Ma'lumotlar mavjud emas": [
+    "Data unavailable",
+    "Данные недоступны"
+  ],
+  "Ma'lumotlarni yuklab bo'lmadi. Yangilash tugmasini bosing.": [
+    "Could not load locations. Select Refresh to try again.",
+    "Не удалось загрузить места. Нажмите «Обновить»."
+  ],
+  "Tanlangan filtrlar bo'yicha joylar topilmadi.": [
+    "No locations match these filters.",
+    "По выбранным фильтрам ничего не найдено."
+  ],
+  "Hozircha xaritada tozalash joylari yo'q.": [
+    "No cleanup locations on the map yet.",
+    "На карте пока нет мест для уборки."
+  ],
+  "Xaritani yuklab bo'lmadi. Sahifani qayta yuklang.": [
+    "Could not load the map. Reload the page.",
+    "Не удалось загрузить карту. Перезагрузите страницу."
+  ],
+  "Yaqinlashtirish": [
+    "Zoom in",
+    "Приблизить"
+  ],
+  "Uzoqlashtirish": [
+    "Zoom out",
+    "Отдалить"
+  ],
+  "Xaritaga chiqarish": [
+    "Publish to map",
+    "Опубликовать на карте"
+  ],
+  "Xabarni xaritaga chiqarasizmi?": [
+    "Publish this report to the map?",
+    "Опубликовать это сообщение на карте?"
+  ],
+  "Tasdiqlangach bu joy xaritada boshqalar uchun tozalashga ochiladi. Avval berilgan mukofot qayta berilmaydi.": [
+    "Once approved, this location will be available on the map for others to clean. Previously granted rewards will not be paid again.",
+    "После подтверждения это место станет доступно на карте для уборки другими пользователями. Ранее выданные награды повторно не начисляются."
+  ],
+  "Xabar xaritaga chiqarildi. Endi boshqalar bu joyni tozalashi mumkin.": [
+    "Report published to the map. Others can now clean this location.",
+    "Сообщение опубликовано на карте. Теперь другие пользователи могут убрать это место."
+  ],
+  "Bu xabar chiqindi joylashuvi haqida. Tasdiqlangach xaritada boshqalar uchun tozalashga ochiladi.": [
+    "This report identifies a waste location. Approval makes it available on the map for others to clean.",
+    "В этом сообщении указано место скопления отходов. После подтверждения оно станет доступно на карте для уборки другими пользователями."
+  ],
+  "Tozalash jarayoni": [
+    "Cleanup in progress",
+    "Уборка в процессе"
+  ],
+  "Tozalash joyi": [
+    "Cleanup location",
+    "Место уборки"
+  ],
+  "Yakuniy surat yuborilgach, tozalash natijasi admin tomonidan tekshiriladi.": [
+    "After you submit the final photo, an admin will review the cleanup.",
+    "После отправки итогового фото администратор проверит результат уборки."
+  ],
+  "Keyinroq davom etish": [
+    "Continue later",
+    "Продолжить позже"
+  ],
+  "Tozalashni boshlash": [
+    "Start cleaning",
+    "Начать уборку"
+  ],
+  "Bu siz yuborgan xabar. Uni boshqa foydalanuvchi tozalashi mumkin.": [
+    "You reported this location. Another user can take this cleanup.",
+    "Вы сообщили об этом месте. Уборку может выполнить другой пользователь."
+  ],
+  "Tozalashni boshlab bo'lmadi. Xaritani yangilab qayta urinib ko'ring.": [
+    "Could not start cleaning. Refresh the map and try again.",
+    "Не удалось начать уборку. Обновите карту и попробуйте ещё раз."
+  ],
+  "Boshlangan vaqt: {0}": [
+    "Started: {0}",
+    "Начало: {0}"
+  ],
+  "Tozalashni tugatgach, kamerada yakuniy surat oling va tekshiruvga yuboring.": [
+    "When you finish cleaning, take a final camera photo and submit it for review.",
+    "После уборки сделайте итоговое фото камерой и отправьте на проверку."
+  ],
+  "Tugatish va suratga olish": [
+    "Finish and take photo",
+    "Завершить и сделать фото"
+  ],
+  "Qayta suratga olish": [
+    "Retake photo",
+    "Переснять"
+  ],
+  "Suratga olish": [
+    "Take photo",
+    "Сделать фото"
+  ],
+  "Tekshiruvga yuborish": [
+    "Submit for review",
+    "Отправить на проверку"
+  ],
+  "Brauzerda yo'nalish": [
+    "Directions in browser",
+    "Маршрут в браузере"
+  ],
+  "Xarita ilovasida ochish": [
+    "Open in maps app",
+    "Открыть в приложении карт"
+  ],
+  "Kamera ochilmadi. Ruxsatlarni tekshiring va HTTPS yoki localhost orqali foydalaning.": [
+    "Could not open the camera. Check permissions and use HTTPS or localhost.",
+    "Не удалось открыть камеру. Проверьте разрешения и используйте HTTPS или localhost."
+  ],
+  "Surat saqlanmadi. Qayta suratga oling.": [
+    "Photo could not be saved. Please take it again.",
+    "Не удалось сохранить фото. Сделайте снимок ещё раз."
+  ],
+  "Tozalash hisoboti moderatsiyaga yuborildi.": [
+    "Cleanup submitted for admin review.",
+    "Отчёт об уборке отправлен администратору."
+  ],
+  "Yuborib bo'lmadi. Xaritani yangilab holatni tekshiring.": [
+    "Submission could not be confirmed. Refresh the map to check its status.",
+    "Не удалось подтвердить отправку. Обновите карту и проверьте статус."
+  ],
+  "Bu joy hozir tozalash uchun mavjud emas. Xaritani yangilang.": [
+    "This location is no longer available for cleanup. Refresh the map.",
+    "Это место больше недоступно для уборки. Обновите карту."
+  ],
+  "Davom etayotgan tozalashlar": [
+    "Your active cleanups",
+    "Ваши текущие уборки"
+  ],
+  "Boshlangan vazifalar shu brauzerda tiklanadi.": [
+    "Started tasks can be resumed in this browser.",
+    "Начатые задачи можно продолжить в этом браузере."
+  ],
+  "Tozalash mukofoti: {0} tanga": [
+    "Cleanup reward: {0} coins",
+    "Награда за уборку: {0} монет"
+  ],
+  "Barcha vazifalar": [
+    "All tasks",
+    "Все задачи"
+  ],
+  "Tozalash tasdig'i": [
+    "Cleanup approval",
+    "Подтверждение уборки"
+  ],
+  "AI qo'lda tekshirish": [
+    "AI / manual review",
+    "Проверка ИИ / вручную"
+  ],
+  "Vazifa turi (joriy sahifa)": [
+    "Task type (current page)",
+    "Тип задачи (текущая страница)"
+  ],
+  "Filtrlar joriy sahifaga qo'llanadi.": [
+    "Filters apply to the current page.",
+    "Фильтры применяются к текущей странице."
+  ],
+  "AI ishlamasa yoki xulosa noaniq bo'lsa, surat va manzilni tekshiring. Ishonchli xabarni Xaritaga chiqarish orqali tasdiqlashingiz mumkin.": [
+    "If AI is unavailable or uncertain, review the photo and location. Publish a reliable report using Publish to map.",
+    "Если ИИ недоступен или не уверен, проверьте фото и местоположение. Достоверное сообщение можно опубликовать на карте."
+  ],
+  "AI xulosasi yetarli emas. Qarorni suratlar va manzilni qo'lda tekshirib qabul qiling.": [
+    "The AI assessment is insufficient. Review the photos and location manually before deciding.",
+    "Оценки ИИ недостаточно. Перед решением проверьте фото и местоположение вручную."
+  ],
+  "This report is not available for cleaning": [
+    "This report is no longer available for cleanup.",
+    "Это сообщение больше недоступно для уборки.",
+    "Bu xabar hozir tozalash uchun mavjud emas."
+  ],
+  "This report is not assigned to you for cleaning": [
+    "This cleanup is not assigned to you.",
+    "Эта уборка вам не назначена.",
+    "Bu tozalash vazifasi sizga biriktirilmagan."
+  ],
+  "You cannot clean your own reported waste": [
+    "Another user must take this reported cleanup.",
+    "Эту уборку должен выполнить другой пользователь.",
+    "Bu xabarni boshqa foydalanuvchi tozalashi kerak."
+  ],
   "{0} tanga": [
     "{0} coins",
     "{0} монет"

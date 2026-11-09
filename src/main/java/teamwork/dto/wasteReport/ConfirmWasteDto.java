@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import teamwork.enums.AiReviewStatus;
 import teamwork.enums.ReportStatus;
+import teamwork.enums.ReportActionEnum;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +23,7 @@ public class ConfirmWasteDto {
     private String beforeImageUrl;
     private String afterImageUrl;
     private ReportStatus status;
+    private ReportActionEnum reportAction;
     private Double cleanPeriod;
     private Integer confidenceScore;
     private String reasoning;

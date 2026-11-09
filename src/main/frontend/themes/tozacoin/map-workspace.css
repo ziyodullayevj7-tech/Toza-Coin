@@ -1,0 +1,86 @@
+/* The map uses the user panel's glass surfaces, typography and control rhythm. */
+.user-jungle-layout.user-layout-container .map-view-root.map-workspace {
+  box-sizing:border-box; width:100%; max-width:1440px; margin:0 auto;
+  height:auto!important; min-height:0; padding:32px!important; gap:20px!important; align-items:stretch;
+}
+.user-jungle-layout.user-layout-container .map-workspace .map-topbar {
+  box-sizing:border-box; display:flex; width:100%; height:auto; min-height:100px; padding:24px 28px;
+  align-items:center; justify-content:space-between; gap:24px; flex-wrap:nowrap; margin:0;
+  border:1px solid rgba(255,255,255,.38); border-radius:16px;
+  background:linear-gradient(130deg,rgba(255,255,255,.72),rgba(221,244,207,.4)); backdrop-filter:blur(10px);
+}
+.map-workspace .map-topbar-left { display:flex; align-items:center; min-width:0; gap:16px; }
+.map-workspace .map-heading-icon { display:grid; place-items:center; width:46px; height:46px; flex:0 0 46px; border:1px solid #bfd0b3; border-radius:13px; color:#426c38; background:rgba(232,243,222,.7); }
+.map-workspace .map-heading-icon vaadin-icon { width:23px; height:23px; }
+.map-workspace .map-topbar-title-group { display:flex; flex-direction:column; align-items:flex-start; gap:8px; }
+.map-workspace .map-topbar-title-group h1 { margin:0; color:#243e2b; font-size:28px; line-height:1.25; letter-spacing:-.7px; font-weight:650; }
+.map-workspace .map-topbar-title-group p { margin:0; color:#526a4c; font-size:13px; line-height:1.6; }
+.map-workspace .map-topbar-right { display:flex; align-items:center; flex-shrink:0; gap:10px; }
+.map-workspace vaadin-button { box-sizing:border-box; min-height:42px; height:42px; margin:0; padding:0 14px; border-radius:10px; border:1px solid rgba(66,108,56,.22); background:rgba(255,255,255,.65); color:#35552f; font-size:13px; font-weight:600; cursor:pointer; box-shadow:none; transition:background 160ms ease,border-color 160ms ease; }
+.map-workspace vaadin-button vaadin-icon { width:18px; height:18px; }
+.map-workspace vaadin-button:not([disabled]):hover { background:#e9f1e2; border-color:#9fb78c; }
+.map-workspace vaadin-button[theme~="primary"] { background:#426c38; border-color:#426c38; color:white; }
+.map-workspace vaadin-button[theme~="primary"]:not([disabled]):hover { background:#355a2d; border-color:#355a2d; }
+.map-workspace vaadin-button[disabled] { opacity:.5; cursor:default; }
+.map-workspace vaadin-button:is(:focus-visible,[focus-ring]) { outline:2px solid #567f49; outline-offset:3px; }
+.user-jungle-layout.user-layout-container .map-workspace .map-content-area {
+  /* Override the legacy map's !important row/zero-basis flex rules locally.
+     Otherwise the auto-height page collapses this entire workspace to its border. */
+  display:flex; flex-direction:column!important; align-items:stretch; width:100%; height:auto!important; flex:0 0 auto!important; min-height:0; margin:0; overflow:hidden;
+  border:1px solid rgba(255,255,255,.5); border-radius:16px; background:rgba(245,251,240,.9); box-shadow:0 8px 32px rgba(25,48,30,.05);
+}
+.map-workspace .map-filters-toolbar { display:grid; grid-template-columns:minmax(160px,280px) minmax(160px,280px) auto; align-items:end; gap:16px; padding:18px 24px 22px; border-bottom:1px solid rgba(57,86,52,.14); }
+.map-workspace .map-combo { width:100%; min-width:0; padding:0; --vaadin-input-field-height:42px; --vaadin-input-field-background:rgba(255,255,255,.85); --vaadin-input-field-border-radius:10px; }
+.map-workspace .map-combo::part(label) { color:#45624c; font-size:12px; font-weight:600; margin-bottom:5px; }
+.map-workspace .map-combo::part(input-field) { border:1px solid #c9d8bf; box-shadow:none; color:#294633; border-radius:10px; }
+.map-workspace .map-combo::part(input-field):hover { border-color:#a6be96; }
+.map-workspace .map-combo[focused]::part(input-field) { border-color:#62863f; box-shadow:0 0 0 2px rgba(98,134,63,.16); }
+.map-workspace .map-reset-filters { justify-self:end; }
+.map-workspace .map-right-area { position:relative; width:100%; height:clamp(420px,62dvh,700px); min-height:420px; flex:none; overflow:hidden; border-radius:0; }
+.map-workspace .map-leaflet-div { background:#e3ebdf; }
+.map-workspace .map-count-overlay { top:16px; right:16px; padding:10px 14px; gap:8px; border-radius:10px; border:1px solid #c7d5bd; background:rgba(250,253,247,.96); box-shadow:0 2px 8px rgba(25,48,30,.08); pointer-events:none; transform:none; }
+.map-workspace .map-count-overlay vaadin-icon { width:16px; height:16px; color:#62863f; }
+.map-workspace .map-count-text { font-size:12px; font-weight:600; color:#35552f; font-variant-numeric:tabular-nums; }
+.map-workspace-feedback { box-sizing:border-box; width:100%; padding:14px 24px; background:#eef4e7; color:#526a4c; font-size:13px; line-height:1.6; border-bottom:1px solid #d2dfc8; }
+.map-workspace-feedback.is-error { color:#864832; background:#f6e9e4; border-color:#dfb8ae; }
+.map-workspace .map-workspace-legend { display:flex; align-items:center; flex-wrap:wrap; gap:12px 22px; padding:16px 24px; border-top:1px solid #d2dfc8; color:#526a4c; font-size:12px; }
+.map-workspace-legend > span:first-child { font-weight:600; color:#35552f; }
+.map-workspace-legend > div { display:flex; align-items:center; gap:7px; }
+.map-severity-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.map-severity-dot.is-low { background:#628b4d; }
+.map-severity-dot.is-medium { background:#bd8c36; }
+.map-severity-dot.is-high { background:#b45c4a; }
+.map-severity-dot.is-review { background:#819080; }
+.map-workspace .leaflet-control-zoom { overflow:hidden; border:1px solid #c7d5bd!important; border-radius:10px!important; box-shadow:0 2px 8px rgba(25,48,30,.1)!important; }
+.map-workspace .leaflet-control-zoom a { width:40px!important; height:40px!important; line-height:40px!important; font-size:21px!important; color:#35552f!important; background:#f8fcf4!important; font-weight:500; }
+.map-workspace .leaflet-control-zoom a:hover { background:#e5efdc!important; }
+.map-workspace .leaflet-control-zoom a:focus-visible { outline:2px solid #567f49; outline-offset:-3px; }
+.map-workspace .leaflet-control-attribution { font-size:10px; background:rgba(250,253,247,.9); color:#526a4c; }
+.map-workspace .leaflet-control-attribution a { color:#426c38; }
+.map-workspace .wm-tooltip { border:1px solid #c7d5bd; background:#f8fcf4; border-radius:10px; box-shadow:0 4px 16px rgba(25,48,30,.12); }
+@media(max-width:1000px) {
+  .user-jungle-layout.user-layout-container .map-workspace .map-topbar { flex-wrap:wrap; }
+  .map-workspace .map-topbar-right { margin-inline-start:auto; }
+}
+@media(max-width:768px) {
+  .user-jungle-layout.user-layout-container .map-view-root.map-workspace { padding:20px 16px!important; gap:16px!important; }
+  .user-jungle-layout.user-layout-container .map-workspace .map-topbar { padding:22px; gap:18px; }
+  .map-workspace .map-topbar-title-group h1 { font-size:24px; }
+  .map-workspace .map-filters-toolbar { padding:16px; grid-template-columns:1fr 1fr; gap:12px; }
+  .map-workspace .map-reset-filters { grid-column:1 / -1; }
+  .map-workspace .map-workspace-legend { padding:16px; gap:12px 16px; }
+}
+@media(max-width:520px) {
+  .map-workspace .map-heading-icon { display:none; }
+  .map-workspace .map-topbar-right { width:100%; margin:0; }
+  .map-workspace .map-topbar-right > vaadin-button { flex:1; }
+  .map-workspace .map-filters-toolbar { grid-template-columns:1fr; }
+  .map-workspace .map-reset-filters { justify-self:stretch; }
+  .map-workspace .map-right-area { height:440px; min-height:360px; }
+  .map-workspace .map-workspace-legend > span:first-child { width:100%; }
+  .map-workspace .map-count-overlay { top:12px; right:12px; }
+}
+@media(prefers-reduced-motion:reduce) { .map-workspace vaadin-button { transition:none; } }
+@media(prefers-reduced-transparency:reduce) {
+  .user-jungle-layout.user-layout-container .map-workspace .map-topbar { background:#f1f7eb; backdrop-filter:none; }
+}

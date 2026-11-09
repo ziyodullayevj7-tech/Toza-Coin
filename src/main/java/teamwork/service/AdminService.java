@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.security.access.prepost.PreAuthorize;
 import teamwork.dto.leaderBoard.LeaderBoardDto;
 import teamwork.dto.coinTransaction.CoinTransactionDto;
 import teamwork.entity.ProfileEntity;
@@ -27,6 +28,7 @@ public class AdminService {
 
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public boolean confirmReport(ConfirmWasteDto dto) {
         if (dto == null || dto.getReportId() == null || dto.getReportId().isBlank()
                 || dto.getStatus() == null) {
@@ -46,9 +48,24 @@ public class AdminService {
             return true;
         }
 
-        if (dto.getStatus() == ReportStatus.IN_PROGRESS) {
+        boolean reportOnly = report.getReportAction() == ReportActionEnum.SEND_TO_OTHERS
+                && report.getCleaner() == null
+                && (report.getAfterImageUrl() == null || report.getAfterImageUrl().isBlank());
+        if (reportOnly && (dto.getStatus() == ReportStatus.IN_PROGRESS || dto.getStatus() == ReportStatus.RESOLVED)) {
             if (report.getReportStatus() != ReportStatus.PENDING) {
-                throw new AppBadRequestException("Only pending reports can enter review");
+                throw new AppBadRequestException("This report has already been published for cleanup");
+            }
+            grantInitialReward(report);
+            report.setCleanerRewardCoins(50);
+            report.setReportStatus(ReportStatus.IN_PROGRESS);
+            wasteReportRepository.save(report);
+            return true;
+        }
+
+        if (dto.getStatus() == ReportStatus.IN_PROGRESS) {
+            if (report.getReportStatus() != ReportStatus.PENDING
+                    || report.getReportAction() != ReportActionEnum.CLEAN_MYSELF) {
+                throw new AppBadRequestException("Only pending self-cleanup reports can enter review");
             }
             report.setReportStatus(ReportStatus.IN_PROGRESS);
             wasteReportRepository.save(report);
@@ -59,13 +76,11 @@ public class AdminService {
             throw new AppBadRequestException("Unsupported report status");
         }
 
-        // AI and manual approval share the initial report reward marker. The locked
-        // report prevents two reviewers (or a late AI result) from paying it twice.
-        if (!Boolean.TRUE.equals(report.getAiRewardGranted())) {
-            int reward = report.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 50 : 15;
-            creditReward(report.getReporter(), reward, "Approved report reward: " + report.getId());
-            report.setAiRewardGranted(true);
+        if (report.getAfterImageUrl() == null || report.getAfterImageUrl().isBlank()
+                || report.getReportAction() == ReportActionEnum.SEND_TO_OTHERS && report.getCleaner() == null) {
+            throw new AppBadRequestException("Cleanup evidence and a cleaner are required before completing this report");
         }
+        grantInitialReward(report);
         // A community cleaner is a separate beneficiary from the original reporter.
         if (report.getReportAction() == ReportActionEnum.SEND_TO_OTHERS
                 && report.getCleaner() != null) {
@@ -78,6 +93,15 @@ public class AdminService {
         report.setReportStatus(ReportStatus.RESOLVED);
         wasteReportRepository.save(report);
         return true;
+    }
+
+    private void grantInitialReward(WasteReportEntity report) {
+        // The report row is locked; AI and admin approval share this payment marker.
+        if (!Boolean.TRUE.equals(report.getAiRewardGranted())) {
+            int amount = report.getReportAction() == ReportActionEnum.CLEAN_MYSELF ? 50 : 15;
+            creditReward(report.getReporter(), amount, "Approved report reward: " + report.getId());
+            report.setAiRewardGranted(true);
+        }
     }
 
     private void creditReward(ProfileEntity profile, int amount, String description) {
